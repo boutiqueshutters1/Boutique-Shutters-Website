@@ -5,28 +5,41 @@
     "children": []
   },
   {
-    "key": "About Us",
-    "url": "/about/",
-    "children": []
-  },
-  {
-    "key": "Projects",
-    "url": "/projects/",
+    "key": "Blinds",
+    "url": "/blinds/",
     "children": [
       {
-        "key": "Project 1",
-        "url": "/projects/project-1/"
+        "key": "Fauxwood Blinds",
+        "url": "/blinds/fauxwood/"
       },
       {
-        "key": "Project 2",
-        "url": "/projects/project-2/"
+        "key": "Roller Shades",
+        "url": "/blinds/rollershades/"
+      },
+      {
+        "key": "Plantation Shutters",
+        "url": "/blinds/plantationshutters/"
+      },
+      {
+        "key": "Motorized",
+        "url": "/blinds/motorized/"
       }
     ]
   },
   {
-    "key": "Reviews",
-    "url": "/reviews/",
+    "key": "Gallery",
+    "url": "/gallery/",
     "children": []
+  },
+  {
+    "key": "Services",
+    "url": "/services/",
+    "children": []
+  },
+  {
+    "key": "About Us",
+    "url": "/about/",
+    "children": []     
   },
   {
     "key": "Blog",
