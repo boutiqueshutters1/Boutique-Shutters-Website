@@ -129,6 +129,7 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
 </header>
 <style lang="less">
 
+
 /*-- -------------------------- -->
 <---     Mobile Navigation      -->
 <--- -------------------------- -*/
@@ -590,32 +591,6 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
     }
 }
 
-/* Dark Mode */
-@media only screen and (max-width: 63.9375rem) {
-    body.dark-mode {
-        #cs-navigation {
-            background-color: var(--dark);
-
-            .cs-logo {
-                /* makes it white */
-                filter: grayscale(1) brightness(1000%);
-            }
-
-            .cs-ul-wrapper {
-                background-color: var(--dark);
-            }
-
-            .cs-li-link {
-                color: var(--bodyTextColorWhite);
-            }
-
-            .cs-container {
-                background-color: rgba(0, 0, 0, 0.5);
-            }
-        }
-    }
-}
-
 /*-- -------------------------- -->
 <---     Navigation Dropdown    -->
 <--- -------------------------- -*/
@@ -830,30 +805,6 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
     }
 }
 
-/* Dark Mode */
-@media only screen and (min-width: 64rem) {
-    body.dark-mode {
-        #cs-navigation {
-            .cs-drop-ul {
-                background-color: var(--dark);
-            }
-
-            .cs-li-link {
-                &.cs-drop-link {
-                    color: var(--bodyTextColorWhite);
-                    &:hover {
-                        background-color: rgba(255, 255, 255, 0.2);
-                    }
-
-                    &:before {
-                        display: none;
-                    }
-                }
-            }
-        }
-    }
-}
-
 /*-- -------------------------- -->
 <---     Desktop Navigation     -->
 <--- -------------------------- -*/
@@ -1018,7 +969,7 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
 
         .cs-bottom-bar {
             width: 100%;
-            background-color: #1a1a1a;
+            background-color: var(--primaryLight);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -1036,6 +987,7 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
             align-items: center;
             gap: (24/16rem);
             position: relative;
+            background-color: var( --primaryLight);
         }
 
         .cs-toggle {
@@ -1188,4 +1140,6 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
         }
     }
 }
+
+                                
 </style>

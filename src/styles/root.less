@@ -8,9 +8,9 @@
 @media only screen and (min-width: 0em) {
   // Website colors
   :root {
-    --primary: #ffba19;
-    --primaryLight: #ffd675;
-    --secondary: #001f3f;
+    --primary: #000000;
+    --primaryLight: #851919;
+    --secondary: #e4e400;
     --secondaryLight: #001f3f;
     --headerColor: #1a1a1a;
     --bodyTextColor: #ffffff;
@@ -35,7 +35,15 @@
     color: var(--secondary);
     display: block;
   }
-
+  .cs-icon {
+    filter: var(--svgIconFilter);
+  }
+  .cs-item {
+    background-color: var(--primaryLight);
+  }
+  .cs-navigation {
+    background-color: var(--primaryLight);
+  }
   .cs-title {
     font-size: var(--headerFontSize);
     font-weight: 900;
@@ -221,7 +229,6 @@
     font-size: 0.85vw;
   }
 }
-
 
 
 
