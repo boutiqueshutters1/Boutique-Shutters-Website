@@ -7,56 +7,81 @@ import fallbackImage from "@assets/images/CTA/cabinets2.jpg"
 ---
 
 <!-- ============================================ -->
-<!--                  Subscribe                   -->
+<!--                    CTA                       -->
 <!-- ============================================ -->
 
-<section id="subscribe-1718">
-  <div class="cs-container">
-      <div class="cs-content">
-          <span class="cs-topper">Subscribe Us</span>
-          <h2 class="cs-title">Subscribe Your Email for Newsletter & Promotion</h2>
-          <p class="cs-text">
-              Nulla dig nissimmi quis neque interdum. An Ohio man allegedly punched his lawyer in the face in court Tuesday upon finding out he was sentenced.
-          </p>
-          <form class="cs-form" name="Contact Form" method="post">
-              <input class="cs-input" type="email" id="cs-email-301-1718" name="find-us" placeholder="Email Address" required>
-              <button class="cs-button-solid cs-submit" type="submit">Subscribe</button>
-          </form>
-          <!--Graphic-->
-          <img class="cs-floater" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Graphics/white-spiral.svg" alt="graphic" width="1920" height="486" aria-hidden="true">
-      </div>
-  </div>
-  <!--Background Image-->
-  <picture class="cs-background">
-      <source media="(max-width: 600px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/people1.jpg">
-      <source media="(min-width: 601px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/people1.jpg">
-      <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/people1.jpg" alt="people" width="1920" height="486" aria-hidden="true">
-  </picture>
+<section id="cta-403">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">Our Portfolio</span>
+            <h2 class="cs-title">Want to Work with Our Team?</h2>
+            <p class="cs-text">
+                We love what we do and we do it with passion. We value the experimentation of the message and smart incentives.
+            </p>
+            <a href="" class="cs-button-solid">Read More</a>
+        </div>
+    </div>
+    <!--Background Image-->
+    <picture class="cs-background">
+        <source media="(max-width: 600px)" srcset="src/assets/images/whiteplantationshutters.webp">
+        <source media="(min-width: 601px)" srcset="src/assets/images/whiteplantationshutters.webp">
+        <img loading="lazy" decoding="async" src="src/assets/images/whiteplantationshutters.webp" alt="cleaner" width="1920" height="660" aria-hidden="true">
+    </picture>
 </section>
                               
 
 <style lang="less">
 /*-- -------------------------- -->
-<---         Subscribe          -->
+<---            CTA             -->
 <--- -------------------------- -*/
 
 /* Mobile - 360px */
 @media only screen and (min-width: 0rem) {
-    #subscribe-1718 {
-        background-color: #1A1A1A;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
+    #cta-403 {
+        padding: var(--sectionPadding);
         position: relative;
-        z-index: 1;
+
+        .cs-background {
+            width: 100%;
+            height: 100%;
+            background-blend-mode: multiply;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+
+            &:before {
+                /* background color overlay */
+                content: "";
+                position: absolute;
+                display: block;
+                height: 100%;
+                width: 100%;
+                background: #1a1a1a;
+                opacity: 0.8;
+                top: 0;
+                left: 0;
+                z-index: 1;
+            }
+
+            img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                /* Makes img tag act as a background image */
+                object-fit: cover;
+                /* positions the image inside the parent */
+                object-position: 0% 30%;
+            }
+        }
 
         .cs-container {
             width: 100%;
-            /* changes to 1312px at tablet */
-            max-width: (550/16rem);
+            max-width: (1280/16rem);
             margin: auto;
-            padding: var(--sectionPadding);
-            box-sizing: border-box;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -66,53 +91,25 @@ import fallbackImage from "@assets/images/CTA/cabinets2.jpg"
 
         .cs-content {
             /* set text align to left if content needs to be left aligned */
-            text-align: left;
+            text-align: center;
             width: 100%;
-            max-width: (630/16rem);
+            max-width: (517/16rem);
             display: flex;
             flex-direction: column;
             /* centers content horizontally, set to flex-start to left align */
-            align-items: flex-start;
-            position: relative;
-            z-index: 1;
+            align-items: center;
         }
 
-        .cs-title {
-            max-width: 20ch;
+        .cs-title,
+        .cs-text {
             color: var(--bodyTextColorWhite);
         }
 
         .cs-text {
+            opacity: 0.8;
             margin-bottom: (16/16rem);
-            color: var(--bodyTextColorWhite);
-            opacity: .8;
             &:last-of-type {
                 margin-bottom: (32/16rem);
-            }
-        }
-
-        .cs-form {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: (16/16rem);
-        }
-
-        .cs-input {
-            font-size: (16/16rem);
-            width: 100%;
-            height: clamp(2.875rem, 5.5vw, 3.5rem);
-            margin: 0;
-            padding: 0;
-            padding-left: (20/16rem);
-            border: none;
-            /* prevents padding from adding to width and height */
-            box-sizing: border-box;
-            display: block;
-            &::placeholder {
-                color: #767676;
             }
         }
 
@@ -124,10 +121,11 @@ import fallbackImage from "@assets/images/CTA/cabinets2.jpg"
             font-weight: 700;
             text-align: center;
             margin: 0;
-            color: #fff;
+            color: #000;
             min-width: (150/16rem);
             padding: 0 (24/16rem);
             background-color: var(--primary);
+            border-radius: (4/16rem);
             display: inline-block;
             position: relative;
             z-index: 1;
@@ -139,11 +137,12 @@ import fallbackImage from "@assets/images/CTA/cabinets2.jpg"
                 position: absolute;
                 height: 100%;
                 width: 0%;
-                background: #000;
+                background: #fff;
                 opacity: 1;
                 top: 0;
                 left: 0;
                 z-index: -1;
+                border-radius: (4/16rem);
                 transition: width 0.3s;
             }
 
@@ -153,131 +152,75 @@ import fallbackImage from "@assets/images/CTA/cabinets2.jpg"
                 }
             }
         }
-
-        .cs-submit {
-            width: 100%;
-            border: none;
-            color: var(--bodyTextColorWhite);
-            
-            &:hover {
-                cursor: pointer;
-            }
-        }
-
-        .cs-background {
-            width: 100%;
-            height: 100vw;
-            max-height: (400/16rem);
-            display: block;
-            order: -1;
-            position: relative;
-            z-index: 2;
-
-            img {
-                position: absolute;
-                top: 0;
-                left: 0;
-                height: 100%;
-                width: 100%;
-                object-fit: cover;
-            }
-        }
-
-        .cs-floater {
-            /* 296px - 450px */
-            width: clamp(18.5rem, 35vw, 28.125rem);
-            height: auto;
-            opacity: .04;
-            position: absolute;
-            right: (-129/16rem);
-            top: (-150/16rem);
-            z-index: -1;
-        }
     }
 }
 
 /* Tablet - 768px */
 @media only screen and (min-width: 48rem) {
-    #subscribe-1718 {
-        flex-direction: row;
-        align-items: stretch;
+    #cta-403 {
+        .cs-background {
+            /* clips the black slant so it doesnt overflow */
+            overflow: hidden;
+            &:before {
+                width: 40%;
+                opacity: 1;
+            }
+
+            &:after {
+                /* black slant */
+                content: "";
+                width: (500/16rem);
+                height: (1500/16rem);
+                margin-right: (-50/16rem);
+                background: -moz-linear-gradient(
+                    left,
+                    rgba(26, 26, 26, 1) 0%,
+                    rgba(26, 26, 26, 1) 57%,
+                    rgba(26, 26, 26, 0) 100%
+                );
+                background: -webkit-linear-gradient(
+                    left,
+                    rgba(26, 26, 26, 1) 0%,
+                    rgba(26, 26, 26, 1) 57%,
+                    rgba(26, 26, 26, 0) 100%
+                );
+                background: linear-gradient(
+                    to right,
+                    rgba(26, 26, 26, 1) 0%,
+                    rgba(26, 26, 26, 1) 57%,
+                    rgba(26, 26, 26, 0) 100%
+                );
+                opacity: 1;
+                position: absolute;
+                display: block;
+                top: 50%;
+                right: 50%;
+                transform: rotate(10deg) translateY(-50%);
+            }
+
+            img {
+                width: 60%;
+                object-position: right;
+                left: auto;
+                right: 0;
+            }
+        }
 
         .cs-container {
-            max-width: (1312/16rem);
-            align-items: flex-end;
-        }
-
-        .cs-content {
-            width: 45vw;
-            max-width: (630/16rem);
-        }
-
-        .cs-background {
-            width: 50%;
-            max-height: 100%;
-            height: 100%;
-            position: absolute;
-            right: 50%;
-        }
-    }
-}
-
-/* Desktop - 1024px */
-@media only screen and (min-width: 64rem) {
-    #subscribe-1718 {
-        .cs-content {
-            /* remove the positioning so the cs-floater is now absolutely positioned to the nearest parent that has a declared position relative, which is the section parent */
-            position: initial;
-        }
-
-        .cs-form {
             flex-direction: row;
+            justify-content: space-between;
         }
 
-        .cs-button-solid {
-            width: auto;
-        }
-
-        .cs-floater {
-            top: 50%;
-            right: (-200/16rem);
-            transform: translateY(-50%);
-        }
-    }
-}
-      
-/* Large Desktop - 1300px */
-@media only screen and (min-width: 81.25rem) {
-    #subscribe-1718 {
         .cs-content {
-            width: 100%;
+            text-align: left;
+            align-items: flex-start;
+            width: 45%;
         }
 
-        .cs-background {
-            margin-right: (118/16rem);
-        }
-    }
-}
-
-/* Dark Mode */
-@media only screen and (min-width: 0rem) {
-    body.dark-mode {
-        #subscribe-1718 {
-            background-color: rgba(0, 0, 0, .2);
-    
-            .cs-title, .cs-text {
-                color: var(--bodyTextColorWhite);
-            }
-    
-            .cs-text {
-                opacity: .8;
-            }
-
-            .cs-floater {
-                opacity: .1;
-            }
+        .cs-text,
+        .cs-title {
+            margin-left: 0;
         }
     }
-}
-                                
+}                           
 </style>
