@@ -267,93 +267,42 @@ Let's create a window treatment solution that elevates your home.
             <a class="cs-button-solid" href="">Book Appointment</a>
         </div>
     </div>
-</section>                                              
-  <!-- ============================================ -->
-  <!--                   Reviews                    -->
-  <!-- ============================================ -->
+</section>    
+<!-- ============================================ -->
+<!--                Smart Home                    -->
+<!-- ============================================ -->
 
-  <section id="reviews">
+<section id="sbs-1591">
     <div class="cs-container">
-      <span class="cs-topper">Our Reviews</span>
-      <h2 class="cs-title">Words From Our Customers</h2>
-      <p class="cs-text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit dolor
-        volutpat porttitor sagittis nunc nisl. Sagittis sit pellentesque gravida
-        viverra. Leo ut sed euismod tortor risus et. Ornare non neque, leo,
-        ornare. Lorem ipsum dolor sit amet.
-      </p>
-      <ul class="cs-card-group">
-        <!-- Review 1 -->
-        <li class="cs-item">
-          <img
-            class="cs-item-img"
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            src="https://csimg.nyc3.digitaloceanspaces.com/Reviews/profile5.png"
-            alt="profile picture"
-            width="80"
-            height="80"
-          />
-          <p class="cs-item-p">
-            Dictum dolor, nullam morbi sem in auctor proin. Consequat dolor
-            habitasse nam sed tempor. Viverra magna pharetra rhoncus, nec sed
-            ullamcorper lectus et. Auctor velit diam fermentum consequat.
-            Feugiat viverra massa urna, volutpat orci imperdiet eget eget.
-          </p>
-          <span class="cs-reviewer">
-            Jon Doe
-            <span class="cs-desc">Homeowner</span>
-          </span>
-          <img
-            class="cs-item-stars"
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            src="https://csimg.nyc3.digitaloceanspaces.com/Reviews/stars-yellow.svg"
-            alt="stars"
-            width="96"
-            height="16"
-          />
-        </li>
-        <!-- Review 2 -->
-        <li class="cs-item">
-          <img
-            class="cs-item-img"
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            src="https://csimg.nyc3.digitaloceanspaces.com/Reviews/profile-4.png"
-            alt="profile picture"
-            width="80"
-            height="80"
-          />
-          <p class="cs-item-p">
-            Dictum dolor, nullam morbi sem in auctor proin. Consequat dolor
-            habitasse nam sed tempor. Viverra magna pharetra rhoncus, nec sed
-            ullamcorper lectus et. Auctor velit diam fermentum consequat.
-            Feugiat viverra massa urna, volutpat orci imperdiet eget eget.
-          </p>
-          <span class="cs-reviewer">
-            Jane Doe
-            <span class="cs-desc">Homeowner</span>
-          </span>
-          <img
-            class="cs-item-stars"
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            src="https://csimg.nyc3.digitaloceanspaces.com/Reviews/stars-yellow.svg"
-            alt="stars"
-            width="96"
-            height="16"
-          />
-        </li>
-      </ul>
-      <a aria-label="read more reviews" href="/reviews" class="cs-button-solid"
-        >Our Reviews</a>
+        <div class="cs-image-group">
+            <!--Top left image-->
+            <picture class="cs-picture cs-picture1">
+                <!--Mobile Image-->
+                <source media="(max-width: 600px)" srcset="hsrc/assets/images/remotecontrolled.webp">
+                <!--Tablet and above Image-->
+                <source media="(min-width: 601px)" srcset="src/assets/images/remotecontrolled.webp">
+                <img loading="lazy" decoding="async" src="src/assets/images/remotecontrolled.webp" alt="mechanic" width="413" height="500">
+            </picture>
+            <!--Top Right image-->
+            <picture class="cs-picture cs-picture2">
+                <!--Mobile Image-->
+                <source media="(max-width: 600px)" srcset="src/assets/images/smarthome.webp">
+                <!--Tablet and above Image-->
+                <source media="(min-width: 601px)" srcset="src/assets/images/smarthome.webp">
+                <img loading="lazy" decoding="async" src="src/assets/images/smarthome.webp alt="mechanic" width="413" height="280">
+            </picture>
+        </div>
+        <div class="cs-content">
+            <span class="cs-topper">About us</span>
+            <h2 class="cs-title">Accessible Wardrobe That Women Can Wear and Curate Over Time</h2>
+            <p class="cs-text">
+                Dive into the exhilarating world of fishing with Gill Rush, a dynamic and electrifying apparel brand designed exclusively for those who live for the rush of the catch. For avid anglers who feel the pulse quicken at the mere tug on their line, Gill Rush captures the essence of that heart-pounding moment when fish and fisherman lock in a fierce dance of skill and strategy.
+            </p>
+            <a href="" class="cs-button-solid">View All Collections</a>
+        </div>
     </div>
-  </section>
+</section>
+
   <!-- ============================================ -->
   <!--                   CTA                        -->
   <!-- ============================================ -->
@@ -364,8 +313,6 @@ Let's create a window treatment solution that elevates your home.
 <!-- ============================================ -->
 <!--                    Styles                    -->
 <!-- ============================================ -->
-
-
 <style lang="less">
   /* STYLES FOR ABOVE THE FOLD */
 
@@ -683,7 +630,7 @@ Let's create a window treatment solution that elevates your home.
             margin: 0 0 (32/16rem);
             /* 24px - 32px */
             padding: clamp(1.5rem, 4vw, 2rem);
-            background-color: #fef5f4;
+            background-color: var(--primaryLight);
             border-left: (4/16rem) solid var(--secondary);
         }
 
@@ -804,7 +751,7 @@ Let's create a window treatment solution that elevates your home.
             box-sizing: border-box;
             /* 24px - 32px */
             padding: clamp(1.5rem, 3vw, 2rem);
-            background-color: #fffcf3;
+            background-color: var(--primaryLight);
             display: inline-flex;
             flex-direction: column;
             justify-content: center;
@@ -889,35 +836,7 @@ Let's create a window treatment solution that elevates your home.
             bottom: (64/16rem);
         }
     }
-}
-
-/* Dark Mode */
-@media only screen and (min-width: 0rem) {
-    body.dark-mode {
-        #sbs-2291 {
-            .cs-title,
-            .cs-text,
-            .cs-h3,
-            .cs-li,
-            .cs-heading,
-            .cs-desc {
-                color: var(--bodyTextColorWhite);
-            }
-
-            .cs-text,
-            .cs-li,
-            .cs-desc {
-                opacity: 0.8;
-            }
-
-            .cs-features,
-            .cs-box {
-                background-color: var(--medium);
-            }
-        }
-    }
-}
-                                
+}                              
 /*-- -------------------------- -->
 <---          Services          -->
 <--- -------------------------- -*/
@@ -1356,179 +1275,151 @@ Let's create a window treatment solution that elevates your home.
         }
     }
 }
-
-/* Dark Mode */
-@media only screen and (min-width: 0rem) {
-    body.dark-mode {
-        #why-choose-681 {
-            .cs-topper .cs-color {
-                color: var(--primaryLight);
-            }
-            .cs-title,
-            .cs-text,
-            .cs-h3,
-            .cs-item-text {
-                color: var(--bodyTextColorWhite);
-            }
-
-            .cs-text,
-            .cs-item-text {
-                opacity: 0.8;
-            }
-1
-            .cs-icon {
-                filter: brightness(125%);
-            }
-
-            .cs-graphic {
-                opacity: 0.5;
-            }
-        }
-    }
-}                                                   
+                                                
 /*-- -------------------------- -->
-<---          Reviews           -->
+<---       Smart Home           -->
 <--- -------------------------- -*/
 
-  /* Mobile - 360px */
-  @media only screen and (min-width: 0em) {
-    #reviews {
-      /* Centers the button */
-      text-align: center;
-      padding: var(--sectionPadding);
-
-      .cs-container {
-        width: 100%;
-        max-width: (1104/16rem);
-        margin: auto;
-      }
-
-      .cs-topper {
-        text-align: center;
-        margin-bottom: (16/16rem);
-      }
-
-      .cs-title {
-        text-align: center;
-        max-width: (700/16rem);
-      }
-
-      .cs-text {
-        text-align: center;
-        max-width: (650/16rem);
-        /* 88px - 104px */
-        margin-bottom: clamp(5.5em, 10.2vw, 6.5em);
-      }
-
-      .cs-card-group {
-        /* 48px - 64px */
-        margin: 0 auto clamp(3rem, 5vw, 4rem);
-        padding: 0;
-      }
-
-      .cs-item {
-        text-align: left;
-        list-style: none;
-        width: 100%;
-        max-width: (542/16rem);
-        margin: 0 auto (64/16rem);
-        /* Prevents padding from affecting height & width */
-        box-sizing: border-box;
-        /* Padding L & R - 16px - 32px */
-        padding: (60/16rem) clamp(1rem, 3.2vw, 2rem) 0;
-        /* 32px - 40px */
-        padding-bottom: clamp(2rem, 5.4vw, 2.5rem);
-        background: #fff;
-        box-shadow: 0px 20px 39px 0px rgba(0, 0, 0, 0.05);
-        border-radius: (4/16rem);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        position: relative;
-
-        &:last-of-type {
-          margin-bottom: 0;
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #sbs-1591 {
+        padding: var(--sectionPadding);
+        background-color: var(--primaryLight);
+        
+        .cs-container {
+            width: 100%;
+            /* changes to 1280px at desktop */
+            max-width: (550/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* 48px - 64px */
+            gap: clamp(3rem, 6vw, 4rem);
         }
-      }
 
-      .cs-item-img {
-        width: (80/16rem);
-        height: (80/16rem);
-        position: absolute;
-        top: (-40/16rem);
-      }
+        .cs-content {
+            /* set text align to left if content needs to be left aligned */
+            text-align: left;
+            width: 100%;
+            max-width: (586/16rem);
+            display: flex;
+            flex-direction: column;
+            /* centers content horizontally, set to flex-start to left align */
+            align-items: flex-start;
+        }
 
-      .cs-item-p {
-        font-size: (16/16rem);
-        line-height: 1.5em;
-        margin: 0 0 (20/16rem);
-        padding-bottom: (20/16rem);
-        color: var(--bodyTextColor);
-        border-bottom: 1px solid #e8e9ec;
-      }
+        .cs-text {
+            margin-bottom: (16/16rem);
+            &:last-of-type {
+                margin-bottom: (32/16rem);
+            }
+        }
 
-      .cs-reviewer {
-        font-size: (16/16rem);
-        font-weight: 700;
-        line-height: 1.5em;
-        width: 40%;
-        margin: 0 auto 0 0;
-        color: var(--headerColor);
-        display: block;
-      }
+        .cs-button-solid {
+            font-size: (16/16rem);
+            /* 46px - 56px */
+            line-height: clamp(2.875rem, 5.5vw, 3.5rem);
+            text-decoration: none;
+	    	font-weight: 700;
+	        text-align: center;
+            margin: 0;
+            color: #fff;
+            min-width: (150/16rem);
+            padding: 0 (48/16rem);
+            background-color: var(--primary);
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            /* prevents padding from adding to the width */
+            box-sizing: border-box;
 
-      .cs-desc {
-        font-size: (14/16rem);
-        font-weight: 400;
-        color: var(#353535);
-        display: block;
-      }
+            &:before {
+                content: '';
+                position: absolute;
+                height: 100%;
+                width: 0%;
+                background: #000;
+                opacity: 1;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                transition: width .3s;
+            }
 
-      .cs-item-stars {
-        width: (96/16rem);
-        height: (16/16rem);
-      }
+            &:hover {
+                &:before {
+                    width: 100%;
+                }
+            }
+        }
+
+        .cs-image-group {
+            /* scales the whole group based on the view width size and stop when that vales equals .745em, resets at desktop */
+            font-size:~"min(1.959vw, .745em)";
+            width: (630/16em);
+            /* we set a minimum height so it never gets smaller than this value */
+            min-height: (628/16em);
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cs-picture {
+            position: absolute;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        }
+
+        .cs-picture1 {
+            /* the percentage heights allow them to be responsive to the height of the parent cs-image-group. On desktop, when the felxbox is set to aling-items: stretch, the cs-image group will stretch to fill the height of the parent container. So when you add more content to the cs-content group and make it taller, the cs-image group will get taller with it and every image will stretch with the parent, making this entire group responsive to the changing amounts of content next to it */
+            width: (413/16em);
+            height: 79.617834%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .cs-picture2 {
+            width: (413/16em);
+            height: 44.585987%;
+            bottom: 0;
+            right: 0;
+            z-index: 10;
+        }
     }
-  }
+}
 
-  /* Tablet - 768px */
-  @media only screen and (min-width: 48em) {
-    #reviews {
-      .cs-card-group {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: (16/16rem);
-      }
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #sbs-1591 {
+        .cs-container {
+            max-width: (1280/16rem);
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: stretch;
+        }
 
-      .cs-item {
-        /* reset margin so it won't interfere with flexbox */
-        margin: 0;
-      }
+        .cs-content {
+            /* this padding sets a minimum gap between the top and bottom of the content div and the top and bottom of the cs-image-group */
+            padding: (60/16rem) 0;
+            /* while the cs-image-group will stretch to fill the height of the parent, this property will ensure that the cs-content group aligns itse;f in the center of the parent div instead of stretching */
+            align-self: center;
+        }
+
+        .cs-image-group {
+            font-size:~"min(1.2vw, 1em)";
+            flex: none;
+        }
     }
-  }
-
-  /* Dark Mode */
-  @media only screen and (min-width: 0em) {
-    body.dark-mode {
-      #reviews {
-        .cs-title,
-        .cs-text,
-        .cs-item-p,
-        .cs-reviewer {
-          color: var(--bodyTextColorWhite);
-        }
-
-        .cs-item {
-          background: var(--medium);
-        }
-
-        .cs-desc {
-          color: var(--primaryLight);
-        }
-      }
-    }
-  }
+}
+                                
 </style>
 

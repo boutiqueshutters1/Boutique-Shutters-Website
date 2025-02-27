@@ -70,6 +70,7 @@ const currentYear = getCurrentYear()
     #footer-1241 {
         padding: var(--sectionPadding);
         box-sizing: border-box;
+        background-color: var(--primary);
 
         .cs-container {
             width: 100%;
@@ -313,52 +314,5 @@ const currentYear = getCurrentYear()
             grid-template-rows: 1fr;
         }
     }
-}
-
-/* Dark Mode */
-@media only screen and (min-width: 0rem) {
-    body.dark-mode {
-        #footer-1241 {
-            .cs-logo {
-                /* turns logo white */
-                filter: grayscale(1) brightness(1000%);
-            }
-
-            .cs-logo-text,
-            .cs-header,
-            .cs-li-link,
-            .cs-li-link,
-            .cs-credit-link,
-            .cs-contact-link,
-            .cs-credit {
-                color: var(--bodyTextColorWhite);
-            }
-
-            .cs-contact-link,
-            .cs-li-link,
-            .cs-credit-link {
-                &:hover {
-                    color: var(--primary);
-                }
-            }
-
-            .cs-social {
-                border-color: var(--bodyTextColorWhite);
-            }
-
-            .cs-social-link {
-                border-color: var(--bodyTextColorWhite);
-                svg {
-                    path {
-                        fill: var(--bodyTextColorWhite);
-                    }
-                }
-            }
-
-            .cs-credit {
-                border-color: rgba(255, 255, 255, 0.2);
-            }
-        }
-    }
-}                        
+}                     
 </style>
