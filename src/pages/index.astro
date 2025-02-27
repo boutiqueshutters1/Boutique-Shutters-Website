@@ -231,8 +231,6 @@ Let's create a window treatment solution that elevates your home.
                 <source media="(min-width: 601px)" srcset="src/assets/images/customzebrashades.webp">
                 <img loading="lazy" decoding="async" src="src/assets/images/customzebrashades.webp" alt="urban environment in green" width="306" height="360">
             </picture>
-            <!--Zig Zag Graphic-->
-            <img class="cs-graphic" aria-hidden="true" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images%2FGraphics%2Fzigzag.svg" loading="lazy" decoding="async" alt="zigzag" width="983" height="416">
         </div>
         <div class="cs-content">
             <span class="cs-topper">Custom Blinds, Shades, Shutters, & Motorized</span>
@@ -272,34 +270,70 @@ Let's create a window treatment solution that elevates your home.
 <!--                Smart Home                    -->
 <!-- ============================================ -->
 
-<section id="sbs-1591">
+<section id="sbs-2283">
     <div class="cs-container">
         <div class="cs-image-group">
             <!--Top left image-->
             <picture class="cs-picture cs-picture1">
                 <!--Mobile Image-->
-                <source media="(max-width: 600px)" srcset="hsrc/assets/images/remotecontrolled.webp">
+                <source media="(max-width: 600px)" srcset="src/assets/images/remotecontrolled.webp">
                 <!--Tablet and above Image-->
                 <source media="(min-width: 601px)" srcset="src/assets/images/remotecontrolled.webp">
-                <img loading="lazy" decoding="async" src="src/assets/images/remotecontrolled.webp" alt="mechanic" width="413" height="500">
+                <img loading="lazy" decoding="async" src="src/assets/images/remotecontrolled.webp" alt="wedding photoshoot" width="297" height="366">
             </picture>
-            <!--Top Right image-->
+            <!--Bottom right image-->
             <picture class="cs-picture cs-picture2">
                 <!--Mobile Image-->
                 <source media="(max-width: 600px)" srcset="src/assets/images/smarthome.webp">
                 <!--Tablet and above Image-->
                 <source media="(min-width: 601px)" srcset="src/assets/images/smarthome.webp">
-                <img loading="lazy" decoding="async" src="src/assets/images/smarthome.webp alt="mechanic" width="413" height="280">
+                <img loading="lazy" decoding="async" src="src/assets/images/smarthome.webp" alt="photograph of a woman" width="405" height="376">
             </picture>
+            <!--Middle image-->
         </div>
         <div class="cs-content">
-            <span class="cs-topper">About us</span>
-            <h2 class="cs-title">Accessible Wardrobe That Women Can Wear and Curate Over Time</h2>
-            <p class="cs-text">
-                Dive into the exhilarating world of fishing with Gill Rush, a dynamic and electrifying apparel brand designed exclusively for those who live for the rush of the catch. For avid anglers who feel the pulse quicken at the mere tug on their line, Gill Rush captures the essence of that heart-pounding moment when fish and fisherman lock in a fierce dance of skill and strategy.
-            </p>
-            <a href="" class="cs-button-solid">View All Collections</a>
+            <div class="cs-flex">
+                <span class="cs-topper">Our Story</span>
+                <h2 class="cs-title">Excellence in Exterior Remodeling</h2>
+                <p class="cs-text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores architecto dolor corporis, optio libero voluptates placeat sapiente exercitationem aliquam, expedita ab rerum quae consectetur quia, pariatur quasi nobis! Totam dignissimos fugit amet delectus quisquam ab similique corporis labore quidem ratione? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora, laboriosam!
+                </p>
+            </div>
+            <!--We hide this on mobile, adding the images into a group in the content section allows us to have better control over its responsivenes when the content section gets taller from more content-->
+            <div class="cs-content-images">
+                <picture class="cs-picture cs-picture1">
+                    <!--Mobile Image-->
+                    <source media="(max-width: 600px)" srcset="src/assets/images/remotecontrolled.webp">
+                    <!--Tablet and above Image-->
+                    <source media="(min-width: 601px)" srcset="src/assets/images/remotecontrolled.webp">
+                    <img loading="lazy" decoding="async" src="src/assets/images/remotecontrolled.webp" alt="wedding photoshoot" width="297" height="366">
+                </picture>
+            </div>
         </div>
+        <ul class="cs-card-group">
+            <li class="cs-item">
+                <h2 class="cs-h3">Our Mission</h2>
+                <p class="cs-item-text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga delectus deleniti quas illo explicabo unde sapiente, doloribus pariatur et inventore quaerat?
+                </p>
+            </li>
+            <li class="cs-item">
+                <h2 class="cs-h3">Our Vision</h2>
+                <p class="cs-item-text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga delectus deleniti quas illo explicabo unde sapiente, doloribus pariatur et inventore quaerat? Lorem ipsum dolor, sit amet consectetur adipisicing elit!
+                </p>
+            </li>
+            <!--We hide this on mobile, adding the images into a group in the content section allows us to have better control over its responsivenes when the cs-card-group gets taller from more content-->
+            <li class="cs-item cs-item-picture">
+                <picture class="cs-picture cs-picture2">
+                    <!--Mobile Image-->
+                    <source media="(max-width: 600px)" srcset="src/assets/images/smarthome.webp">
+                    <!--Tablet and above Image-->
+                    <source media="(min-width: 601px)" srcset="src/assets/images/smarthome.webp">
+                    <img loading="lazy" decoding="async" src="src/assets/images/smarthome.webp" alt="photograph of a woman" width="405" height="376">
+                </picture>
+            </li>
+        </ul>
     </div>
 </section>
 
@@ -361,7 +395,7 @@ Let's create a window treatment solution that elevates your home.
             text-align: center;
             text-transform: uppercase;
             margin-bottom: (4/16rem);
-            color: var(--primary);
+            color: var(--secondary);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -1282,144 +1316,250 @@ Let's create a window treatment solution that elevates your home.
 
 /* Mobile - 360px */
 @media only screen and (min-width: 0rem) {
-    #sbs-1591 {
-        padding: var(--sectionPadding);
-        background-color: var(--primaryLight);
-        
-        .cs-container {
-            width: 100%;
-            /* changes to 1280px at desktop */
-            max-width: (550/16rem);
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            /* 48px - 64px */
-            gap: clamp(3rem, 6vw, 4rem);
-        }
-
-        .cs-content {
-            /* set text align to left if content needs to be left aligned */
-            text-align: left;
-            width: 100%;
-            max-width: (586/16rem);
-            display: flex;
-            flex-direction: column;
-            /* centers content horizontally, set to flex-start to left align */
-            align-items: flex-start;
-        }
-
-        .cs-text {
-            margin-bottom: (16/16rem);
-            &:last-of-type {
-                margin-bottom: (32/16rem);
-            }
-        }
-
-        .cs-button-solid {
-            font-size: (16/16rem);
-            /* 46px - 56px */
-            line-height: clamp(2.875rem, 5.5vw, 3.5rem);
-            text-decoration: none;
-	    	font-weight: 700;
-	        text-align: center;
-            margin: 0;
-            color: #fff;
-            min-width: (150/16rem);
-            padding: 0 (48/16rem);
-            background-color: var(--primary);
-            display: inline-block;
-            position: relative;
-            z-index: 1;
-            /* prevents padding from adding to the width */
-            box-sizing: border-box;
-
-            &:before {
-                content: '';
-                position: absolute;
-                height: 100%;
-                width: 0%;
-                background: #000;
-                opacity: 1;
-                top: 0;
-                left: 0;
-                z-index: -1;
-                transition: width .3s;
-            }
-
-            &:hover {
-                &:before {
-                    width: 100%;
-                }
-            }
-        }
-
-        .cs-image-group {
-            /* scales the whole group based on the view width size and stop when that vales equals .745em, resets at desktop */
-            font-size:~"min(1.959vw, .745em)";
-            width: (630/16em);
-            /* we set a minimum height so it never gets smaller than this value */
-            min-height: (628/16em);
-            display: block;
-            position: relative;
-            z-index: 1;
-        }
-
-        .cs-picture {
-            position: absolute;
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
-        }
-
-        .cs-picture1 {
-            /* the percentage heights allow them to be responsive to the height of the parent cs-image-group. On desktop, when the felxbox is set to aling-items: stretch, the cs-image group will stretch to fill the height of the parent container. So when you add more content to the cs-content group and make it taller, the cs-image group will get taller with it and every image will stretch with the parent, making this entire group responsive to the changing amounts of content next to it */
-            width: (413/16em);
-            height: 79.617834%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-
-        .cs-picture2 {
-            width: (413/16em);
-            height: 44.585987%;
-            bottom: 0;
-            right: 0;
-            z-index: 10;
-        }
-    }
+  #sbs-2283 {
+    padding: var(--sectionPadding);
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+  }
+  #sbs-2283 .cs-container {
+    width: 100%;
+    /* changes to 1280px at desktop */
+    max-width: 36.5rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 48px - 64px */
+    gap: clamp(3rem, 6vw, 4rem);
+  }
+  #sbs-2283 .cs-content {
+    /* set text align to left if content needs to be left aligned */
+    text-align: left;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /* centers content horizontally, set to flex-start to left align */
+    align-items: flex-start;
+  }
+  #sbs-2283 .cs-content-images {
+    display: none;
+  }
+  #sbs-2283 .cs-text {
+    max-width: 100%;
+    margin-bottom: 1rem;
+  }
+  #sbs-2283 .cs-text:last-of-type {
+    margin: 0;
+  }
+  #sbs-2283 .cs-card-group {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    order: 3;
+  }
+  #sbs-2283 .cs-item {
+    list-style: none;
+    /* 24px - 32px */
+    padding: clamp(1.5rem, 5vw, 2rem);
+    border-left: 4px solid var(--primary);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    position: relative;
+    z-index: 1;
+  }
+  #sbs-2283 .cs-item:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: var(--primary);
+    opacity: 0.05;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+  #sbs-2283 .cs-item-picture {
+    display: none;
+  }
+  #sbs-2283 .cs-h3 {
+    font-size: 1rem;
+    line-height: 1.2em;
+    font-weight: 700;
+    margin: 0;
+    color: var(--headerColor);
+  }
+  #sbs-2283 .cs-item-text {
+    font-size: 1rem;
+    line-height: 1.5em;
+    margin: 0;
+    color: var(--bodyTextColor);
+  }
+  #sbs-2283 .cs-button-solid {
+    font-size: 1rem;
+    font-weight: 700;
+    /* 46px - 56px */
+    line-height: clamp(2.875rem, 5.5vw, 3.5rem);
+    text-align: center;
+    text-decoration: none;
+    min-width: 9.375rem;
+    margin: 0;
+    /* prevents padding from adding to the width */
+    box-sizing: border-box;
+    padding: 0 1.5rem;
+    background-color: var(--primary);
+    color: #fff;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+  }
+  #sbs-2283 .cs-button-solid:before {
+    content: "";
+    width: 0%;
+    height: 100%;
+    background: #000;
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: width 0.3s;
+  }
+  #sbs-2283 .cs-button-solid:hover:before {
+    width: 100%;
+  }
+  #sbs-2283 .cs-image-group {
+    /* scales the whole group based on the view width size and stop when that vales equals .74em, resets at desktop */
+    font-size: min(2.48vw, 1rem);
+    width: 36.5em;
+    height: 38.6875em;
+    display: block;
+    position: relative;
+    z-index: 1;
+    order: 2;
+  }
+  #sbs-2283 .cs-picture {
+    display: block;
+    position: absolute;
+  }
+  #sbs-2283 .cs-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  #sbs-2283 .cs-picture1 {
+    width: 23.8125em;
+    height: 23.8125em;
+    border-right: 0.875em solid #FEF5F4;
+    border-bottom: 0.875em solid #FEF5F4;
+    top: 0;
+    bottom: 17.5625em;
+    left: 0;
+  }
+  #sbs-2283 .cs-picture2 {
+    width: 23.875em;
+    height: 20.375em;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+  #sbs-2283 .cs-picture3 {
+    width: 13.4375em;
+    height: 9.5em;
+    bottom: 10em;
+    left: 6.25em;
+  }
 }
-
-/* Tablet - 768px */
-@media only screen and (min-width: 48rem) {
-    #sbs-1591 {
-        .cs-container {
-            max-width: (1280/16rem);
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: stretch;
-        }
-
-        .cs-content {
-            /* this padding sets a minimum gap between the top and bottom of the content div and the top and bottom of the cs-image-group */
-            padding: (60/16rem) 0;
-            /* while the cs-image-group will stretch to fill the height of the parent, this property will ensure that the cs-content group aligns itse;f in the center of the parent div instead of stretching */
-            align-self: center;
-        }
-
-        .cs-image-group {
-            font-size:~"min(1.2vw, 1em)";
-            flex: none;
-        }
-    }
-}
-                                
+/* Small Desktop - 1024px */
+@media only screen and (min-width: 64rem) {
+  #sbs-2283 .cs-container {
+    max-width: 80rem;
+    gap: 2rem;
+  }
+  #sbs-2283 .cs-content {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 2.75rem;
+    position: relative;
+    z-index: 10;
+  }
+  #sbs-2283 .cs-flex {
+    width: 100%;
+    max-width: 46.125rem;
+  }
+  #sbs-2283 .cs-content-images {
+    width: 45vw;
+    max-width: 25.75rem;
+    height: auto;
+    display: block;
+    position: relative;
+    z-index: 1;
+    order: -1;
+  }
+  #sbs-2283 .cs-li {
+    align-items: center;
+  }
+  #sbs-2283 .cs-image-group {
+    display: none;
+  }
+  #sbs-2283 .cs-picture1 {
+    width: 100%;
+    /* -133px to -165px */
+    height: calc(100% + clamp(8.3125rem, 13vw, 10.3125rem));
+    top: 0;
+  }
+  #sbs-2283 .cs-picture3 {
+    width: 56%;
+    min-height: 100px;
+    max-width: 14.5625rem;
+    left: 50%;
+    top: calc(100% + 5rem);
+    transform: translateX(-50%);
+  }
+  #sbs-2283 .cs-picture3 img {
+    width: 100%;
+    height: auto;
+    position: relative;
+    z-index: 1;
+    top: auto;
+    left: auto;
+    object-fit: initial;
+  }
+  #sbs-2283 .cs-card-group {
+    width: 50%;
+    max-width: 32.5625rem;
+    margin-left: auto;
+    position: relative;
+    z-index: 1;
+  }
+  #sbs-2283 .cs-item-picture {
+    width: 30vw;
+    max-width: 25.8125rem;
+    border: none;
+    display: block;
+    position: absolute;
+    /* 72px - 130px */
+    right: calc(100% + clamp(4.5rem, 8.5vw, 8.125rem));
+    top: 2.25rem;
+    bottom: 0;
+  }
+  #sbs-2283 .cs-item-picture:before {
+    display: none;
+  }
+  #sbs-2283 .cs-picture2 {
+    width: 100%;
+    height: 100%;
+  }
+}                             
 </style>
 
