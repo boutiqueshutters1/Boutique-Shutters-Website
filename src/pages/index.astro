@@ -24,7 +24,7 @@ const optimizedImage = await getOptimizedImage(landingImage)
           <span class="cs-topper">
             Custom Blinds, Shades, Shutters, Morotized         
         </span>
-          <h1 class="cs-title">Premium Window Treatments</h1>
+          <h1 class="cs-title">Atlanta's Premium Window Treatments</h1>
           <a href="" class="cs-button-solid">Request Appointment</a>
       </div>
       <ul class="cs-card-group">
@@ -327,6 +327,7 @@ Let's create a window treatment solution that elevates your home.
 @media only screen and (min-width: 0rem) {
     #hero-1619 {
         padding: var(--sectionPadding);
+        background-color: var(--primaryLight);
 	    /* 200px - 300px - leaving extra space for the navigation */
         padding-top: clamp(12.5rem, 31.95vw, 18.75rem);
         position: relative;
@@ -410,7 +411,9 @@ Let's create a window treatment solution that elevates your home.
             text-decoration: none;
 	    	font-weight: 700;
             margin: 0;
+            color: var(--primary);
             padding: 0 (24/16rem);
+            background-color: var(--secondary);
             display: inline-block;
             position: relative;
             z-index: 1;
@@ -421,6 +424,7 @@ Let's create a window treatment solution that elevates your home.
                 display: block;
                 height: 100%;
                 width: 0%;
+                background: #000;
                 opacity: 1;
                 top: 0;
                 left: 0;
@@ -452,7 +456,7 @@ Let's create a window treatment solution that elevates your home.
             margin:0;
             /* 24px - 32px */
             padding: clamp(1.5rem, 3vw, 2rem);
-            background-color: var(--primaryLight);
+            background-color: var(--primaryLightSecondary);
             box-shadow: 0px 12px 80px 0px rgba(26, 26, 26, 0.08);
             /* prevents padding from affecting height and width */
             box-sizing: border-box;
@@ -551,7 +555,8 @@ Let's create a window treatment solution that elevates your home.
         .cs-background {
             height:87%;
             &:before {
-                background: linear-gradient(90deg, #111926 21.41%, rgba(17, 25, 38, 0.72) 34.98%, rgba(17, 25, 38, 0.00) 62.53%);
+                background: 
+                linear-gradient(118deg, #101010f5 0.41%, rgb(44 44 44 / 62%) 52.98%, rgb(0 0 0 / 9%) 72.53%);
                 opacity: 1;
             }
         }
@@ -584,6 +589,7 @@ Let's create a window treatment solution that elevates your home.
     }
 }
                                 
+                                
 /*-- -------------------------- -->
 <---       About Danny          -->
 <--- -------------------------- -*/
@@ -593,6 +599,7 @@ Let's create a window treatment solution that elevates your home.
     #sbs-2291 {
         padding: var(--sectionPadding);
         overflow: hidden;
+        background-color: var(--primaryLight);
 
         .cs-container {
             width: 100%;
@@ -630,7 +637,7 @@ Let's create a window treatment solution that elevates your home.
             margin: 0 0 (32/16rem);
             /* 24px - 32px */
             padding: clamp(1.5rem, 4vw, 2rem);
-            background-color: #fef5f4;
+            background-color: var(--primaryLightSecondary);
             border-left: (4/16rem) solid var(--secondary);
         }
 
@@ -686,7 +693,7 @@ Let's create a window treatment solution that elevates your home.
             /* prevents padding from adding to the width */
             box-sizing: border-box;
             padding: 0 (24/16rem);
-            background-color: var(--primary);
+            background-color: var(--secondary);
             color: #1a1a1a;
             display: inline-block;
             position: relative;
@@ -751,7 +758,7 @@ Let's create a window treatment solution that elevates your home.
             box-sizing: border-box;
             /* 24px - 32px */
             padding: clamp(1.5rem, 3vw, 2rem);
-            background-color: var(--secondary);
+            background-color: var(--primaryLightSecondary);
             display: inline-flex;
             flex-direction: column;
             justify-content: center;
@@ -1068,6 +1075,7 @@ Let's create a window treatment solution that elevates your home.
     #sbsr-2289 {
         padding: var(--sectionPadding);
         overflow: hidden;
+        background-color: var(--primaryLight);
 
         .cs-container {
             width: 100%;
@@ -1105,7 +1113,7 @@ Let's create a window treatment solution that elevates your home.
             margin: 0 0 (32/16rem);
             /* 24px - 32px */
             padding: clamp(1.5rem, 4vw, 2rem);
-            background-color: var(--primaryLight);
+            background-color: var(--primaryLightSecondary);
             border-left: (4/16rem) solid var(--secondary);
         }
 
@@ -1319,7 +1327,7 @@ Let's create a window treatment solution that elevates your home.
 @media only screen and (min-width: 0rem) {
     #reviews-245 {
         padding: var(--sectionPadding);
-        background: var(--primaryLight);
+        background: var(--primary);
 
         .cs-container {
             width: 100%;
@@ -1371,7 +1379,7 @@ Let's create a window treatment solution that elevates your home.
             box-sizing: border-box;
             box-shadow: 0px 20px 39px 0px rgba(0, 0, 0, 0.05);
             border-radius: (4/16rem);
-            background: var(--primaryLight);
+            background: var(--primaryLightSecondary);
             position: relative;
             display: flex;
             justify-content: space-between;
