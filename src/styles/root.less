@@ -13,9 +13,10 @@
     --secondary: #ffbf00;
     --secondaryLight: #001f3f;
     --headerColor: #ffffff;
-    --bodyTextColor: #ffffff;
+    --bodyTextColor: #a7a7a7;
     --bodyTextColorWhite: #fafbfc;
     --svgIconFilter: brightness(0) invert(1);
+    --cardShadows: #3400de;
     /* 13px - 16px */
     --topperFontSize: clamp(0.8125rem, 1.6vw, 1rem);
     /* 31px - 49px */
@@ -34,9 +35,6 @@
     letter-spacing: 0.1em;
     color: var(--secondary);
     display: block;
-  }
-  .cs-wrapper {
-    background-color: var(--secondary);
   }
   .cs-logo {
     filter: var(--svgIconFilter);
@@ -77,8 +75,8 @@
     padding: 0 (30/16rem);
 
     // Transition Properties
-    color: #000;
-    background-color: var(--primary);
+    color: var(--primary);
+    background-color: var(--secondary);
     display: inline-block;
     position: relative;
     z-index: 1;
@@ -98,7 +96,7 @@
       //Transition properties
       width: 0;
       height: 100%;
-      background-color: #000;
+      background-color: var(--secondary);
       opacity: 1;
       display: block;
       position: absolute;
