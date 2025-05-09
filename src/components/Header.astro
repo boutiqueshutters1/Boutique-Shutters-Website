@@ -35,8 +35,8 @@ import { Icon } from 'astro-icon/components';
     </div>
     <div class="cs-container">
         <!--Nav Logo-->
-        <a href="" class="cs-logo" aria-label="back to home">
-            <img src="/assets/images/logo.svg" alt="logo" width="197" height="43" aria-hidden="true" decoding="async">
+        <a href="/" class="cs-logo" aria-label="back to home">
+            <img src="/assets/svgs/main-logo.svg" alt="logo" width="197" height="43" aria-hidden="true" decoding="async">
         </a>
         <!--Navigation List-->
         <nav class="cs-nav" role="navigation">
@@ -56,9 +56,7 @@ import { Icon } from 'astro-icon/components';
                       class:list={[
                         "cs-li",
                         { "cs-dropdown": entry.children?.length > 0 },
-                      ]}
-                      
-                    >
+                      ]}>
                       {entry.children?.length > 0 ? (
                         // If entry has children in navData.json, create a button and a dropdown icon
                         <button
@@ -836,6 +834,7 @@ html {
                 height: 100%;
                 /* ensures the image never overflows the container. It stays contained within it's width and height and expands to fill it then stops once it reaches an edge */
                 object-fit: contain;
+                filter: brightness(0) invert(1);
             }
         }
 
