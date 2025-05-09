@@ -1,0 +1,531 @@
+---
+const { city, state } = Astro.props
+---
+
+<!-- ============================================ -->
+<!--                 Content Page                 -->
+<!-- ============================================ -->
+
+<!-- ============================================ 
+    This Stitch is used for content heavy interior pages
+    that have no design or layout.  Often times these are 
+    content silos where you talk extensively about a topic
+    to educate your visitors and rank on Google for the 
+    content.  These are great for pages that have a TON
+    of content.  Design isn't important here, it's all 
+    about making the content accessible and easy to read.
+================================================= -->
+
+<section id="content-page-1401">
+    <div class="cs-container">
+        <div class="cs-image-group">
+            <div class="cs-flex">
+                <picture class="cs-background">
+                    <!--Mobile Image-->
+                    <source media="(max-width: 600px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/on-computer2.jpg">
+                    <!--Tablet and above Image-->
+                    <source media="(min-width: 601px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/on-computer2.jpg">
+                    <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/on-computer2.jpg" alt="people" width="542" height="728">
+                </picture>
+                <div class="cs-box">
+                    <img class="cs-box-icon" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/gear-white.svg" alt="quality icon" width="60" height="60">
+                    <span class="cs-desc">
+                        Serving {city} Homeowners Since 2010
+                    </span>
+                </div>
+            </div>
+            <ul class="cs-card-group">
+                <li class="cs-item">
+                    <h3 class="cs-h3">
+                        <img class="cs-h3-icon" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/trophy.svg" alt="icon" width="32" height="32">
+                        Premium Window Treatments
+                    </h3>
+                    <p class="cs-item-text">
+                        Our custom plantation shutters and premium window treatments are crafted with superior materials for lasting beauty and functionality.
+                    </p>
+                </li>
+                <li class="cs-item">
+                    <h3 class="cs-h3">
+                        <img class="cs-h3-icon" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/circle-check.svg" alt="icon" width="32" height="32">
+                        Expert Installation
+                    </h3>
+                    <p class="cs-item-text">
+                        Our professional {city} installers ensure perfect fit and function with meticulous attention to detail on every project.
+                    </p>
+                </li>
+            </ul>
+        </div>
+        <div class="cs-content">
+            <h1 class="cs-title">Custom Window Treatments in <span class="cs-color">{city}, {state}</span></h1>
+            
+            <p>
+                Boutique Shutters brings elegance and functionality to {city} homes with our premium selection of custom window treatments. As the area's trusted local experts, we specialize in beautifully crafted plantation shutters, versatile window shades, and advanced motorized solutions that perfectly complement your home's architecture and your personal style.
+            </p>
+            
+            <h2>Elevate Your {city} Home with Custom Window Treatments</h2>
+            
+            <p>
+                Your windows deserve more than standard, off-the-shelf solutions. Our custom window treatments are designed to enhance your home's aesthetic while providing practical benefits like improved energy efficiency, precise light control, and increased privacy. From the classic elegance of plantation shutters to the modern convenience of motorized shades, we offer window covering solutions that transform your living spaces.
+            </p>
+            
+            <h3>Expert Window Treatment Services in {city}</h3>
+            
+            <p>
+                At Boutique Shutters, we pride ourselves on delivering exceptional quality and service to homeowners throughout {city}. Our process begins with a complimentary in-home consultation where our design experts help you select the perfect window treatments for your unique needs. We take precise measurements and handle every aspect of the installation process to ensure flawless results.
+            </p>
+            
+            <h3>Our Premium Window Treatment Solutions</h3>
+            
+            <ul>
+                <li>Custom plantation shutters crafted from premium hardwoods and composite materials</li>
+                <li>Versatile window shades in light-filtering, room-darkening, and blackout options</li>
+                <li>State-of-the-art motorized shade systems with smart home integration</li>
+                <li>Energy-efficient window treatments that help lower utility costs</li>
+                <li>Child-safe cordless options for enhanced safety</li>
+            </ul>
+            
+            <h3>Why {city} Homeowners Choose Boutique Shutters</h3>
+            
+            <p>
+                Homeowners in {city} trust Boutique Shutters for our commitment to quality, expertise, and personalized service. From elegant homes in established neighborhoods to modern new constructions, we enhance properties of all styles with custom window treatments that perfectly balance beauty and functionality. Our dedicated team ensures a seamless experience from selection through installation.
+            </p>
+            
+            <h4>Schedule Your Free In-Home Consultation</h4>
+            
+            <p>
+                Transform your {city} home with custom window treatments designed to enhance your comfort and style. Contact Boutique Shutters today to schedule your complimentary in-home consultation with our window treatment experts. We proudly serve homeowners throughout {city} and surrounding communities with premium shutters, shades, and motorized systems backed by our satisfaction guarantee.
+            </p>
+        </div>
+    </div>
+    <div class="cs-bubbles" aria-hidden="true"></div>
+</section>
+                                
+<style lang="less">
+
+/*-- -------------------------- -->
+<---        Content Page        -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    @keyframes floatAnimation {
+        0% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-2rem);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes floatAnimation2 {
+        0% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-3rem);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    #content-page-1401 {
+        padding: var(--sectionPadding);
+        background-color: #fff;
+        /* clips the wave background from causing overflow issues when it goes off screen */
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+
+        .cs-container {
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* 40px - 64px */
+            gap: clamp(2.5rem, 4vw, 4rem);
+            position: relative;
+        }
+        .cs-title {
+            color:black
+        }
+        .cs-content {
+            /* set text align to left if content needs to be left aligned */
+            text-align: left;
+            width: 100%;
+            max-width: (738/16rem);
+            display: flex;
+            flex-direction: column;
+            /* centers content horizontally, set to flex-start to left align */
+            align-items: flex-start;
+        }
+
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: 700;
+            text-align: inherit;
+            margin: 0 0 (16/16rem) 0;
+            color: var(--headerColor);
+        }
+
+        h2 {
+            font-size: (32/16rem);
+            margin-top: (32/16rem);
+        }
+
+        h3 {
+            font-size: (24/16rem);
+            color: var(--primary);
+        }
+
+        h4,
+        h5,
+        h6 {
+            font-size: (20/16rem);
+        }
+
+        .cs-button-solid {
+            margin-bottom: (32/16rem);
+        }
+
+        .cs-no-margin {
+            margin: 0;
+        }
+
+        .cs-color {
+            color: var(--primary);
+        }
+
+        p {
+            font-size: var(--bodyFontSize);
+            line-height: 1.5em;
+            text-align: inherit;
+            width: 100%;
+            margin: 0 0 (16/16rem) 0;
+            color: var(--bodyTextColor);
+            &:last-of-type {
+                margin-bottom: (32/16rem);
+            }
+
+            a {
+                font-size: inherit;
+                line-height: inherit;
+                text-decoration: underline;
+                color: var(--primary);
+                filter: brightness(120%);
+            }
+        }
+
+        ol,
+        ul {
+            padding-left: (24/16rem);
+            margin: 0 0 (32/16rem) 0;
+            color: var(--bodyTextColor);
+            display: flex;
+            flex-direction: column;
+            gap: (16/16rem);
+        }
+
+        ul {
+            li {
+                list-style: none;
+                color: inherit;
+                position: relative;
+
+                &:before {
+                    /* custom list bullet */
+                    content: "";
+                    width: 3px;
+                    height: 3px;
+                    background: currentColor;
+                    opacity: 1;
+                    border-radius: 50%;
+                    position: absolute;
+                    display: block;
+                    top: (10/16rem);
+                    left: (-12/16rem);
+                }
+            }
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .cs-image-group {
+            width: 100%;
+            display: none;
+            flex-direction: column;
+            /* 16px - 20px */
+            gap: clamp(1rem, 2.6vw, 1.25rem);
+            position: relative;
+        }
+
+        .cs-flex {
+            position: relative;
+        }
+
+        .cs-background {
+            width: 100%;
+            height: 100%;
+            /* 32px - 48px */
+            border-radius: clamp(2rem, 4vw, 3rem);
+            /* clips the corners of the children around the border radius */
+            overflow: hidden;
+            /* makes it cover the parent dimensions */
+            object-fit: cover;
+            display: block;
+
+            img {
+                width: 100%;
+                height: 100%;
+                /* makes it cover the parent like a backgorund image */
+                object-fit: cover;
+                display: block;
+            }
+        }
+
+        .cs-box {
+            text-align: left;
+            width: 100%;
+            max-width: (200/16rem);
+            padding: (32/16rem);
+            /* prevents padding from affecting height and width */
+            box-sizing: border-box;
+            background-color: var(--primary);
+            /* 48px - 80px */
+            border-radius: (32/16rem);
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: (24/16rem);
+            position: absolute;
+            /* 12px - 20px */
+            right: clamp(0.75rem, 1.9vw, 1.5rem);
+            /* 12px - 20px */
+            bottom: clamp(0.75rem, 1.9vw, 1.5rem);
+        }
+
+        .cs-box-icon {
+            width: (60/16rem);
+            height: auto;
+            display: block;
+        }
+
+        .cs-desc {
+            font-size: (20/16rem);
+            line-height: 1.2em;
+            text-align: inherit;
+            font-weight: 700;
+            width: 100%;
+            margin: 0;
+            color: var(--bodyTextColorWhite);
+        }
+
+        .cs-card-group {
+            width: 100%;
+            max-width: (630/16rem);
+            margin: 0 0 (24/16rem) 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(15.265rem, 1fr));
+            align-items: center;
+            gap: clamp(1rem, 2vw, 1.25rem);
+        }
+
+        .cs-item {
+            list-style: none;
+            /* 16px - 24px */
+            padding: clamp(1rem, 3vw, 1.5rem);
+            /* prevents padding from affecting height and width */
+            box-sizing: border-box;
+            background-color: #f7f7f7;
+            border-radius: (16/16rem);
+            border: 1px solid #e8e8e8;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: (12/16rem);
+
+            &:before {
+                display: none;
+            }
+        }
+
+        .cs-h3 {
+            font-size: (20/16rem);
+            line-height: 1.2em;
+            font-weight: 700;
+            margin: 0;
+            color: var(--headerColor);
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: (8/16rem);
+        }
+
+        .cs-h3-icon {
+            width: (32/16rem);
+            height: auto;
+            display: block;
+        }
+
+        .cs-item-text {
+            font-size: (14/16rem);
+            line-height: 1.5em;
+            margin: 0;
+            color: var(--bodyTextColor);
+
+            &:last-of-type {
+                margin: 0;
+            }
+        }
+
+        .cs-ul {
+            width: 100%;
+            margin: 0 0 (24/16rem) 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: (12/16rem);
+        }
+
+        .cs-li {
+            font-size: var(--bodyFontSize);
+            list-style: none;
+            line-height: 1.5em;
+            width: 100%;
+            color: var(--bodyTextColor);
+            display: flex;
+            justify-content: flex-start;
+            /* push icon top the top so if the list item goes to two lines the icon stays at the top */
+            align-items: flex-start;
+            gap: (8/16rem);
+        }
+
+        .cs-icon {
+            width: (24/16rem);
+            height: auto;
+            /* adds extra space between the icon and top of parent so it's more centered */
+            margin-top: 1px;
+            display: block;
+        }
+
+        .cs-bubbles {
+            font-size: ~"min(2.5vw, .7em)";
+            width: (582/16em);
+            height: (557/16em);
+            display: none;
+            position: absolute;
+            /* changes to auto at larger desktop */
+            right: (-260/16em);
+            /* changes to -220px at large desktop */
+            bottom: (-50/16em);
+            z-index: -1;
+
+            &:before {
+                /* white border bubble */
+                content: "";
+                width: (464/16em);
+                height: (464/16em);
+                background: transparent;
+                border: 1px solid #1a1a1a;
+                border-radius: 50%;
+                opacity: 1;
+                position: absolute;
+                display: block;
+                top: 0;
+                right: 0;
+                animation-name: floatAnimation;
+                animation-duration: 5s;
+                animation-timing-function: ease-in-out;
+                animation-fill-mode: forwards;
+                animation-iteration-count: infinite;
+            }
+
+            &:after {
+                /* orange bubble */
+                content: "";
+                width: (366/16em);
+                height: (366/16em);
+                background: var(--primary);
+                opacity: 0.15;
+                border-radius: 50%;
+                display: block;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                z-index: -1;
+                animation-name: floatAnimation2;
+                animation-duration: 14s;
+                animation-timing-function: ease-in-out;
+                animation-fill-mode: forwards;
+                animation-iteration-count: infinite;
+            }
+        }
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #content-page-1401 {
+        .cs-container {
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .cs-content {
+            width: 50%;
+            max-width: (674/16rem);
+            /* prevents flexbox from squishing it */
+            flex: none;
+        }
+
+        .cs-image-group {
+            width: 44%;
+            max-width: (542/16rem);
+            display: flex;
+            /* sends it to the right in the 2nd position */
+            order: 2;
+        }
+    }
+}
+
+/* Desktop - 1200px */
+@media only screen and (min-width: 75rem) {
+    #content-page-1401 {
+        .cs-content {
+            width: 53%;
+        }
+
+        .cs-image-group {
+            width: 43%;
+        }
+
+        .cs-box {
+            display: flex;
+        }
+
+        .cs-bubbles {
+            font-size: 1em;
+            margin-left: (600/16rem);
+            display: block;
+            right: auto;
+            left: 50%;
+            bottom: (-220/16rem);
+        }
+    }
+}               
+</style>

@@ -510,7 +510,7 @@ html {
                 }
 
                 .cs-drop-link {
-                    opacity: 1;
+                    opacity: 1;             
                 }
             }
 
@@ -526,7 +526,7 @@ html {
             position: absolute;
             top: 50%;
             right: (-20/16rem);
-            transform: translateY(-50%);
+            transform: rotate(180deg); // Add this line to rotate the icon
         }
         .cs-dropdown-button {
             background-color: transparent;
@@ -592,6 +592,8 @@ html {
         .cs-drop-icon {
             width: (15/16rem);
             height: auto;
+            transform: rotate(180deg); // Add this line to rotate the icon
+
             display: inline-block;
         }
         .cs-dropdown-button {
