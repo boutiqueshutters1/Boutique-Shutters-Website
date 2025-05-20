@@ -34,6 +34,44 @@ const optimizedImage = await getOptimizedImage(landingImage)
         <img decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/mechanic-20.jpg" alt="mechanic" width="1280" height="568" aria-hidden="true">
     </picture>
 </div>
+
+<!-- ============================================ -->
+<!--                 Customn Blinds               -->
+<!-- ============================================ -->
+
+<section id="sbsr-2289">
+    <div class="cs-container">
+        <!-- Left Content Section-->
+        <div class="cs-content">
+            <span class="cs-topper">Smart Home Integration for Modern Living</span>
+            <h2 class="cs-title">Voice-Controlled Motorized Window Treatments</h2>
+            <p class="cs-text">
+                Our motorized window treatments integrate seamlessly with the smart home systems you already use and trust. Whether you prefer Amazon Alexa, Google Home, or both platforms in different areas of your Suwanee or Johns Creek residence, our solutions provide consistent, reliable performance across your entire smart home ecosystem.
+            </p>
+            <div class="cs-features">
+                <h3 class="cs-h3">Smart Features:</h3>
+                <ul class="cs-ul">
+                    <li class="cs-li">Expert Installation & Programming</li>
+                    <li class="cs-li">Enhanced Accessibility & Convenience</li>
+                    <li class="cs-li">Voice-Activated & App Control</li>
+                    <li class="cs-li">Full Smart Home Integration</li>
+                </ul>
+            </div>
+            <a href="https://calendar.app.google/7mPzbQwFKEmmRWCR7" class="cs-button-solid">Free Consultation</a>
+        </div>
+        <!-- Right Image Section -->
+        <div class="cs-image-group">
+            <!--Floating Box-->
+            <!--Image-->
+            <picture class="cs-picture">
+                <source media="(max-width: 600px)" srcset="/assets/images/zebra-shades.webp">
+                <source media="(min-width: 601px)" srcset="/assets/images/zebra-shades.webp">
+                <img loading="lazy" decoding="async" src="/assets/images/zebra-shades.webp" alt="meeting" width="630" height="630" aria-hidden="true">
+            </picture>
+        </div>
+    </div>
+</section>
+
 </BaseLayout>
 
 
@@ -166,5 +204,258 @@ const optimizedImage = await getOptimizedImage(landingImage)
     }
 }
 
-                                
+/*-- -------------------------- -->
+<---       Customn Blinds       -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #sbsr-2289 {
+        padding: var(--sectionPadding);
+        overflow: hidden;
+        background-color: var(--primaryLight);
+
+        .cs-container {
+            width: 100%;
+            /* changes to 1280px at desktop */
+            max-width: (584/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: (48/16rem);
+        }
+
+        .cs-content {
+            /* set text align to left if content needs to be left aligned */
+            text-align: left;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            /* centers content horizontally, set to flex-start to left align */
+            align-items: flex-start;
+            position: relative;
+            z-index: 10;
+        }
+
+        .cs-text {
+            margin-bottom: (16/16rem);
+            &:last-of-type {
+                margin-bottom: (32/16rem);
+            }
+        }
+
+        .cs-features {
+            width: 100%;
+            margin: 0 0 (32/16rem);
+            /* 24px - 32px */
+            padding: clamp(1.5rem, 4vw, 2rem);
+            background-color: var(--primaryLightSecondary);
+            border-left: (4/16rem) solid var(--secondary);
+        }
+
+        .cs-h3 {
+            font-size: (16/16rem);
+            font-weight: 700;
+            line-height: 1.5em;
+            margin: 0 0 (12/16rem);
+            color: var(--bodyTextColorWhite);
+        }
+
+        .cs-ul {
+            font-size: (12/16rem);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: (12/16rem);
+        }
+
+        .cs-li {
+            font-size: (16/16rem);
+            line-height: 1.5em;
+            list-style: none;
+            /* 20px - 24px */
+            padding-left: clamp(1.25rem, 3vw, 1.5rem);
+            color: var(--bodyTextColor);
+            position: relative;
+
+            &::before {
+                content: "";
+                width: (8/16rem);
+                height: (8/16rem);
+                margin-top: (8/16rem);
+                background-color: var(--secondary);
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                transform: rotate(45deg);
+            }
+        }
+
+        .cs-button-solid {
+            font-size: (16/16rem);
+            font-weight: 700;
+            /* 46px - 56px */
+            line-height: clamp(2.875rem, 5.5vw, 3.5rem);
+            text-align: center;
+            text-decoration: none;
+            min-width: (150/16rem);
+            margin: 0;
+            /* prevents padding from adding to the width */
+            box-sizing: border-box;
+            padding: 0 (24/16rem);
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s;
+
+            &:before {
+                content: "";
+                width: 0%;
+                height: 100%;
+                background: #000;
+                opacity: 1;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                transition: width 0.3s;
+            }
+
+            &:hover {
+                color: #fff;
+                &:before {
+                    width: 100%;
+                }
+            }
+        }
+
+        .cs-image-group {
+            width: 100%;
+            height: 126vw;
+            max-height: (626/16rem);
+            display: block;
+            order: -1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cs-picture {
+            /* big background image */
+            width: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: (95/16rem);
+            left: 0;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        }
+
+        .cs-box {
+            text-align: left;
+            width: 91%;
+            max-width: (450/16rem);
+            /* prevents padding and border from affecting height and width */
+            box-sizing: border-box;
+            /* 24px - 32px */
+            padding: clamp(1.5rem, 3vw, 2rem);
+            background-color: #fffcf3;
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            column-gap: (24/16rem);
+            row-gap: (8/16rem);
+            position: absolute;
+            right: 50%;
+            bottom: 0;
+            z-index: 10;
+            transform: translate(50%);
+        }
+
+        .cs-number {
+            /* 31px - 49px */
+            font-size: clamp(1.9375rem, 4vw, 3.0625rem);
+            font-weight: 700;
+            line-height: 1.2em;
+            text-transform: uppercase;
+            margin: 0;
+            color: var(--General-Secondary, #ffc219);
+        }
+
+        .cs-heading {
+            font-size: (20/16rem);
+            font-weight: 700;
+            line-height: 1.2em;
+            margin: 0 0 (8/16rem);
+            color: var(--headerColor);
+        }
+
+        .cs-desc {
+            font-size: (16/16rem);
+            line-height: 1.5em;
+            color: var(--bodyTextColorWhite);
+        }
+
+        .cs-graphic {
+            width: 150%;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+        }
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #sbsr-2289 {
+        .cs-box {
+            flex-direction: row;
+            align-items: center;
+        }
+    }
+}
+
+/* Desktop - 1024px */
+@media only screen and (min-width: 64rem) {
+    #sbsr-2289 {
+        .cs-container {
+            max-width: (1280/16rem);
+            flex-direction: row;
+            align-items: stretch;
+            gap: (20/16rem);
+        }
+
+        .cs-content {
+            padding-right: (52/16rem);
+            padding-bottom: (108/16rem);
+        }
+
+        .cs-image-group {
+            height: auto;
+            min-height: (642/16rem);
+            max-height: 100%;
+            order: initial;
+        }
+
+        .cs-picture {
+            bottom: (64/16rem);
+        }
+    }
+} 
+
 </style>
