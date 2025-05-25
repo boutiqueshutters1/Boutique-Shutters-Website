@@ -22,13 +22,12 @@ const { city, state } = Astro.props
             <div class="cs-flex">
                 <picture class="cs-background">
                     <!--Mobile Image-->
-                    <source media="(max-width: 600px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/on-computer2.jpg">
+                    <source media="(max-width: 600px)" srcset="/assets/images/zebra-shades/whitezebrashades.webp">
                     <!--Tablet and above Image-->
-                    <source media="(min-width: 601px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/on-computer2.jpg">
-                    <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/on-computer2.jpg" alt="people" width="542" height="728">
+                    <source media="(min-width: 601px)" srcset="/assets/images/zebra-shades/whitezebrashades.webp">
+                    <img loading="lazy" decoding="async" src="/assets/images/zebra-shades/whitezebrashades.webp" alt="people" width="542" height="728">
                 </picture>
                 <div class="cs-box">
-                    <img class="cs-box-icon" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/gear-white.svg" alt="quality icon" width="60" height="60">
                     <span class="cs-desc">
                         Serving {city} Homeowners
                     </span>
@@ -97,7 +96,6 @@ const { city, state } = Astro.props
             </p>
         </div>
     </div>
-    <div class="cs-bubbles" aria-hidden="true"></div>
 </section>
                                 
 <style lang="less">
