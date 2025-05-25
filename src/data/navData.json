@@ -24,6 +24,11 @@
     "url": "/motorized/",
     "children": []
   },
+    {
+    "key": "Exterior Shades",
+    "url": "/exterior-shades/",
+    "children": []
+  },
   {
     "key": "Locations",
     "url": "/locations/",
