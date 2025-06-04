@@ -122,7 +122,7 @@ const { city, state } = Astro.props
 
     #content-page-1401 {
         padding: var(--sectionPadding);
-        background-color: #fff;
+        /*background-color: #fff;*/
         /* clips the wave background from causing overflow issues when it goes off screen */
         overflow: hidden;
         position: relative;
@@ -140,7 +140,7 @@ const { city, state } = Astro.props
             position: relative;
         }
         .cs-title {
-            color:black
+            /*color:black*/
         }
         .cs-content {
             /* set text align to left if content needs to be left aligned */
@@ -161,7 +161,7 @@ const { city, state } = Astro.props
             font-weight: 700;
             text-align: inherit;
             margin: 0 0 (16/16rem) 0;
-            color: var(--headerColor);
+            /*color: var(--headerColor);*/
         }
 
         h2 {
@@ -171,7 +171,7 @@ const { city, state } = Astro.props
 
         h3 {
             font-size: (24/16rem);
-            color: var(--primary);
+            /*color: var(--primary);*/
         }
 
         h4,
@@ -189,7 +189,7 @@ const { city, state } = Astro.props
         }
 
         .cs-color {
-            color: var(--primary);
+            /*color: var(--primary);*/
         }
 
         p {
@@ -198,7 +198,7 @@ const { city, state } = Astro.props
             text-align: inherit;
             width: 100%;
             margin: 0 0 (16/16rem) 0;
-            color: var(--bodyTextColor);
+            /*color: var(--bodyTextColor);*/
             &:last-of-type {
                 margin-bottom: (32/16rem);
             }
@@ -207,7 +207,7 @@ const { city, state } = Astro.props
                 font-size: inherit;
                 line-height: inherit;
                 text-decoration: underline;
-                color: var(--primary);
+                /*color: var(--primary);*/
                 filter: brightness(120%);
             }
         }
@@ -216,7 +216,7 @@ const { city, state } = Astro.props
         ul {
             padding-left: (24/16rem);
             margin: 0 0 (32/16rem) 0;
-            color: var(--bodyTextColor);
+            /*color: var(--bodyTextColor);*/
             display: flex;
             flex-direction: column;
             gap: (16/16rem);
@@ -233,7 +233,7 @@ const { city, state } = Astro.props
                     content: "";
                     width: 3px;
                     height: 3px;
-                    background: currentColor;
+                    /*background: currentColor;*/
                     opacity: 1;
                     border-radius: 50%;
                     position: absolute;
@@ -290,7 +290,7 @@ const { city, state } = Astro.props
             padding: (32/16rem);
             /* prevents padding from affecting height and width */
             box-sizing: border-box;
-            background-color: var(--primary);
+            /*background-color: var(--primary);*/
             /* 48px - 80px */
             border-radius: (32/16rem);
             display: none;
@@ -317,7 +317,7 @@ const { city, state } = Astro.props
             font-weight: 700;
             width: 100%;
             margin: 0;
-            color: var(--bodyTextColorWhite);
+            /*color: var(--bodyTextColorWhite);*/
         }
 
         .cs-card-group {
@@ -337,9 +337,9 @@ const { city, state } = Astro.props
             padding: clamp(1rem, 3vw, 1.5rem);
             /* prevents padding from affecting height and width */
             box-sizing: border-box;
-            background-color: #f7f7f7;
+            /*background-color: #f7f7f7;*/
             border-radius: (16/16rem);
-            border: 1px solid #e8e8e8;
+            /*border: 1px solid #e8e8e8;*/
             display: flex;
             flex-direction: column;
             align-items: flex-start;
@@ -355,7 +355,7 @@ const { city, state } = Astro.props
             line-height: 1.2em;
             font-weight: 700;
             margin: 0;
-            color: var(--headerColor);
+            /*color: var(--headerColor);*/
             display: flex;
             justify-content: flex-start;
             align-items: center;
@@ -372,7 +372,7 @@ const { city, state } = Astro.props
             font-size: (14/16rem);
             line-height: 1.5em;
             margin: 0;
-            color: var(--bodyTextColor);
+            /*color: var(--bodyTextColor);*/
 
             &:last-of-type {
                 margin: 0;
@@ -394,7 +394,7 @@ const { city, state } = Astro.props
             list-style: none;
             line-height: 1.5em;
             width: 100%;
-            color: var(--bodyTextColor);
+            /*color: var(--bodyTextColor);*/
             display: flex;
             justify-content: flex-start;
             /* push icon top the top so if the list item goes to two lines the icon stays at the top */
@@ -427,8 +427,8 @@ const { city, state } = Astro.props
                 content: "";
                 width: (464/16em);
                 height: (464/16em);
-                background: transparent;
-                border: 1px solid #1a1a1a;
+                /*background: transparent;*/
+                /*border: 1px solid #1a1a1a;*/
                 border-radius: 50%;
                 opacity: 1;
                 position: absolute;
@@ -447,7 +447,7 @@ const { city, state } = Astro.props
                 content: "";
                 width: (366/16em);
                 height: (366/16em);
-                background: var(--primary);
+                /*background: var(--primary);*/
                 opacity: 0.15;
                 border-radius: 50%;
                 display: block;
