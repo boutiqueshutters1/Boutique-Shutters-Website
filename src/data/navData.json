@@ -9,14 +9,14 @@
     "url": "/about/",
     "children": []
   },
-  {
-    "key": "Zebra Shades",
-    "url": "/shades/",
+    {
+    "key": "Shutters",
+    "url": "/shutters/",
     "children": []
   },
   {
-    "key": "Shutters",
-    "url": "/shutters/",
+    "key": "Zebra Shades",
+    "url": "/shades/",
     "children": []
   },
   {
