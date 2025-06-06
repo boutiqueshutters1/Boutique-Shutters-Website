@@ -1,7 +1,82 @@
 [
   {
-    "key": "",
+    "key": "Home",
     "url": "/",
     "children": []
+  },
+  {
+    "key": "About",
+    "url": "/about/",
+    "children": []
+  },
+  {
+    "key": "Zebra Shades",
+    "url": "/shades/",
+    "children": []
+  },
+  {
+    "key": "Shutters",
+    "url": "/shutters/",
+    "children": []
+  },
+  {
+    "key": "Motorized Shades",
+    "url": "/motorized/",
+    "children": []
+  },
+    {
+    "key": "Exterior Shades",
+    "url": "/exterior-shades/",
+    "children": []
+  },
+  {
+    "key": "Locations",
+    "url": "/locations/",
+    "children": [
+      {
+        "key": "Alpharetta",
+        "url": "/locations/alpharetta/"
+      },
+      {
+        "key": "Auburn",
+        "url": "/locations/auburn/"
+      },
+      {
+        "key": "Buford",
+        "url": "/locations/buford/"
+      },
+      {
+        "key": "Cumming",
+        "url": "/locations/cumming/"
+      },
+      {
+        "key": "Decature",
+        "url": "/locations/decature/"
+      },
+      {
+        "key": "Duluth",
+        "url": "/locations/duluth/"
+      },
+      {
+        "key": "Lawrenceville",
+        "url": "/locations/lawrenceville/"
+      },
+      {
+        "key": "Marietta",
+        "url": "/locations/marietta/"
+      },
+      {
+        "key": "Roswell",
+        "url": "/locations/roswell/"
+      },
+      {
+        "key": "Snellville",
+        "url": "/locations/snellville/"
+      },
+      {
+        "key": "Suwanee",
+        "url": "/locations/suwanee/"
+      }
+    ]
   }
 ]

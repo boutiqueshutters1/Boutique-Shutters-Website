@@ -1,0 +1,598 @@
+---
+import BaseLayout from "src/layouts/BaseLayout.astro";
+import CTA from "@components/CTA.astro";
+
+// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
+import {getOptimizedImage} from "@js/utils"
+import landingImage from "@assets/images/landing.jpg" // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+const optimizedImage = await getOptimizedImage(landingImage)
+---
+
+<BaseLayout
+  title="Custom Plantation Shutters | Premium Window Treatments | Boutique Shutters"
+  description="Transform your home with handcrafted plantation shutters. Custom-fitted, energy-efficient window treatments with professional installation. Free consultations available."
+  preloadedImage = {optimizedImage}
+>
+<!-- ============================================ -->
+<!--                   Banner                     -->
+<!-- ============================================ -->
+
+<div id="banner-1106">
+    <div class="cs-container">
+        <span class="cs-int-title">Plantation Shutters</span>
+        <div class="cs-breadcrumbs">
+            <a href="/" class="cs-link">Home</a>
+            <a href="" class="cs-link cs-active">Plantation Shutters</a>
+        </div>
+    </div>
+    <!--Background Image-->
+    <picture class="cs-background">
+        <!--Mobile Image-->
+        <source media="(max-width: 600px)" srcset="/assets/images/shutters/plantation-shutters-1280x568-d.webp">
+        <!--Tablet and above Image-->
+        <source media="(min-width: 601px)" srcset="/assets/images/shutters/plantation-shutters-1280x568-d.webp">
+        <img decoding="async" src="/assets/images/shutters/plantation-shutters-1280x568-d.webp" alt="elegant custom plantation shutters in modern home" width="1280" height="568" aria-hidden="true">
+    </picture>
+</div>
+
+<!-- ============================================ -->
+<!--                Side By Side                  -->
+<!-- ============================================ -->
+
+<section id="sbs-1598">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">Timeless Elegance</span>
+            <h2 class="cs-title">Handcrafted Plantation Shutters for Every Home</h2>
+            <p class="cs-text">
+                Discover the perfect blend of sophistication and functionality with Boutique Shutters' custom plantation shutters. Each shutter is meticulously crafted to your exact window specifications, ensuring a flawless fit and years of reliable operation. Our premium materials and expert craftsmanship create window treatments that enhance your home's beauty while providing superior light control and privacy.
+            </p>
+            <p class="cs-text">
+                Available in a variety of louver sizes, paint finishes, and stain options, our plantation shutters complement any architectural style from traditional to contemporary. Experience the luxury of custom window treatments that increase your home's value while reducing energy costs through enhanced insulation.
+            </p>
+            <picture class="cs-picture cs-picture1">
+                <!--Mobile Image-->
+                <source media="(max-width: 600px)" srcset="/assets/images/shutters/shutters-1-608x406-d.webp">
+                <!--Tablet and above Image-->
+                <source media="(min-width: 601px)" srcset="/assets/images/shutters/shutters-1-608x406-d.webp">
+                <img loading="lazy" decoding="async" src="/assets/images/shutters/shutters-1-608x406-d.webp" alt="white plantation shutters in elegant bedroom setting" width="608" height="406">
+            </picture>
+        </div>
+        <div class="cs-stats-group">
+            <picture class="cs-picture cs-picture2">
+                <!--Mobile Image-->
+                <source media="(max-width: 600px)" srcset="/assets/images/shutters/plantationshutters-608x662-d.webp">
+                <!--Tablet and above Image-->
+                <source media="(min-width: 601px)" srcset="/assets/images/shutters/plantationshutters-608x662-d.webp">
+                <img loading="lazy" decoding="async" src="/assets/images/shutters/plantationshutters-608x662-d.webp" alt="custom fitted plantation shutters with adjustable louvers" width="608" height="662">
+            </picture>
+            <ul class="cs-stats">
+                <li class="cs-stat">
+                    <span class="cs-number">10+</span>
+                    <span class="cs-desc">Years plantation shutter expertise</span>
+                </li>
+                <li class="cs-stat">
+                    <span class="cs-number">100%</span>
+                    <span class="cs-desc">Custom measured installations</span>
+                </li>
+                <li class="cs-stat">
+                    <span class="cs-number">Lifetime</span>
+                    <span class="cs-desc">Warranty on craftsmanship</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!--            Side By Side Reverse              -->
+<!-- ============================================ -->
+
+<section id="sbsr-1599">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">Superior Craftsmanship</span>
+            <h2 class="cs-title">Why Choose Boutique Shutters for Your Home</h2>
+            <p class="cs-text">
+                At Boutique Shutters, we understand that plantation shutters are an investment in your home's beauty and functionality. Our commitment to excellence begins with premium materials sourced from trusted suppliers and extends through every step of our meticulous crafting process. Each shutter frame is precision-engineered for perfect alignment, while our reinforced louvers ensure smooth operation for decades to come.
+            </p>
+            <p class="cs-text">
+                Our certified installation team brings years of experience to every project, ensuring your custom shutters fit flawlessly and operate smoothly from day one. We handle complex window shapes, including arches, angles, and specialty configurations that other companies often avoid. The result is a stunning window treatment that perfectly complements your home's unique character.
+            </p>
+            <picture class="cs-picture cs-picture1">
+                <!--Mobile Image-->
+                <source media="(max-width: 600px)" srcset="/assets/images/shutters/shutters-2-398x400-m.webp">
+                <!--Tablet and above Image-->
+                <source media="(min-width: 601px)" srcset="/assets/images/shutters/shutters-2-608x406-d.webp">
+                <img loading="lazy" decoding="async" src="/assets/images/shutters/shutters-2-608x406-d.webp" alt="detailed view of plantation shutter construction and hardware" width="608" height="406">       
+            </picture>
+        </div>
+        <div class="cs-stats-group">
+            <picture class="cs-picture cs-picture2">
+                <!--Mobile Image-->
+                <source media="(max-width: 600px)" srcset="/assets/images/projects/shutter-project-5-398x477-m.webp">
+                <!--Tablet and above Image-->
+                <source media="(min-width: 601px)" srcset="/assets/images/projects/shutter-project-5-608x662-d.webp">
+                <img loading="lazy" decoding="async" src="/assets/images/projects/shutter-project-5-608x662-d.webp" alt="completed plantation shutter installation in luxury home" width="608" height="662">
+            </picture>
+            <ul class="cs-stats">
+                <li class="cs-stat">
+                    <span class="cs-number">500+</span>
+                    <span class="cs-desc">Satisfied homeowners</span>
+                </li>
+                <li class="cs-stat">
+                    <span class="cs-number">25%</span>
+                    <span class="cs-desc">Average energy savings</span>
+                </li>
+                <li class="cs-stat">
+                    <span class="cs-number">5-Star</span>
+                    <span class="cs-desc">Customer satisfaction rating</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+                                
+
+<CTA/>
+
+</BaseLayout>
+
+<style lang="less">
+
+/*-- -------------------------- -->
+<---          Banner            -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #banner-1106 {
+        padding: var(--sectionPadding);
+        padding-top: (250/16rem);
+        padding-bottom: (120/16rem);
+        /* clips the line from causing overflow issues for going off screen */
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+
+        .cs-container {
+            text-align: center;
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+            gap: (12/16rem);
+        }
+
+        .cs-int-title {
+            /* 39px - 61px */
+            font-size: clamp(2.4375rem, 6.4vw, 3.8125rem);
+            font-weight: 900;
+            line-height: 1.2em;
+            text-align: inherit;
+            margin: 0;
+            color: var(--bodyTextColorWhite);
+            position: relative;
+        }
+
+        .cs-breadcrumbs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cs-link {
+            font-size: (16/16rem);
+            line-height: 1.2em;
+            text-decoration: none;
+            color: var(--bodyTextColorWhite);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:last-of-type {
+                /* remove the chevron on the last list item */
+                &::after {
+                    display: none;
+                }
+            }
+
+            &:after {
+                /* chevron */
+                content: "";
+                width: (7/16rem);
+                height: (12/16rem);
+                margin: 0 (16/16rem);
+                background: url("https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/white-chev.svg");
+                background-size: contain;
+                background-position: center;
+                background-repeat: no-repeat;
+                position: relative;
+                display: block;
+            }
+
+            &.cs-active {
+                color: var(--secondary);
+            }
+        }
+
+        .cs-background {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+
+            &:before {
+                /* background color overlay */
+                content: "";
+                position: absolute;
+                display: block;
+                height: 100%;
+                width: 100%;
+                background: -moz-linear-gradient(
+                    left,
+                    rgba(26, 26, 26, 0.94) 0%,
+                    rgba(26, 26, 26, 0) 100%
+                ); /* FF3.6-15 */
+                background: -webkit-linear-gradient(
+                    left,
+                    rgba(26, 26, 26, 0.94) 0%,
+                    rgba(26, 26, 26, 0) 100%
+                ); /* Chrome10-25,Safari5.1-6 */
+                opacity: 1;
+                top: 0;
+                left: 0;
+                z-index: 1;
+            }
+
+            img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                /* Makes img tag act as a background image */
+                object-fit: cover;
+            }
+        }
+    }
+}
+
+/*-- -------------------------- -->
+<---        Side By Side        -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #sbs-1598 {
+        padding: var(--sectionPadding);
+        
+        .cs-container {
+            width: 100%;
+            /* changes to 1280px at tablet */
+            max-width: (584/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* 48px - 64px */
+            gap: clamp(3rem, 6vw, 4rem);
+        }
+
+        .cs-content {
+            /* set text align to left if content needs to be left aligned */
+            text-align: left;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            /* centers content horizontally, set to flex-start to left align */
+            align-items: flex-start;
+        }
+
+        .cs-text {
+            margin-bottom: (16/16rem);
+            &:last-of-type {
+                margin-bottom: (32/16rem);
+            }
+        }
+
+        .cs-picture {
+            width: 100%;
+            display: block;
+            position: relative;
+            z-index: 1;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        }
+
+        .cs-picture1 {
+            height: 95vw;
+            max-height: (400/16rem);
+        }
+
+        .cs-picture2 {
+            height: 111vw;
+            max-height: (500/16rem);
+        }
+
+        .cs-stats-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            /* 28px - 40px */
+            gap: clamp(1.75rem, 3vw, 2.5rem);
+        }
+
+        .cs-stats {
+            width: 100%;
+            max-width: (630/16rem);
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            row-gap: (24/16rem);
+            column-gap: (12/16rem);
+        }
+        
+        .cs-stat {
+            list-style: none;
+            margin: 0;
+            padding: 0 0 (24/16rem) 0;
+            /*border-bottom: 1px solid var(--primary);*/
+            /* making flex so we can align a heading with 1 line to the bottom */
+            display: flex;
+            grid-column: span 4;
+            flex-direction: column;
+            align-self: stretch;
+            align-content: space-between;
+        }
+    
+        .cs-number {
+            /* 31px - 39px */
+            font-size: clamp(1.9375rem, 3vw, 2.4375rem);
+            line-height: 1.2em;
+            font-weight: 700;
+            text-align: left;
+            /*color: var(--headerColor);*/
+            display: block;
+            margin: 0 0 (4/16rem) 0;
+        }
+    
+        .cs-desc {
+            font-size: (16/16rem);
+            line-height: 1.5em;
+            font-weight: 400;
+            text-align: left;
+            /* auto margin top will push text to bottom if there's only one line */
+            margin: 0;
+            /*color: var(--bodyTextColor);*/
+        }
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #sbs-1598 {
+        .cs-container {
+            max-width: (1280/16rem);
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: stretch;
+        }
+
+        .cs-picture1 {
+            /* 340px - 460px */
+            min-height: clamp(21.25rem, 35vw, 28.75rem);
+            height: 100%;
+            max-height: 100%;
+        }
+
+        .cs-picture2 {
+            /* 530px - 660px */
+            min-height: clamp(33.125rem, 45vw, 41.25rem);
+            height: 100%;
+            max-height: 100%;
+        }
+    }
+}
+
+/*-- -------------------------- -->
+<---   Side By Side Reverse     -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #sbsr-1599 {
+        padding: var(--sectionPadding);
+        
+        .cs-container {
+            width: 100%;
+            /* changes to 1280px at tablet */
+            max-width: (584/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* 48px - 64px */
+            gap: clamp(3rem, 6vw, 4rem);
+        }
+
+        .cs-content {
+            /* set text align to left if content needs to be left aligned */
+            text-align: left;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            /* centers content horizontally, set to flex-start to left align */
+            align-items: flex-start;
+        }
+    
+        .cs-topper {
+            font-size: var(--topperFontSize);
+            line-height: 1.2em;
+            text-transform: uppercase;
+            text-align: inherit;
+            letter-spacing: .1em;
+            font-weight: 700;
+            /*color: var(--primary);*/
+            margin-bottom: (4/16rem);
+            display: block;
+        }
+    
+        .cs-title {
+            font-size: var(--headerFontSize);
+            font-weight: 900;
+            line-height: 1.2em;
+            text-align: inherit;
+            max-width: (700/16rem);
+            margin: 0 0 (16/16rem) 0;
+            /*color: var(--headerColor);*/
+            position: relative;
+        }
+    
+        .cs-text {
+            font-size: var(--bodyFontSize);
+            line-height: 1.5em;
+            text-align: inherit;
+            width: 100%;
+            max-width: (650/16rem);
+            margin: 0;
+            /*color: var(--bodyTextColor);*/
+        }
+
+        .cs-text {
+            /* Override.  cs-topper cs-title and first cs-text should be removed and put into your global css sheet so it can control every instance of them on your site and is consistent. This selector is a section specific override that stays inside this stitch */
+            margin-bottom: (16/16rem);
+            &:last-of-type {
+                margin-bottom: (32/16rem);
+            }
+        }
+
+        .cs-picture {
+            width: 100%;
+            display: block;
+            position: relative;
+            z-index: 1;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        }
+
+        .cs-picture1 {
+            height: 95vw;
+            max-height: (400/16rem);
+        }
+
+        .cs-picture2 {
+            height: 111vw;
+            max-height: (500/16rem);
+        }
+
+        .cs-stats-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            /* 28px - 40px */
+            gap: clamp(1.75rem, 3vw, 2.5rem);
+        }
+
+        .cs-stats {
+            width: 100%;
+            max-width: (630/16rem);
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            row-gap: (24/16rem);
+            column-gap: (12/16rem);
+        }
+        
+        .cs-stat {
+            list-style: none;
+            margin: 0;
+            padding: 0 0 (24/16rem) 0;
+            /*border-bottom: 1px solid var(--primary);*/
+            /* making flex so we can align a heading with 1 line to the bottom */
+            display: flex;
+            grid-column: span 4;
+            flex-direction: column;
+            align-self: stretch;
+            align-content: space-between;
+        }
+    
+        .cs-number {
+            /* 31px - 39px */
+            font-size: clamp(1.9375rem, 3vw, 2.4375rem);
+            line-height: 1.2em;
+            font-weight: 700;
+            text-align: left;
+            /*color: var(--headerColor);*/
+            display: block;
+            margin: 0 0 (4/16rem) 0;
+        }
+    
+        .cs-desc {
+            font-size: (16/16rem);
+            line-height: 1.5em;
+            font-weight: 400;
+            text-align: left;
+            /* auto margin top will push text to bottom if there's only one line */
+            margin: 0;
+            /*color: var(--bodyTextColor);*/
+        }
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #sbsr-1599 {
+        .cs-container {
+            max-width: (1280/16rem);
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: stretch;
+        }
+
+        .cs-content {
+            /* sends it to the right in the 2nd position */
+            order: 2;
+        }
+
+        .cs-picture1 {
+            /* 340px - 460px */
+            min-height: clamp(21.25rem, 35vw, 28.75rem);
+            height: 100%;
+            max-height: 100%;
+        }
+
+        .cs-picture2 {
+            /* 530px - 660px */
+            min-height: clamp(33.125rem, 45vw, 41.25rem);
+            height: 100%;
+            max-height: 100%;
+        }
+    }
+}
+                                                               
+</style>

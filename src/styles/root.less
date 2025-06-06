@@ -16,8 +16,16 @@
     --headerColor: #000000c2;
     --bodyTextColor: #a7a7a7;
     --bodyTextColorWhite: #ffffff;
-    --svgIconFilter: brightness(0) invert(1);
+    //--svgIconFilter: brightness(0) invert(1);
     --cardShadows: #1c1c1c;
+    --csTopperColor: #cb8e00;
+    --csTitleColor: #000000;
+    --csTextColor: #959595;
+    --csHeadingColor: #000000;
+    --csContentColor: #000000;
+    --csStatsBgColor: #fbfbfb;
+    --csIconColors: #910b0b;
+    --csButtonColor: #cb8e00;
     /* 13px - 16px */
     --topperFontSize: clamp(0.8125rem, 1.6vw, 1rem);
     /* 31px - 49px */
@@ -34,14 +42,14 @@
     line-height: 1.2em;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--secondary);
+    color: var(--csTopperColor);
     display: block;
   }
   .cs-logo {
-    filter: var(--svgIconFilter);
+    color: var(--csIconColors);
   }
   .cs-icon {
-    filter: var(--svgIconFilter);
+    color: var(--csIconColors);
   }
   .cs-navigation {
     background-color: var(--primaryLight);
@@ -51,7 +59,7 @@
     font-weight: 900;
     line-height: 1.2em;
     margin: 0 auto (16/16rem);
-    color: var(--bodyTextColorWhite);
+    color: var(--csTitleColor);
     position: relative;
   }
 
@@ -60,7 +68,7 @@
     line-height: 1.5em;
     width: 100%;
     margin: 0 auto;
-    color: var(--bodyTextColor);
+    color: var(--csTextColor);
   }
 
   // Button - can be replaced using CodeStitch's "Button" Stitches
@@ -77,7 +85,7 @@
 
     // Transition Properties
     color: var(--primary);
-    background-color: var(--secondary);
+    background-color: var(--csButtonColor);
     display: inline-block;
     position: relative;
     z-index: 1;
@@ -217,19 +225,19 @@
 
 /* Reset Margins */
 @media only screen and (min-width: 1024px) {
-  body,
-  html {
-    margin: 0;
-    padding: 0;
-  }
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+    }
 }
 
 /* Scale full website with the viewport width */
-@media only screen and (min-width: 2000px) {
-  body,
-  html {
-    font-size: 0.85vw;
-  }
+@media only screen and (min-width: 3000px) {
+    body,
+    html {
+        font-size: 0.55vw;
+    }
 }
 
 

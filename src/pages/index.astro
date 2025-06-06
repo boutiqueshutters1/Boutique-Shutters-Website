@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import CTA from "@components/CTA.astro";
-
+import Projects from "@components/Projects.astro";
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import {getOptimizedImage} from "@js/utils"
 import landingImage from "@assets/images/landing.jpg" // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
@@ -9,99 +9,153 @@ const optimizedImage = await getOptimizedImage(landingImage)
 ---
 
 <BaseLayout
-  title="Custom Shutters, Blinds, Shades | Premium Window Treatments”"
-  description="Shop custom boutique shutters in Atlanta! Enhance your home with high-quality, stylish window shutters designed for durability and elegance. Get expert installation and personalized service from your local shutter specialists. Contact us today!"
+  title="Boutique Shutters | Custom Window Treatments in Buford & Metro Atlanta"
+  description="Elevate your home with premium shutters, shades & motorized window treatments in Suwanee, Johns Creek & Metro Atlanta. Free in-home design consultations."
   preloadedImage = {optimizedImage}
 >
+
 <!-- ============================================ -->
 <!--                    Hero                      -->
 <!-- ============================================ -->
 
-<section id="hero-1619">
-  <div class="cs-container">
-      <div class="cs-content">
-          <span class="cs-topper">
-            Custom Blinds, Shades, Shutters, Motorized         
-        </span>
-          <h1 class="cs-title">Atlanta's Premium Window Treatments</h1>
-          <a href="https://calendar.app.google/7mPzbQwFKEmmRWCR7" class="cs-button-solid">Free Consultation</a>
-      </div>
-      <ul class="cs-card-group">
-          <li class="cs-item">
-              <img class="cs-icon" loading="lazy" decoding="async" src="/assets/images/quality.svg" alt="icon" width="48" height="48">
-              <h2 class="cs-h3">Premium Materials</h2>
-              <p class="cs-item-text">
-                We select only the finest material for our shutters, ensuring exceptional durability and elegance for Atlanta homes. Every component meets strict quality standards to provide lasting beauty throughout Gwinnett County.          </li>
-          <li class="cs-item">
-              <img class="cs-icon" loading="lazy" decoding="async" src="/assets/images/installation.svg" alt="icon" width="48" height="48">
-              <h2 class="cs-h3">Quality Installation</h2>
-              <p class="cs-item-text">
-                Our skilled technicians deliver precise, careful installation in homes across Duluth, Suwanee, and Lawrenceville. We ensure perfect measurements and seamless mounting for shutters that enhance your home's value and appearance.          <li class="cs-item">
-              <img class="cs-icon" loading="lazy" decoding="async" src="/assets/images/custom.svg" alt="icon" width="48" height="48">
-              <h2 class="cs-h3">Completely Custom</h2>
-              <p class="cs-item-text">
-                Each shutter is crafted to your exact specifications, perfectly fitting unique windows in both historic and modern homes throughout Gwinnett County. Your custom treatments match your home's style while meeting all functional needs.          </li>
-          <li class="cs-item">
-              <img class="cs-icon" loading="lazy" decoding="async" src="/assets/images/professional.svg" alt="icon" width="48" height="48">
-              <h2 class="cs-h3">Expert Consultation</h2>
-              <p class="cs-item-text">
-                Our consultants visit your home to help select ideal materials and designs for your specific needs. We recommend energy-efficient solutions perfect for Atlanta's climate while ensuring you make confident decisions without pressure.              </p>
-          </li>
-      </ul>
-  </div>
+<section id="hero-1059">
+    <div class="cs-container">
+        <div class="cs-content">
+            <h1 class="cs-title">Premium Custom Window Treatments for Metro Atlanta Homes</h1>
+            <p class="cs-text">
+                Transform your home with expertly crafted plantation shutters, designer shades, and smart motorized window treatments. Serving Sugar Hill, Suwanee, Johns Creek, and surrounding areas with professional installation and lifetime warranties.
+            </p>
+            <a href="https://calendar.app.google/7mPzbQwFKEmmRWCR7" class="cs-button-solid">Schedule Consultation</a>
+        </div>
+    </div>
 
-  <!-- Background Image, there's a background image in the CSS for the parallax effect you'll need to change as well if you swap out our images -->
-  <picture class="cs-background">
-      <source media="(max-width: 600px)" srcset="/assets/images/home-hero-bg.webp">
-      <source media="(min-width: 601px)" srcset="/assets/images/home-hero-bg.webp">
-      <img decoding="async" src="/assets/images/home-hero-bg.webp" alt="meeting" width="2250" height="1500" aria-hidden="true">
-  </picture>
+    <!-- Background Image -->
+    <picture class="cs-background">
+        <source media="(max-width: 600px)" srcset="/assets/images/shutters/plantation-shutters-1800x860-d.webp">
+        <source media="(min-width: 601px)" srcset="/assets/images/shutters/plantation-shutters-1800x860-d.webp">
+        <img decoding="async" src="/assets/images/shutters/plantation-shutters-1800x860-d.webp" alt="custom plantation shutters in elegant living room" width="2250" height="1500" aria-hidden="true">
+    </picture>
+</section>
+                                
+<!-- ============================================ -->
+<!--                 Services                     -->
+<!-- ============================================ -->
+                                
+<section id="services-2349">
+    <ul class="cs-card-group">
+        <li class="cs-item">
+            <a href="" class="cs-link">
+                <!-- <img class="cs-icon" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/arch7.svg" alt="icon" width="24" height="24"> -->
+                <h2 class="cs-h2">Window Shutters</h2>
+                <p class="cs-item-text">
+                    Premium plantation shutters custom-crafted for any Sugar Hill home. Enhance style, control light, and improve energy efficiency.
+                </p>
+            </a>
+        </li>
+        <li class="cs-item">
+            <a href="" class="cs-link">
+                <!-- <img class="cs-icon" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/arch8.svg" alt="icon" width="24" height="24"> -->
+                <h2 class="cs-h2">Window Shades</h2>
+                <p class="cs-item-text">
+                    Versatile, designer window shades in hundreds of fabrics and opacities. Perfect light control for your home and offices.
+                </p>
+            </a>
+        </li>
+        <li class="cs-item">
+            <a href="" class="cs-link">
+                <!-- <img class="cs-icon" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/arch9.svg" alt="icon" width="24" height="24"> -->
+                <h2 class="cs-h2">Motorized Shades</h2>
+                <p class="cs-item-text">
+                    Smart home integration with convenient control via smartphone, remote, or voice command for Metro Atlanta homeowners.
+                </p>
+            </a>
+        </li>
+        <li class="cs-item">
+            <a href="" class="cs-link">
+                <!-- <img class="cs-icon" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/arch10.svg" alt="icon" width="24" height="24"> -->
+                <h2 class="cs-h2">Exterior Shades</h2>
+                <p class="cs-item-text">
+                    Durable, precision-crafted blinds in various styles and materials. Affordable elegance and high quality for your home.
+                </p>
+            </a>
+        </li>
+    </ul>
 </section>
 
 <!-- ============================================ -->
-<!--                 About Danny                  -->
+<!--             Side By Side Reverse             -->
 <!-- ============================================ -->
 
-<section id="sbs-2291">
+<section id="sbsr-2169">
     <div class="cs-container">
-        <!-- Left Content Section-->
         <div class="cs-content">
-            <span class="cs-topper">Commitment to Excellence</span>
-            <h2 class="cs-title">Meet You Window Treatment Expert</h2>
+            <span class="cs-topper">Welcome to Boutique Shutters</span>
+            <h2 class="cs-title">Elevate Your Home's Style with Custom Window Treatments</h2>
             <p class="cs-text">
-                I'm Danny Huynh, your window treatment expert in the Greater Atlanta Metro Area. My passion is transforming spaces through expertly crafted window treatments that blend aesthetic appeal with functionality.
-At Boutique Shutters, we curate high-quality shutters, shades, and blinds tailored to your unique style. We carefully select premium materials and deliver precision craftsmanship to exceed your expectations.
-Our team is dedicated to creating beautiful, functional spaces that reflect your individual needs. Every client receives exceptional attention and personalized solutions.
-Let's create a window treatment solution that elevates your home.          
+                For over a decade, Boutique Shutters has been Metro Atlanta's premier destination for luxury window treatments. We specialize in creating custom solutions that perfectly complement your home's architecture and your family's lifestyle. From traditional plantation shutters to cutting-edge motorized systems, every installation reflects our commitment to exceptional craftsmanship and personalized service.
             </p>
-            <div class="cs-features">
-                <h3 class="cs-h3">Our Approach:</h3>
-                <ul class="cs-ul">
-                    <li class="cs-li">Personalized Design</li>
-                    <li class="cs-li">Premium Quality</li>
-                    <li class="cs-li">Professional Installation</li>
-                    <li class="cs-li">Commercial and Residential Solutions</li>
-                    <li class="cs-li">Local Atlanta Experts</li>
-
-                </ul>
-            </div>
-            <a class="cs-button-solid" aria-label="learn more about our programs" href="https://calendar.app.google/7mPzbQwFKEmmRWCR7">Free Consultation</a>
-        </div>
-        <!-- Right Image Section -->
-        <div class="cs-image-group">
-            <!--Floating Box-->
-            <div class="cs-box">
-                <div class="cs-flex">
-                    <h3 class="cs-heading">Danny Huynh</h3>
-                    <span class="cs-desc">Your Window Treatment Expert</span>
-                </div>
-            </div>
-            <!--Image-->
-            <picture class="cs-picture">
-                <source media="(max-width: 600px)" srcset="/assets/images/headshot.webp">
-                <source media="(min-width: 601px)" srcset="/assets/images/headshot.webp">
-                <img loading="lazy" decoding="async" src="/assets/images/headshot.webp" alt="meeting" width="630" height="630" aria-hidden="true">
+            <picture class="cs-picture cs-picture1">
+                <!--Mobile Image-->
+                <source media="(max-width: 600px)" srcset="/assets/images/zebra-shades/zebra-shades-315x200-m.webp">
+                <!--Tablet and above Image-->
+                <source media="(min-width: 601px)" srcset="/assets/images/zebra-shades/zebra-shades-630x400-d.webp">
+                <img loading="lazy" decoding="async" src="/assets/images/zebra-shades/zebra-shades-630x400-d.webp" alt="elegant zebra shades providing light control" width="630" height="400">
             </picture>
+        </div>
+        <div class="cs-image-group">
+            <picture class="cs-picture cs-picture2">
+                <!--Mobile Image-->
+                <source media="(max-width: 600px)" srcset="/assets/images/projects/shutter-project-7-210x310-m.webp">
+                <!--Tablet and above Image-->
+                <source media="(min-width: 601px)" srcset="/assets/images/projects/shutter-project-7-420x619-d.webp">
+                <img loading="lazy" decoding="async" src="/assets/images/projects/shutter-project-7-420x619-d.webp" alt="beautiful plantation shutters installation project" width="420" height="619">
+            </picture>
+        </div>
+    </div>
+</section>                  
+
+<!-- ============================================ -->
+<!--            Side By Side Reverse              -->
+<!-- ============================================ -->
+
+<section id="sbsr-1599">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">Expert Installation</span>
+            <h2 class="cs-title">Professional Installation Makes All The Difference</h2>
+            <p class="cs-text">
+                Experience the Boutique Shutters difference with our meticulous installation process. Unlike DIY solutions that lead to gaps, misalignment, and operational issues, our certified installers ensure every plantation shutter fits perfectly within your window frame. We take precise measurements, account for unique window features, and handle every detail so you can enjoy flawless functionality and elegant style in your Georgia home.
+            </p>
+            <picture class="cs-picture cs-picture1">
+                <!--Mobile Image-->
+                <source media="(max-width: 600px)" srcset="/assets/images/shutters/shutters-2-398x400-m.webp">
+                <!--Tablet and above Image-->
+                <source media="(min-width: 601px)" srcset="/assets/images/shutters/shutters-2-608x406-d.webp">
+                <img loading="lazy" decoding="async" src="/assets/images/shutters/shutters-2-608x406-d.webp" alt="before professional shutter installation" width="608" height="406">       
+            </picture>
+        </div>
+        <div class="cs-stats-group">
+            <picture class="cs-picture cs-picture2">
+                <!--Mobile Image-->
+                <source media="(max-width: 600px)" srcset="/assets/images/projects/shutter-project-5-398x477-m.webp">
+                <!--Tablet and above Image-->
+                <source media="(min-width: 601px)" srcset="/assets/images/projects/shutter-project-5-608x662-d.webp">
+                <img loading="lazy" decoding="async" src="assets/images/projects/shutter-project-5-608x662-d.webp" alt="after professional shutter installation" width="608" height="662">
+            </picture>
+            <ul class="cs-stats">
+                <li class="cs-stat">
+                    <span class="cs-number">100%</span>
+                    <span class="cs-desc">Custom measured fit</span>
+                </li>
+                <li class="cs-stat">
+                    <span class="cs-number">5-Year</span>
+                    <span class="cs-desc">Installation warranty</span>
+                </li>
+                <li class="cs-stat">
+                    <span class="cs-number">1-Day</span>
+                    <span class="cs-desc">Professional installation</span>
+                </li>
+            </ul>
         </div>
     </div>
 </section>
@@ -114,119 +168,72 @@ Let's create a window treatment solution that elevates your home.
   <div class="cs-container">
       <div class="cs-content">
           <div class="cs-flex">
-              <span class="cs-topper">Custom Shutters, Blinds & Shades</span>
-              <h2 class="cs-title">Premium Atlanta Window Treatments</h2>
+              <span class="cs-topper">Plantation Shutters, Designer Shades & Motorized Blinds</span>
+              <h2 class="cs-title">Custom Window Treatments for Atlanta Homes</h2>
           </div>
           <p class="cs-text">
-            At Boutique Shutters, we customize every window treatment specifically for your Atlanta home. Our faux wood blinds, plantation shutters, roller shades, and motorized solutions are precisely measured, expertly crafted, and professionally installed to fit your exact windows. We consider your Gwinnett County home's style, your light and privacy preferences, and Georgia's climate to create perfect-fitting window coverings that enhance both beauty and functionality.
+            At Boutique Shutters, we create custom window treatments for Sugar Hill, Duluth, and Lawrenceville homes. Our plantation shutters, shades, blinds, and motorized solutions are precisely measured and professionally installed to fit your windows perfectly.
           </p>
       </div>                  
       <ul class="cs-card-group">
           <li class="cs-item">
-             <!-- add href="" if you want to link a new page -->
                   <picture class="cs-picture">
-                      <!--Mobile Image-->
-                      <source media="(max-width: 600px)" srcset="/assets/images/fauxwoodblinds.webp">
-                      <!--Tablet and above Image-->
-                      <source media="(min-width: 601px)" srcset="/assets/images/fauxwoodblinds.webp">
-                      <img loading="lazy" decoding="async" src="/assets/images/fauxwoodblinds.webp" alt="room" width="413" height="420">
+                      <source media="(max-width: 600px)" srcset="/assets/images/zebra-shades/whitezebrashades-398x240-m.webp">
+                      <source media="(min-width: 601px)" srcset="/assets/images/zebra-shades/whitezebrashades-413x420-d.webp">
+                      <img loading="lazy" decoding="async" src="/assets/images/zebra-shades/whitezebrashades-413x420-d.webp" alt="room" width="413" height="420">
                   </picture>
-                  <h3 class="cs-h3">Premium Faux Wood Blinds</h3>
+                  <h3 class="cs-h3">Zebra Shades</h3>
                   <p class="cs-item-text">
-                    Each blind is precisely measured and fitted to your exact window specifications, ensuring a seamless look and optimal functionality. Available in various slat sizes from 1" to 2.5", our faux wood blinds can be customized to achieve your perfect balance of light control, privacy, and style.</p>
+                    Durable, low-maintenance faux wood blinds precisely fitted to your windows. Available in various slat sizes and finishes for perfect light control and style.</p>
                   <span class="cs-fake-link">
-                    <a class="cs-button-solid" aria-label="learn more about our programs" href="https://calendar.app.google/7mPzbQwFKEmmRWCR7">Free Consultation</a>
+                    <a class="cs-button-solid" aria-label="learn more about our programs" href="https://calendar.app.google/7mPzbQwFKEmmRWCR7">Schedule Consultation</a>
                   </span>
           </li>
           <li class="cs-item">
-             <!-- add href="" if you want to link a new page -->
                   <picture class="cs-picture">
-                      <!--Mobile Image-->
-                      <source media="(max-width: 600px)" srcset="/assets/images/plantationshutters.webp">
-                      <!--Tablet and above Image-->
-                      <source media="(min-width: 601px)" srcset="/assets/images/plantationshutters.webp">
-                      <img loading="lazy" decoding="async" src="/assets/images/plantationshutters.webp" alt="room" width="413" height="420">
+                      <source media="(max-width: 600px)" srcset="/assets/images/shutters/shutters-1-398x240-m.webp">
+                      <source media="(min-width: 601px)" srcset="/assets/images/shutters/shutters-1-413x420-d.webp">
+                      <img loading="lazy" decoding="async" src="/assets/images/shutters/shutters-1-413x420-d.webp" alt="room" width="413" height="420">
                   </picture>
-                  <h3 class="cs-h3">Custom Plantation Shutters</h3>
+                  <h3 class="cs-h3">Plantation Shutters</h3>
                   <p class="cs-item-text">
-                    Transform your Atlanta home with our signature plantation shutters, handcrafted and precisely measured for your windows. These elegant treatments add timeless beauty and significant value to your Gwinnett County property while providing superior light control and energy efficiency year-round.</p>
+                    Handcrafted plantation shutters that add sophistication and value to your home while providing superior light control and energy efficiency.</p>
                   <span class="cs-fake-link">
-                    <a class="cs-button-solid" aria-label="learn more about our programs" href="https://calendar.app.google/7mPzbQwFKEmmRWCR7">Free Consultation</a>
+                    <a class="cs-button-solid" aria-label="learn more about our programs" href="https://calendar.app.google/7mPzbQwFKEmmRWCR7">Schedule Consultation</a>
                 </span>
           </li>
           <li class="cs-item">
-            <!-- add href="" if you want to link a new page -->
                   <picture class="cs-picture">
-                      <!--Mobile Image-->
-                      <source media="(max-width: 600px)" srcset="/assets/images/curtains.webp">
-                      <!--Tablet and above Image-->
-                      <source media="(min-width: 601px)" srcset="/assets/images/curtains.webp">
-                      <img loading="lazy" decoding="async" src="/assets/images/curtains.webp" alt="room" width="413" height="420">
+                      <source media="(max-width: 600px)" srcset="/assets/images/shades/curtains-398x240-m.webp">
+                      <source media="(min-width: 601px)" srcset="/assets/images/shades/curtains-413x420-d.webp">
+                      <img loading="lazy" decoding="async" src="/assets/images/shades/curtains-413x420-d.webp" alt="room" width="413" height="420">
                   </picture>
-                  <h3 class="cs-h3">Designer Window Shades</h3>
+                  <h3 class="cs-h3">Window Shades</h3>
                   <p class="cs-item-text">
-                    Cellular, roller, roman, and woven wood shades tailored to your windows. Select from hundreds of premium fabrics with various opacity levels for ideal light filtration and energy efficiency.                  </p>
+                    Custom cellular, roller, roman, and woven wood shades. Choose from hundreds of premium fabrics with varying opacity levels for perfect light and privacy control.</p>
                   <span class="cs-fake-link">
-                    <a class="cs-button-solid" aria-label="learn more about our programs" href="https://calendar.app.google/7mPzbQwFKEmmRWCR7">Free Consultation</a>
+                    <a class="cs-button-solid" aria-label="learn more about our programs" href="https://calendar.app.google/7mPzbQwFKEmmRWCR7">Schedule Consultation</a>
                 </span>
           </li>
           <li class="cs-item">
-             <!-- add href="" if you want to link a new page -->
                   <picture class="cs-picture">
-                      <!--Mobile Image-->
-                      <source media="(max-width: 600px)" srcset="/assets/images/motorized.webp">
-                      <!--Tablet and above Image-->
-                      <source media="(min-width: 601px)" srcset="/assets/images/motorized.webp">
-                      <img loading="lazy" decoding="async" src="/assets/images/motorized.webp" alt="room" width="413" height="420">
+                      <source media="(max-width: 600px)" srcset="/assets/images/exterior/exterior-shades-398x240-m.webp">
+                      <source media="(min-width: 601px)" srcset="/assets/images/exterior/exterior-shades-413x420-d.webp">
+                      <img loading="lazy" decoding="async" src="/assets/images/exterior/exterior-shades-413x420-d.webp" alt="room" width="413" height="420">
                   </picture>
-                  <h3 class="cs-h3">Motorized Window Treatments</h3>
+                  <h3 class="cs-h3">Exterior Shades</h3>
                   <p class="cs-item-text">
-                    Smart window treatments controlled via remote, app, or voice. Integrates with home automation for convenient operation of blinds, shades, and shutters across your Greater Atlanta residence.                  </p>
+                    Smart motorized window treatments controlled via remote, smartphone app, or voice commands. Seamlessly integrates with home automation systems.</p>
                   <span class="cs-fake-link">
-                    <a class="cs-button-solid" aria-label="learn more about our programs" href="https://calendar.app.google/7mPzbQwFKEmmRWCR7">Free Consultation</a>
+                    <a class="cs-button-solid" aria-label="learn more about our programs" href="https://calendar.app.google/7mPzbQwFKEmmRWCR7">Schedule Consultation</a>
                 </span>
           </li>
       </ul>
   </div>
 </section>
 
-<!-- ============================================ -->
-<!--                 Customn Blinds               -->
-<!-- ============================================ -->
+<Projects/>
 
-<section id="sbsr-2289">
-    <div class="cs-container">
-        <!-- Left Content Section-->
-        <div class="cs-content">
-            <span class="cs-topper">Hey Google, open the bedroom blinds</span>
-            <h2 class="cs-title">Smart Home Integration for Motorized Blinds</h2>
-            <p class="cs-text">
-                Our motorized blinds integrate effortlessly with the smart home systems you already use and love. Whether you're an Amazon Alexa enthusiast, a Google Home devotee, or use both platforms in different areas of your home, our solutions provide consistent, reliable performance across your entire smart home ecosystem.
-            </p>
-            <div class="cs-features">
-                <h3 class="cs-h3">Key Features:</h3>
-                <ul class="cs-ul">
-                    <li class="cs-li">Professional Installation and Programming</li>
-                    <li class="cs-li">Enhancing accessibility</li>
-                    <li class="cs-li">Voice-Activated Convenience</li>
-                    <li class="cs-li">Google Home and Amazon Alexa Intergration</li>
-                </ul>
-            </div>
-            <a href="https://calendar.app.google/7mPzbQwFKEmmRWCR7" class="cs-button-solid">Free Consultation</a>
-        </div>
-        <!-- Right Image Section -->
-        <div class="cs-image-group">
-            <!--Floating Box-->
-            <!--Image-->
-            <picture class="cs-picture">
-                <source media="(max-width: 600px)" srcset="/assets/images/smartzebrashades.webp">
-                <source media="(min-width: 601px)" srcset="/assets/images/smartzebrashades.webp">
-                <img loading="lazy" decoding="async" src="/assets/images/smartzebrashades.webp" alt="meeting" width="630" height="630" aria-hidden="true">
-            </picture>
-        </div>
-    </div>
-</section>
-  
 <!-- ============================================ -->
 <!--                   Reviews                    -->
 <!-- ============================================ -->
@@ -234,17 +241,17 @@ Let's create a window treatment solution that elevates your home.
 <section id="reviews-245">
     <div class="cs-container">
         <div class="cs-content">
-            <span class="cs-topper">Our Reviews</span>
-            <h2 class="cs-title">What Client’s Say About Us</h2>
+            <span class="cs-topper">Client Testimonials</span>
+            <h2 class="cs-title">What Our Clients Say About Us</h2>
             <p class="cs-text">
-                We take pride in serving the greater Atlanta metropolitan area with exceptional window treatment solutions. Our Gwinnett County showroom has become a destination for homeowners throughout Duluth, Lawrenceville, Suwanee, and surrounding communities seeking premium window coverings that combine style, functionality, and innovation.</p>
+                We take pride in providing exceptional window treatment solutions throughout Suwanee, Johns Creek, and the entire Metro Atlanta area. Our dedication to quality, service, and attention to detail has made us the trusted choice for homeowners seeking premium window coverings that perfectly balance style, functionality, and innovation.</p>
         </div>
         <ul class="cs-card-group">
             <!-- Review 1 -->
             <li class="cs-item">
                 <img class="cs-item-img" aria-hidden="true" loading="lazy" decoding="async" src="/assets/images/google.svg" alt="profile picture" width="72" height="72">
                 <p class="cs-item-text">
-                    “What an amazing experience from the planning to the installation phase. They worked within my budget and gave me all the options that I asked. They also spent the time to explain some of the new features. I would have spent so much more going with someone else. Thank you!”
+                    "What an amazing experience from the planning to the installation phase. They worked within my budget and gave me all the options that I asked. They also spent the time to explain some of the new features. I would have spent so much more going with someone else. Thank you!"
                 </p>
                 <div class="cs-flex-group">
                     <span class="cs-reviewer">
@@ -259,26 +266,68 @@ Let's create a window treatment solution that elevates your home.
             <li class="cs-item">
                 <img class="cs-item-img" aria-hidden="true" loading="lazy" decoding="async" src="/assets/images/google.svg" alt="profile picture" width="72" height="72">
                 <p class="cs-item-text">
-                    “Dan at Boutique Shutters was very professional and clearly outlined the options. We ordered zebra blinds and within 3 weeks they were installed. Blinds look amazing in our room.” 
+                    "We recently had custom blinds installed by Boutique Shutters and couldn't be happier with the results! We went with motorized Shangri-La shades downstairs and elegant Roman shades upstairs — both look absolutely stunning and function beautifully." 
                 </p>
                 <div class="cs-flex-group">
                     <span class="cs-reviewer">
-                        Jigar Desai
+                        Cam Nguyen
                         <span class="cs-desc">Homeowner</span>
                     </span>
                     <span class="cs-rating">5.0</span>
                     <img class="cs-item-stars" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Reviews/stars-yellow.svg" alt="stars" width="96" height="16">
                 </div>
             </li>
-            <!-- Review 2 -->
+            <!-- Review 3 -->
             <li class="cs-item">
                 <img class="cs-item-img" aria-hidden="true" loading="lazy" decoding="async" src="/assets/images/google.svg" alt="profile picture" width="72" height="72">
                 <p class="cs-item-text">
-                    “Danny did an outstanding job installing beautiful shades in my home. His professionalism, attention to detail, and expertise were evident throughout the process. The shades perfectly complement my decor and have transformed my space. I highly recommend Danny for his excellent service and exceptional craftsmanship.”
+                    "Danny did an outstanding job installing beautiful shades in my home. His professionalism, attention to detail, and expertise were evident throughout the process. The shades perfectly complement my decor and have transformed my space. I highly recommend Danny for his excellent service and exceptional craftsmanship."
                 </p>
                 <div class="cs-flex-group">
                     <span class="cs-reviewer">
                         Tushar Kumar
+                        <span class="cs-desc">Homeowner</span>
+                    </span>
+                    <span class="cs-rating">5.0</span>
+                    <img class="cs-item-stars" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Reviews/stars-yellow.svg" alt="stars" width="96" height="16">
+                </div>
+                            <!-- Review 3 -->
+            <li class="cs-item">
+                <img class="cs-item-img" aria-hidden="true" loading="lazy" decoding="async" src="/assets/images/google.svg" alt="profile picture" width="72" height="72">
+                <p class="cs-item-text">
+                    "Danny did an outstanding job installing beautiful shades in my home. His professionalism, attention to detail, and expertise were evident throughout the process. The shades perfectly complement my decor and have transformed my space. I highly recommend Danny for his excellent service and exceptional craftsmanship."
+                </p>
+                <div class="cs-flex-group">
+                    <span class="cs-reviewer">
+                        Tushar Kumar
+                        <span class="cs-desc">Homeowner</span>
+                    </span>
+                    <span class="cs-rating">5.0</span>
+                    <img class="cs-item-stars" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Reviews/stars-yellow.svg" alt="stars" width="96" height="16">
+                </div>
+                            <!-- Review 3 -->
+            <li class="cs-item">
+                <img class="cs-item-img" aria-hidden="true" loading="lazy" decoding="async" src="/assets/images/google.svg" alt="profile picture" width="72" height="72">
+                <p class="cs-item-text">
+                    "What a satisfying job, the price was good too. You need blinds, make this your first call, other companies are super inflated and play on your not wanting to shop around. Compare..but buy here, you will see the professionalism and competitive prices"
+                </p>
+                <div class="cs-flex-group">
+                    <span class="cs-reviewer">
+                        Michael Agunzo
+                        <span class="cs-desc">Homeowner</span>
+                    </span>
+                    <span class="cs-rating">5.0</span>
+                    <img class="cs-item-stars" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Reviews/stars-yellow.svg" alt="stars" width="96" height="16">
+                </div>
+                            <!-- Review 3 -->
+            <li class="cs-item">
+                <img class="cs-item-img" aria-hidden="true" loading="lazy" decoding="async" src="/assets/images/google.svg" alt="profile picture" width="72" height="72">
+                <p class="cs-item-text">
+                    "This was the greatest experience I have ever had with hiring anybody to do work at our house. They worked around our schedule, came over with a ton of options to choose from and could not have been more professional. I am 100% having them come back to do the rest of the blinds and am looking forward to seeing them again."
+                </p>
+                <div class="cs-flex-group">
+                    <span class="cs-reviewer">
+                        Charles Laverty
                         <span class="cs-desc">Homeowner</span>
                     </span>
                     <span class="cs-rating">5.0</span>
@@ -294,11 +343,13 @@ Let's create a window treatment solution that elevates your home.
   <!-- ============================================ -->
 
   <CTA />
+
 </BaseLayout>
 
 <!-- ============================================ -->
 <!--                    Styles                    -->
 <!-- ============================================ -->
+ 
 <style lang="less">
   /* STYLES FOR ABOVE THE FOLD */
 
@@ -308,64 +359,85 @@ Let's create a window treatment solution that elevates your home.
 
 /* Mobile - 360px */
 @media only screen and (min-width: 0rem) {
-    #hero-1619 {
-        padding: var(--sectionPadding);
-        background-color: var(--primaryLight);
-	    /* 200px - 300px - leaving extra space for the navigation */
-        padding-top: clamp(12.5rem, 31.95vw, 18.75rem);
+    #hero-1059 {
+        /* Centers button */
+        text-align: left;
+        /* 200px - 300px - leaving extra space for the navigation */
+        padding: clamp(12.5rem, 31.95vw, 18.75rem) (16/16rem) 0;
+        /* 130px - 200px */
+        padding-bottom: clamp(8.125rem, 16.5vw, 12.5rem);
         position: relative;
         z-index: 1;
+
+        .cs-background {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -2;
+
+            &:before {
+                /* Overlay */
+                content: "";
+                width: 100%;
+                height: 100%;
+                background: #1a1a1a;
+                opacity: 0.84;
+                position: absolute;
+                display: block;
+                top: 0;
+                left: 0;
+                z-index: 1;
+                /* prevents the cursor from interacting with it */
+                pointer-events: none;
+            }
+
+            img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                /* makes the top of the image start at the top of the parent */
+                object-position: top;
+            }
+        }
 
         .cs-container {
             width: 100%;
             max-width: (1280/16rem);
             margin: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            /* 60px - 180px */
-            gap: clamp(3.75rem, 13vw, 11.25rem);
         }
 
         .cs-content {
             /* set text align to left if content needs to be left aligned */
-            text-align: left;
+            text-align: center;
             width: 100%;
-            max-width: (780/16rem);
+            max-width: (630/16rem);
             display: flex;
             flex-direction: column;
             /* centers content horizontally, set to flex-start to left align */
-            align-items: flex-start;
+            align-items: center;
         }
 
-        .cs-topper {
-            /* 13px - 16px */
-            font-size: clamp(.8125rem, 1.5vw, 1rem);
-            line-height: 1.2em;
+        .cs-title {
+            /* 39px - 61px */
+            font-size: clamp(2.4375rem, 6.4vw, 3.8125rem);
             font-weight: 700;
-            letter-spacing: 0.1em;
-            text-align: left;
-            text-transform: uppercase;
-            margin-bottom: (4/16rem);
-            color: var(--secondary);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: (8/16rem);
+            line-height: 1.2em;
+            text-align: inherit;
+            max-width: (829/16rem);
+            margin: 0 auto (16/16rem) 0;
+            color: #fff;
             position: relative;
         }
 
-        .cs-chevron {
-            --chevronColor: var(--primary);
-
-            width: (48/16rem);
-            height: auto;
-        }
-        
         .cs-text {
             /* 16px - 20px */
-            font-size: clamp( 1rem,1.95vw, 1.25rem);
+            font-size: clamp(1rem, 1.95vw, 1.25rem);
             line-height: 1.5em;
             text-align: inherit;
             width: 100%;
@@ -380,17 +452,17 @@ Let's create a window treatment solution that elevates your home.
             /* 46px - 56px */
             line-height: clamp(2.875rem, 5.5vw, 3.5rem);
             text-decoration: none;
-	    	font-weight: 700;
+            font-weight: 700;
             margin: 0;
-            color: var(--primary);
+            color: #fff;
             padding: 0 (24/16rem);
-            background-color: var(--secondary);
+            //background-color: var(--primary);
             display: inline-block;
             position: relative;
             z-index: 1;
 
             &:before {
-                content: '';
+                content: "";
                 position: absolute;
                 display: block;
                 height: 100%;
@@ -400,7 +472,7 @@ Let's create a window treatment solution that elevates your home.
                 top: 0;
                 left: 0;
                 z-index: -1;
-                transition: width .3s;
+                transition: width 0.3s;
             }
 
             &:hover {
@@ -409,97 +481,252 @@ Let's create a window treatment solution that elevates your home.
                 }
             }
         }
+    }
+}
 
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #hero-1059 {
+        .cs-content {
+            text-align: left;
+            align-items: flex-start;
+        }
+
+        .cs-background {
+            &:before {
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 0, 0, 0.94) 0%,
+                    rgba(0, 0, 0, 0.94) 2%,
+                    rgba(0, 0, 0, 0) 100%
+                );
+                opacity: 1;
+            }
+        }
+    }
+}
+
+                                
+                                
+
+/*-- -------------------------- -->
+<---          Services          -->
+<--- -------------------------- -*/
+
+/* Mobile */
+@media only screen and (min-width: 0rem) {
+    #services-2349 {
+        padding: var(--sectionPadding);
+        /*background-color: var(--csStatsBgColor);*/
         .cs-card-group {
-            margin: 0;
-            padding: 0;
             width: 100%;
+            max-width: (1800/16rem);
+            margin: 0 auto;
+            padding: 0;
             display: grid;
             grid-template-columns: repeat(12, 1fr);
-            /* 16px - 20px */
-            gap: clamp(1rem, 2.3vw, 1.25rem);
+            /* 16px - 20px, changes to 100px at large desktop 1300px */
+            column-gap: clamp(1rem, 3vw, 1.25rem);
+            row-gap: (32/16rem);
         }
 
         .cs-item {
-            width: 100%;
-            text-align: left;
             list-style: none;
-            margin:0;
-            /* 24px - 32px */
-            padding: clamp(1.5rem, 3vw, 2rem);
-            background-color: var(--primaryLightSecondary);
-            box-shadow: 0px 12px 80px 0px rgba(26, 26, 26, 0.08);
-            /* prevents padding from affecting height and width */
-            box-sizing: border-box;
+            text-align: left;
+            margin: 0;
+            padding: 0;
             grid-column: span 12;
-            grid-row: span 1;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            position: relative;
-            z-index: 1;
-        }
-        .cs-icon {
-            width: (48/16rem);
-            height: auto;
-            margin: 0 0 (24/16rem) 0;
         }
 
-        .cs-h3 {
+        .cs-link {
+            text-decoration: none;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cs-icon {
+            width: (24/16rem);
+            height: auto;
+            margin-bottom: (24/16rem);
+            display: block;
+        }
+
+        .cs-h2 {
             /* 20px - 25px */
-            font-size: clamp(1.25rem, 2.5vw, 1.5625rem);
-            line-height: 1.2em;
-            font-weight: bold;
+            font-size: clamp(1.25rem, 3vw, 1.5625rem);
             text-align: inherit;
-            margin: 0 0 (16/16rem) 0;
-            color: var(--bodyTextColorWhite);
+            line-height: 1.2em;
+            font-weight: 700;
+            margin: 0 0 (16/16rem);
+            padding-bottom: (16/16rem);
+            height: 100%;
+            /*color: var(--headerColor);*/
+            border-bottom: 1px solid #E3DDD9;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: (16/16rem);
+        }
+
+        .cs-icon {
+            width: (24/16rem);
+            height: auto;
+            display: block;
         }
 
         .cs-item-text {
-            /* 14px - 16px */
-            font-size: clamp(.875rem, 1.5vw, 1rem);
+            font-size: (16/16rem);
+            text-align: inherit;
             line-height: 1.5em;
-            max-width: (450/16rem);
             margin: 0;
-            padding: 0;
-            color: var(--bodyTextColor);
+            /*color: var(--bodyTextColor);*/
+        }
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #services-2349 {
+        .cs-item {
+            grid-column: span 6;
+        }
+    }
+}
+
+/* Small Desktop - 1024px */
+@media only screen and (min-width: 64rem) {
+    #services-2349 {
+        .cs-item {
+            grid-column: span 3;
+        }
+    }
+}
+
+/* Large Desktop - 1300px */
+@media only screen and (min-width: 81.25rem) {
+    #services-2349 {
+        .cs-card-group {
+            column-gap: (100/16rem);
+        }
+    }
+}
+
+/*-- -------------------------- -->
+<---   Side By Side Reverse     -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #sbsr-2169 {
+        padding: var(--sectionPadding);
+        position: relative;
+        z-index: 1;
+        
+        .cs-container {
+            width: 100%;
+            /* changes to 1280px at tablet */
+            max-width: (584/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* 48px - 64px */
+            gap: clamp(3rem, 10vw, 8rem);
+        }
+        .cs-title {
+            /*color: #000;*/
+        }
+        .cs-content {
+            /* set text align to left if content needs to be left aligned */
+            text-align: left;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            /* centers content horizontally, set to flex-start to left align */
+            align-items: flex-start;
+        }
+
+        .cs-text {
+            /* Override.  cs-topper cs-title and first cs-text should be removed and put into your global css sheet so it can control every instance of them on your site and is consistent. This selector is a section specific override that stays inside this stitch */
+            margin-bottom: (16/16rem);
+            &:last-of-type {
+                /* 32px - 80px */
+                margin-bottom: clamp(2rem, 7vw, 5rem);
+            }
+        }
+
+        .cs-picture {
+            width: 100%;
+            display: block;
+            position: relative;
+            z-index: 1;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        }
+
+        .cs-image-group {
+            width: 100%;
+            /* 520px - 740px */
+            height: clamp(32.3125rem, 100vw, 46.25rem);
+            flex: none;
+            position: relative;
+            z-index: 1;
+            order: -1;
+        }
+
+        .cs-picture1 {
+            /* 220px - 400px */
+            height: clamp(13.75rem, 30vw, 25rem);
+            max-height: (400/16rem);
+        }
+
+        .cs-picture2 {
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 0;
+            /* changes to a clamp at tablet */
+            right: (40/16rem);
+            left: 0;
+            /* changes to clamp at tablet */
+            bottom: (55/16rem);
+        }
+
+        .cs-floater {
+            /* 80px - 170px */
+            width: clamp(5rem, 15vw, 10.625rem);
+            height: auto;
+            display: block;
+            position: absolute;
+            right: 0;
+            bottom: 0;
         }
 
         .cs-background {
             width: 100%;
-            height: 55%;
-            display: block;
+            height: 100%;
             position: absolute;
             top: 0;
             left: 0;
-            z-index: -2;
+            z-index: -1;
 
-            &:before {
-                /* Overlay */
-                content: '';
-                width: 100%;
-                height: 100%;
-                background: #111926;
-                opacity: .8;
-                position: absolute;
-                display: block;
-                top: 0;
-                left: 0;
-                z-index: 1;
-                /* prevents the cursor from interacting with it */
-                pointer-events: none;
-            }
-            
             img {
+                width: 100%;
+                height: 100%;
+                opacity: .6;
+                mix-blend-mode: darken;
+                object-fit: cover;
                 position: absolute;
                 top: 0;
                 left: 0;
-                height: 100%;
-                width: 100%;
-                object-fit: cover;
-                /* makes the top of the image start at the top of the parent */
-                object-position: top;
             }
         }
     }
@@ -507,81 +734,56 @@ Let's create a window treatment solution that elevates your home.
 
 /* Tablet - 768px */
 @media only screen and (min-width: 48rem) {
-    #hero-1619 {
-        padding-bottom: 0;
+    #sbsr-2169 {
         .cs-container {
-            align-items: flex-start;
+            max-width: (1280/16rem);
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: stretch;
         }
 
         .cs-content {
-            text-align: left;
-            margin-left: 0;
-            align-items: flex-start;
+            /* sends it to the right in the 2nd position */
+            order: 2;
         }
 
-        .cs-item {
-            grid-column: span 6;
+        .cs-image-group {
+            width: 45vw;
+            max-width: (522/16rem);
+            height: auto;
+            margin-bottom: (50/16rem);
+            order: 2;
         }
 
-        .cs-background {
-            height:87%;
-            &:before {
-                background: 
-                linear-gradient(118deg, #101010f5 0.41%, rgb(44 44 44 / 62%) 52.98%, rgb(0 0 0 / 9%) 72.53%);
-                opacity: 1;
-            }
-        }
-    }
-}
-
-/* Large Desktop - 1300px */
-@media only screen and (min-width: 81.25rem) {
-    #hero-1619 {
-        .cs-item {
-            grid-column: span 3;
+        .cs-picture2 {
+            /* 60px - 100px */
+            right: clamp(3.75rem, 10vw, 6.5rem);
+            /* 80px - 120px */
+            bottom: clamp(5rem, 9vw, 7.5rem);
         }
     }
 }
                                 
-/* Large Desktop Parallax Effect - 100px */
-@media only screen and (min-width: 100rem) {
-    #hero-1619 {
-        .cs-background {
-            background: url("/assets/images/home-hero-bg.webp");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            /* creates the parallax effect */
-            background-attachment: fixed;
-            img {
-                display: none;
-            }
-        }
-    }
-}
-                                
-                                
+
 /*-- -------------------------- -->
-<---       About Danny          -->
+<---   Side By Side Reverse     -->
 <--- -------------------------- -*/
 
 /* Mobile - 360px */
 @media only screen and (min-width: 0rem) {
-    #sbs-2291 {
+    #sbsr-1599 {
         padding: var(--sectionPadding);
-        overflow: hidden;
-        background-color: var(--primaryLight);
-
+        /*background-color: #fff8f0;*/
         .cs-container {
             width: 100%;
-            /* changes to 1280px at desktop */
+            /* changes to 1280px at tablet */
             max-width: (584/16rem);
             margin: auto;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            gap: (48/16rem);
+            align-items: center;
+            /* 48px - 64px */
+            gap: clamp(3rem, 6vw, 4rem);
         }
 
         .cs-content {
@@ -592,124 +794,54 @@ Let's create a window treatment solution that elevates your home.
             flex-direction: column;
             /* centers content horizontally, set to flex-start to left align */
             align-items: flex-start;
+        }
+    
+        .cs-topper {
+            font-size: var(--topperFontSize);
+            line-height: 1.2em;
+            text-transform: uppercase;
+            text-align: inherit;
+            letter-spacing: .1em;
+            font-weight: 700;
+            /*color: var(--csTopperColor);*/
+            margin-bottom: (4/16rem);
+            display: block;
+        }
+    
+        .cs-title {
+            font-size: var(--headerFontSize);
+            font-weight: 900;
+            line-height: 1.2em;
+            text-align: inherit;
+            max-width: (700/16rem);
+            margin: 0 0 (16/16rem) 0;
+            /*color: var(--headerColor);*/
             position: relative;
-            z-index: 10;
+        }
+    
+        .cs-text {
+            font-size: var(--bodyFontSize);
+            line-height: 1.5em;
+            text-align: inherit;
+            width: 100%;
+            max-width: (650/16rem);
+            margin: 0;
+            /*color: var(--bodyTextColor);*/
         }
 
         .cs-text {
+            /* Override.  cs-topper cs-title and first cs-text should be removed and put into your global css sheet so it can control every instance of them on your site and is consistent. This selector is a section specific override that stays inside this stitch */
             margin-bottom: (16/16rem);
             &:last-of-type {
                 margin-bottom: (32/16rem);
             }
         }
 
-        .cs-features {
-            width: 100%;
-            margin: 0 0 (32/16rem);
-            /* 24px - 32px */
-            padding: clamp(1.5rem, 4vw, 2rem);
-            background-color: var(--primaryLightSecondary);
-            border-left: (4/16rem) solid var(--secondary);
-        }
-
-        .cs-h3 {
-            font-size: (16/16rem);
-            font-weight: 700;
-            line-height: 1.5em;
-            margin: 0 0 (12/16rem);
-            color: var(--bodyTextColorWhite);
-        }
-
-        .cs-ul {
-            font-size: (12/16rem);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            gap: (12/16rem);
-        }
-
-        .cs-li {
-            font-size: (16/16rem);
-            line-height: 1.5em;
-            list-style: none;
-            /* 20px - 24px */
-            padding-left: clamp(1.25rem, 3vw, 1.5rem);
-            color: var(--bodyTextColor);
-            position: relative;
-
-            &::before {
-                content: "";
-                width: (8/16rem);
-                height: (8/16rem);
-                margin-top: (8/16rem);
-                background-color: var(--secondary);
-                display: block;
-                position: absolute;
-                top: 0;
-                left: 0;
-                transform: rotate(45deg);
-            }
-        }
-
-        .cs-button-solid {
-            font-size: (16/16rem);
-            font-weight: 700;
-            /* 46px - 56px */
-            line-height: clamp(2.875rem, 5.5vw, 3.5rem);
-            text-align: center;
-            text-decoration: none;
-            min-width: (150/16rem);
-            margin: 0;
-            /* prevents padding from adding to the width */
-            box-sizing: border-box;
-            padding: 0 (24/16rem);
-            background-color: var(--secondary);
-            color: #1a1a1a;
-            display: inline-block;
-            position: relative;
-            z-index: 1;
-            transition: color 0.3s;
-
-            &:before {
-                content: "";
-                width: 0%;
-                height: 100%;
-                background: #000;
-                opacity: 1;
-                position: absolute;
-                top: 0;
-                left: 0;
-                z-index: -1;
-                transition: width 0.3s;
-            }
-
-            &:hover {
-                color: #fff;
-                &:before {
-                    width: 100%;
-                }
-            }
-        }
-
-        .cs-image-group {
-            width: 100%;
-            height: 126vw;
-            max-height: (626/16rem);
-            display: block;
-            order: -1;
-            position: relative;
-            z-index: 1;
-        }
-
         .cs-picture {
-            /* big background image */
             width: 100%;
             display: block;
-            position: absolute;
-            top: 0;
-            bottom: (95/16rem);
-            left: 0;
+            position: relative;
+            z-index: 1;
 
             img {
                 width: 100%;
@@ -721,110 +853,111 @@ Let's create a window treatment solution that elevates your home.
             }
         }
 
-        .cs-box {
-            text-align: left;
-            width: 91%;
-            max-width: (450/16rem);
-            /* prevents padding and border from affecting height and width */
-            box-sizing: border-box;
-            /* 24px - 32px */
-            padding: clamp(1.5rem, 3vw, 2rem);
-            background-color: var(--primaryLightSecondary);
-            display: inline-flex;
+        .cs-picture1 {
+            height: 95vw;
+            max-height: (400/16rem);
+        }
+
+        .cs-picture2 {
+            height: 111vw;
+            max-height: (500/16rem);
+        }
+
+        .cs-stats-group {
+            width: 100%;
+            display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            column-gap: (24/16rem);
-            row-gap: (8/16rem);
-            position: absolute;
-            right: 50%;
-            bottom: 0;
-            z-index: 10;
-            transform: translate(50%);
+            /* 28px - 40px */
+            gap: clamp(1.75rem, 3vw, 2.5rem);
         }
 
-        .cs-number {
-            /* 31px - 49px */
-            font-size: clamp(1.9375rem, 4vw, 3.0625rem);
-            font-weight: 700;
-            line-height: 1.2em;
-            text-transform: uppercase;
+        .cs-stats {
+            width: 100%;
+            max-width: (630/16rem);
+            padding: 0;
             margin: 0;
-            color: var(--General-Secondary, #ffc219);
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            row-gap: (24/16rem);
+            column-gap: (12/16rem);
         }
-
-        .cs-heading {
-            font-size: (20/16rem);
-            font-weight: 700;
+        
+        .cs-stat {
+            list-style: none;
+            margin: 0;
+            padding: 0 0 (24/16rem) 0;
+            /*border-bottom: 1px solid var(--primary);*/
+            /* making flex so we can align a heading with 1 line to the bottom */
+            display: flex;
+            grid-column: span 4;
+            flex-direction: column;
+            align-self: stretch;
+            align-content: space-between;
+        }
+    
+        .cs-number {
+            /* 31px - 39px */
+            font-size: clamp(1.9375rem, 3vw, 2.4375rem);
             line-height: 1.2em;
-            margin: 0 0 (8/16rem);
-            color: var(--bodyTextColorWhite);
+            font-weight: 700;
+            text-align: left;
+            /*color: var(--headerColor);*/
+            display: block;
+            margin: 0 0 (4/16rem) 0;
         }
-
+    
         .cs-desc {
             font-size: (16/16rem);
             line-height: 1.5em;
-            color: var(--bodyTextColor);
-        }
-
-        .cs-graphic {
-            width: 150%;
-            height: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            z-index: -1;
-            transform: translate(-50%, -50%);
+            font-weight: 400;
+            text-align: left;
+            /* auto margin top will push text to bottom if there's only one line */
+            margin: 0;
+            /*color: var(--bodyTextColor);*/
         }
     }
 }
 
 /* Tablet - 768px */
 @media only screen and (min-width: 48rem) {
-    #sbs-2291 {
-        .cs-box {
-            flex-direction: row;
-            align-items: center;
-        }
-    }
-}
-
-/* Desktop - 1024px */
-@media only screen and (min-width: 64rem) {
-    #sbs-2291 {
+    #sbsr-1599 {
         .cs-container {
             max-width: (1280/16rem);
             flex-direction: row;
+            justify-content: space-between;
             align-items: stretch;
-            gap: (20/16rem);
         }
 
         .cs-content {
-            padding-left: (52/16rem);
-            padding-bottom: (108/16rem);
+            /* sends it to the right in the 2nd position */
+            order: 2;
         }
 
-        .cs-image-group {
-            height: auto;
-            min-height: (642/16rem);
+        .cs-picture1 {
+            /* 340px - 460px */
+            min-height: clamp(21.25rem, 35vw, 28.75rem);
+            height: 100%;
             max-height: 100%;
         }
 
-        .cs-picture {
-            bottom: (64/16rem);
+        .cs-picture2 {
+            /* 530px - 660px */
+            min-height: clamp(33.125rem, 45vw, 41.25rem);
+            height: 100%;
+            max-height: 100%;
         }
     }
-}
-                                                           
+}                         
+
 /*-- -------------------------- -->
-<---          Services          -->
+<---       Blinds Section       -->
 <--- -------------------------- -*/
 
 /* Mobile - 360px */
 @media only screen and (min-width: 0rem) {
     #services-1628 {
         padding: var(--sectionPadding);
-        background-color: var(--primary);
+        /*background-color: #dad9e3;*/
         
         .cs-container {
             width: 100%;
@@ -850,6 +983,7 @@ Let's create a window treatment solution that elevates your home.
     
         .cs-title {
             max-width: 20ch;
+            /*color: #000;*/
         }
 
         .cs-text {
@@ -863,7 +997,7 @@ Let's create a window treatment solution that elevates your home.
                 width: 100%;
                 height: 1px;
                 margin-top: (24/16rem);
-                background: var(--bodyTextColorWhite);
+                /*background: var(--bodyTextColorWhite);*/
                 opacity: 1;
                 display: block;
                 position: relative;
@@ -871,7 +1005,7 @@ Let's create a window treatment solution that elevates your home.
         }
 
         .cs-chevron {
-            --chevronColor: var(--primary);
+            /*--chevronColor: var(--primary);*/
 
             width: (48/16rem);
             height: auto;
@@ -919,7 +1053,7 @@ Let's create a window treatment solution that elevates your home.
             width: 100%;
             height: (240/16rem);
             margin-bottom: (24/16rem);
-            background-color: #000;
+            /*background-color: #000;*/
             overflow: hidden;
             display: block;
             position: relative;
@@ -941,7 +1075,7 @@ Let's create a window treatment solution that elevates your home.
             font-weight: 700;
             text-align: left;
             margin: 0 0 (12/16rem) 0;
-            color: var(--bodyTextColorWhite);
+            /*color: var(--primary);*/
         }
 
         .cs-item-text {
@@ -949,7 +1083,7 @@ Let's create a window treatment solution that elevates your home.
             line-height: 1.5em;
             text-align: left;
             margin: 0 0 (24/16rem) 0;
-            color: var(--bodyTextColor);
+            /*color: var(--bodyTextColor);*/
         }
 
         .cs-fake-link {
@@ -958,7 +1092,7 @@ Let's create a window treatment solution that elevates your home.
             font-weight: 700;
             margin: 0;
             margin-top: auto;
-            color: var(--primary);
+            /*color: var(--primary);*/
             display: inline-flex;
             justify-content: flex-start;
             align-items: center;
@@ -1002,7 +1136,7 @@ Let's create a window treatment solution that elevates your home.
 
         .cs-title {
             margin: 0;
-            color: var(--bodyTextColorWhite);
+            /*color: var(--bodyTextColorWhite);*/
         }
 
         .cs-text {
@@ -1037,260 +1171,8 @@ Let's create a window treatment solution that elevates your home.
             grid-column: span 3;
         }
     }
-}
-/*-- -------------------------- -->
-<---       Customn Blinds       -->
-<--- -------------------------- -*/
+}    
 
-/* Mobile - 360px */
-@media only screen and (min-width: 0rem) {
-    #sbsr-2289 {
-        padding: var(--sectionPadding);
-        overflow: hidden;
-        background-color: var(--primaryLight);
-
-        .cs-container {
-            width: 100%;
-            /* changes to 1280px at desktop */
-            max-width: (584/16rem);
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            gap: (48/16rem);
-        }
-
-        .cs-content {
-            /* set text align to left if content needs to be left aligned */
-            text-align: left;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            /* centers content horizontally, set to flex-start to left align */
-            align-items: flex-start;
-            position: relative;
-            z-index: 10;
-        }
-
-        .cs-text {
-            margin-bottom: (16/16rem);
-            &:last-of-type {
-                margin-bottom: (32/16rem);
-            }
-        }
-
-        .cs-features {
-            width: 100%;
-            margin: 0 0 (32/16rem);
-            /* 24px - 32px */
-            padding: clamp(1.5rem, 4vw, 2rem);
-            background-color: var(--primaryLightSecondary);
-            border-left: (4/16rem) solid var(--secondary);
-        }
-
-        .cs-h3 {
-            font-size: (16/16rem);
-            font-weight: 700;
-            line-height: 1.5em;
-            margin: 0 0 (12/16rem);
-            color: var(--bodyTextColorWhite);
-        }
-
-        .cs-ul {
-            font-size: (12/16rem);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            gap: (12/16rem);
-        }
-
-        .cs-li {
-            font-size: (16/16rem);
-            line-height: 1.5em;
-            list-style: none;
-            /* 20px - 24px */
-            padding-left: clamp(1.25rem, 3vw, 1.5rem);
-            color: var(--bodyTextColor);
-            position: relative;
-
-            &::before {
-                content: "";
-                width: (8/16rem);
-                height: (8/16rem);
-                margin-top: (8/16rem);
-                background-color: var(--secondary);
-                display: block;
-                position: absolute;
-                top: 0;
-                left: 0;
-                transform: rotate(45deg);
-            }
-        }
-
-        .cs-button-solid {
-            font-size: (16/16rem);
-            font-weight: 700;
-            /* 46px - 56px */
-            line-height: clamp(2.875rem, 5.5vw, 3.5rem);
-            text-align: center;
-            text-decoration: none;
-            min-width: (150/16rem);
-            margin: 0;
-            /* prevents padding from adding to the width */
-            box-sizing: border-box;
-            padding: 0 (24/16rem);
-            display: inline-block;
-            position: relative;
-            z-index: 1;
-            transition: color 0.3s;
-
-            &:before {
-                content: "";
-                width: 0%;
-                height: 100%;
-                background: #000;
-                opacity: 1;
-                position: absolute;
-                top: 0;
-                left: 0;
-                z-index: -1;
-                transition: width 0.3s;
-            }
-
-            &:hover {
-                color: #fff;
-                &:before {
-                    width: 100%;
-                }
-            }
-        }
-
-        .cs-image-group {
-            width: 100%;
-            height: 126vw;
-            max-height: (626/16rem);
-            display: block;
-            order: -1;
-            position: relative;
-            z-index: 1;
-        }
-
-        .cs-picture {
-            /* big background image */
-            width: 100%;
-            display: block;
-            position: absolute;
-            top: 0;
-            bottom: (95/16rem);
-            left: 0;
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
-        }
-
-        .cs-box {
-            text-align: left;
-            width: 91%;
-            max-width: (450/16rem);
-            /* prevents padding and border from affecting height and width */
-            box-sizing: border-box;
-            /* 24px - 32px */
-            padding: clamp(1.5rem, 3vw, 2rem);
-            background-color: #fffcf3;
-            display: inline-flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            column-gap: (24/16rem);
-            row-gap: (8/16rem);
-            position: absolute;
-            right: 50%;
-            bottom: 0;
-            z-index: 10;
-            transform: translate(50%);
-        }
-
-        .cs-number {
-            /* 31px - 49px */
-            font-size: clamp(1.9375rem, 4vw, 3.0625rem);
-            font-weight: 700;
-            line-height: 1.2em;
-            text-transform: uppercase;
-            margin: 0;
-            color: var(--General-Secondary, #ffc219);
-        }
-
-        .cs-heading {
-            font-size: (20/16rem);
-            font-weight: 700;
-            line-height: 1.2em;
-            margin: 0 0 (8/16rem);
-            color: var(--headerColor);
-        }
-
-        .cs-desc {
-            font-size: (16/16rem);
-            line-height: 1.5em;
-            color: var(--bodyTextColorWhite);
-        }
-
-        .cs-graphic {
-            width: 150%;
-            height: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            z-index: -1;
-            transform: translate(-50%, -50%);
-        }
-    }
-}
-
-/* Tablet - 768px */
-@media only screen and (min-width: 48rem) {
-    #sbsr-2289 {
-        .cs-box {
-            flex-direction: row;
-            align-items: center;
-        }
-    }
-}
-
-/* Desktop - 1024px */
-@media only screen and (min-width: 64rem) {
-    #sbsr-2289 {
-        .cs-container {
-            max-width: (1280/16rem);
-            flex-direction: row;
-            align-items: stretch;
-            gap: (20/16rem);
-        }
-
-        .cs-content {
-            padding-right: (52/16rem);
-            padding-bottom: (108/16rem);
-        }
-
-        .cs-image-group {
-            height: auto;
-            min-height: (642/16rem);
-            max-height: 100%;
-            order: initial;
-        }
-
-        .cs-picture {
-            bottom: (64/16rem);
-        }
-    }
-}                                                                   
 /*-- -------------------------- -->
 <---          Reviews           -->
 <--- -------------------------- -*/
@@ -1299,7 +1181,7 @@ Let's create a window treatment solution that elevates your home.
 @media only screen and (min-width: 0rem) {
     #reviews-245 {
         padding: var(--sectionPadding);
-        background: var(--primary);
+        /*background: var(--primary);*/
 
         .cs-container {
             width: 100%;
@@ -1351,7 +1233,7 @@ Let's create a window treatment solution that elevates your home.
             box-sizing: border-box;
             box-shadow: 0px 20px 39px 0px rgba(0, 0, 0, 0.05);
             border-radius: (4/16rem);
-            background: var(--primaryLightSecondary);
+            /*background: var(--primaryLightSecondary);*/
             position: relative;
             display: flex;
             justify-content: space-between;
@@ -1370,13 +1252,13 @@ Let's create a window treatment solution that elevates your home.
             font-size: (16/16rem);
             line-height: 1.5em;
             margin: 0 0 (24/16rem);
-            color: var(--bodyTextColor);
+            /*color: var(--bodyTextColor);*/
         }
 
         .cs-flex-group {
             width: 100%;
             padding-top: (24/16rem);
-            border-top: 1px solid #dad9e3;
+            /*border-top: 1px solid #dad9e3;*/
             display: flex;
             justify-content: flex-end;
             align-items: flex-end;
@@ -1391,7 +1273,7 @@ Let's create a window treatment solution that elevates your home.
             width: 40%;
             margin: 0 auto 0 0;
             display: block;
-            color: var(--bodyTextColorWhite);
+            /*color: var(--bodyTextColorWhite);*/
         }
 
         .cs-desc,
@@ -1400,7 +1282,7 @@ Let's create a window treatment solution that elevates your home.
             font-size: clamp(0.875rem, 1.4vw, 1rem);
             font-weight: 400;
             line-height: 1.5em;
-            color: var(--bodyTextColorWhite);
+            /*color: var(--bodyTextColorWhite);*/
             display: block;
         }
 
@@ -1468,7 +1350,5 @@ Let's create a window treatment solution that elevates your home.
         }
     }
 }
-
                                                                                           
 </style>
-
