@@ -168,8 +168,6 @@ import { Icon } from 'astro-icon/components';
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
         }
-
-
         &.cs-active {
             &:after {
                 width: 100%;
@@ -547,7 +545,11 @@ import { Icon } from 'astro-icon/components';
             width: 100%;
             display: block;
         }
-
+        .cs-li-link.cs-dropdown-button {
+                    background-color: transparent; /* Change from light/white to your dark color */
+                    border: none; /* Remove border */
+                    color: #484848; /* Keep text white/visible */
+        }
         .cs-dropdown {
             color: var(--bodyTextColorWhite);
             position: relative;
@@ -577,7 +579,7 @@ import { Icon } from 'astro-icon/components';
             position: absolute;
             top: 50%;
             right: (-20/16rem);
-            transform: translateY(-50%);
+            transform: translateY(-50%) rotate(180deg);
         }
 
         .cs-drop-ul {
@@ -630,11 +632,16 @@ import { Icon } from 'astro-icon/components';
                 }
             }
         }
-
+        .cs-li-link.cs-dropdown-button {
+                    background-color: transparent; /* Change from light/white to your dark color */
+                    border: none; /* Remove border */
+                    color: #484848; /* Keep text white/visible */
+        }
         .cs-drop-icon {
             width: (15/16rem);
             height: auto;
             display: inline-block;
+            transform: rotate(180deg);
         }
 
         .cs-drop-ul {
@@ -720,7 +727,7 @@ import { Icon } from 'astro-icon/components';
                 /* prevents padding from affecting height and width */
                 box-sizing: border-box;
                 padding: (12/16rem);
-                color: var(--bodyTextColor);
+                color: var(--primary);
                 display: block;
                 transition: color .3s, background-color .3s;
     
@@ -940,7 +947,7 @@ import { Icon } from 'astro-icon/components';
             line-height: 1.5em;
             text-decoration: none;
             margin: 0;
-            color: var(--bodyTextColor);
+            color: var(--primary);
             display: block;
             position: relative;
             &:hover {
