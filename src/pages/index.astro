@@ -467,7 +467,7 @@ const optimizedImage = await getOptimizedImage(landingImage)
                 display: block;
                 height: 100%;
                 width: 0%;
-                background: #000;
+                background: var(--csButtonHoverColor);
                 opacity: 1;
                 top: 0;
                 left: 0;
@@ -504,10 +504,7 @@ const optimizedImage = await getOptimizedImage(landingImage)
             }
         }
     }
-}
-
-                                
-                                
+}                                                
 
 /*-- -------------------------- -->
 <---          Services          -->
@@ -762,8 +759,7 @@ const optimizedImage = await getOptimizedImage(landingImage)
             bottom: clamp(5rem, 9vw, 7.5rem);
         }
     }
-}
-                                
+}                         
 
 /*-- -------------------------- -->
 <---   Side By Side Reverse     -->
@@ -1003,10 +999,47 @@ const optimizedImage = await getOptimizedImage(landingImage)
                 position: relative;
             }
         }
+        .cs-button-solid {
+            font-size: (16/16rem);
+	    	font-weight: 700;
+            /* 46px - 56px */
+            line-height: clamp(2.875em, 5.5vw, 3.5em);
+	        text-align: center;
+            text-decoration: none;
+            min-width: (150/16rem);
+            margin: 0;
+            /* prevents padding from adding to the width */
+            box-sizing: border-box;
+            padding: 0 (24/16rem);
+            //background-color: var(--primary);
+            color: var(--csButtonTextColor);
+            border-radius: (4/16rem);
+            display: inline-block;
+            position: relative;
+            z-index: 1;
 
+            &:before {
+                content: '';
+                width: 0%;
+                height: 100%;
+                background: var(--csButtonHoverColor);
+                opacity: 1;
+                border-radius: (4/16rem);
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                transition: width .3s;
+            }
+
+            &:hover {
+                &:before {
+                    width: 100%;
+                }
+            }
+        }
         .cs-chevron {
             /*--chevronColor: var(--primary);*/
-
             width: (48/16rem);
             height: auto;
         }
