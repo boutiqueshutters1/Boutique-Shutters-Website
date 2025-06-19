@@ -143,7 +143,8 @@ import { Icon } from 'astro-icon/components';
             width: 40%;
             max-width: (146/16rem);
             height: 100%;
-            background: var(--primary);
+            //BG color of main logo
+            background: #000000;
             opacity: 1;
             display: block;
             position: absolute;
@@ -547,7 +548,7 @@ import { Icon } from 'astro-icon/components';
             display: block;
         }
         .cs-li-link.cs-dropdown-button {
-                    background-color: transparent; /* Change from light/white to your dark color */
+                    background-color: trasparent; /* Change from light/white to your dark color */
                     border: none; /* Remove border */
                     color: #484848; /* Keep text white/visible */
         }
@@ -588,7 +589,7 @@ import { Icon } from 'astro-icon/components';
             height: 0;
             margin: 0;
             padding: 0;
-            background-color: var(--primary);
+            background-color: #ffffff;
             overflow: hidden;
             opacity: 0;
             display: flex;
@@ -608,7 +609,7 @@ import { Icon } from 'astro-icon/components';
             &.cs-drop-link {
                 /* 14px - 16px */
                 font-size: clamp(.875rem, 2vw, 1.25rem);
-                color: #fff;
+                color: #000000;
             }
         }
     }
@@ -649,7 +650,8 @@ import { Icon } from 'astro-icon/components';
             min-width: (200/16rem);
             margin: 0;
             padding: 0;
-            background-color: #fff;
+            //bg color of dropdown
+            background-color: #ffffff;
             overflow: hidden;
             box-shadow: rgba(149, 157, 165, 0.2) 0px 10px 16px;
             opacity: 0;
@@ -733,7 +735,7 @@ import { Icon } from 'astro-icon/components';
                 transition: color .3s, background-color .3s;
     
                 &:hover {
-                    background-color: #f7f7f7;
+                    background-color: #969696;
                 }
     
                 &:before {
@@ -939,7 +941,7 @@ import { Icon } from 'astro-icon/components';
             &:last-of-type {
                 /* pushes the button to the far right */
                 margin-left: auto;
-                padding: 0;
+                padding: 2rem 0;
             }
         }
 
@@ -1002,7 +1004,7 @@ import { Icon } from 'astro-icon/components';
                 content: '';
                 width: 0%;
                 height: 100%;
-                background: #000;
+                background: var(--csButtonHoverColor);
                 opacity: 1;
                 border-radius: (4/16rem);
                 position: absolute;
