@@ -2,16 +2,12 @@
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import CTA from "@components/CTA.astro";
 import Projects from "@components/Projects.astro";
-// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
-import {getOptimizedImage} from "@js/utils"
-import landingImage from "@assets/images/landing.jpg" // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
-const optimizedImage = await getOptimizedImage(landingImage)
+
 ---
 
 <BaseLayout
   title="Boutique Shutters | Custom Window Treatments in Buford & Metro Atlanta"
   description="Elevate your home with premium shutters, shades & motorized window treatments in Suwanee, Johns Creek & Metro Atlanta. Free in-home design consultations."
-  preloadedImage = {optimizedImage}
 >
 
 <!-- ============================================ -->
