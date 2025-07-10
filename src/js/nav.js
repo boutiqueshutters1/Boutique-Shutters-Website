@@ -1,4 +1,5 @@
-// add classes for mobile navigation toggling
+document.addEventListener("astro:page-load", () => {
+ // your javascript
     var CSbody = document.querySelector("body");
     const CSnavbarMenu = document.querySelector("#cs-navigation");
     const CShamburgerMenu = document.querySelector("#cs-navigation .cs-toggle");
@@ -54,4 +55,7 @@
         document.querySelector('#cs-navigation').classList.remove('scroll')
         }
     });
+});
+
+
                                 
