@@ -8,8 +8,21 @@ const { description, title } = Astro.props;
 ---
 <html lang="en">
         <head>
+          
             <!-- View Transitions support -->
             <ClientRouter />
+
+            <!-- Google tag (gtag.js) -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-BCS8H7X41M"></script>
+            <!-- Google tag (gtag.js) -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-BCS8H7X41M"></script>
+            <script is:inline>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-BCS8H7X41M');
+            </script>
 
             <!-- Standard meta tags -->
             <meta charset="UTF-8">
@@ -34,6 +47,9 @@ const { description, title } = Astro.props;
             <link rel="manifest" href="/assets/favicons/site.webmanifest">
             <meta name="msapplication-TileColor" content="#da532c">
             <meta name="theme-color" content="#ffffff">
+
+            <!-- Additional head content -->
+            <slot name="head" />
          
             <title>
                 {Astro.url.pathname === "/" ?  (`${ title }
