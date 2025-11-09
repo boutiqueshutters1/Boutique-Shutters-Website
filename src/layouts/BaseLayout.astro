@@ -1,5 +1,4 @@
 ---
-import { ClientRouter } from "astro:transitions";
 import client from "@data/client.json";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
@@ -8,14 +7,10 @@ const { description, title } = Astro.props;
 ---
 <html lang="en">
         <head>
-          
-            <!-- View Transitions support -->
-            <ClientRouter />
 
             <!-- Google tag (gtag.js) -->
             <script async src="https://www.googletagmanager.com/gtag/js?id=G-BCS8H7X41M"></script>
-            <!-- Google tag (gtag.js) -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-BCS8H7X41M"></script>
+
             <script is:inline>
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
