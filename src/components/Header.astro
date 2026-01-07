@@ -53,59 +53,109 @@ import { Icon } from 'astro-icon/components';
                     <span class="cs-line cs-line3" aria-hidden="true"></span>
                 </div>
             </button>
-            <div class="cs-ul-wrapper">
-                <ul id="cs-expanded-ul" class="cs-ul">
-                  {navData.map((entry) => (
-                    <li
-                      class:list={[
-                        "cs-li",
-                        { "cs-dropdown": entry.children?.length > 0 },
-                      ]}>
-                      {entry.children?.length > 0 ? (
-                        // If entry has children in navData.json, create a button and a dropdown icon
-                        <button
-                        aria-expanded="false"
-                        aria-controls={`submenu-${entry.key}`}
-                          class:list={[
-                            "cs-li-link cs-dropdown-button",
-                            { "cs-active": Astro.url.pathname.includes(entry.url)},
-                          ]}
-                        >
-                          {entry.key}
-                          <Icon name="mdi--caret" class="cs-drop-icon" />
-                        </button>
-                      ) : (
-                        // If entry does not have children in navData.json, create an anchor
-                        <a
-                          href={entry.url}
-                          class:list={[
-                            "cs-li-link",
-                            { "cs-active": Astro.url.pathname === entry.url },
-                          ]}
-                          aria-current={Astro.url.pathname === entry.url ? "page" : undefined}
-                        >
-                          {entry.key}
+    <div class="cs-ul-wrapper">
+                <ul id="cs-expanded" class="cs-ul">
+                    <li class="cs-li">
+                        <a href="/" class="cs-li-link cs-active">
+                            Home
                         </a>
-                      )}
-                      
-                      {entry.children?.length > 0 && (
-                        // If entry has children in navData.json, create a drop down menu
-                        <ul id={`submenu-${entry.key}`} class="cs-drop-ul">
-                          {entry.children.map((child) => (
-                            <li class="cs-drop-li">
-                              <a 
-                                href={child.url} 
-                                class="cs-li-link cs-drop-link"
-                                aria-current={Astro.url.pathname === child.url ? "page" : undefined}
-                              >
-                                {child.key}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
                     </li>
-                  ))}
+                    <li class="cs-li">
+                        <a href="/about" class="cs-li-link">
+                            About
+                        </a>
+                    </li>
+                    <li class="cs-li">
+                        <a href="/shutters" class="cs-li-link">
+                            Shutters
+                        </a>
+                    </li>
+                    <li class="cs-li">
+                        <a href="/zebra-shades" class="cs-li-link">
+                            Zebra Shades
+                        </a>
+                    </li>
+                    <li class="cs-li">
+                        <a href="/motorized-shades" class="cs-li-link">
+                            Motorized Shades
+                        </a>
+                    </li>
+                    <li class="cs-li">
+                        <a href="/exterior-shades" class="cs-li-link">
+                            Exterior Shades
+                        </a>
+                    </li>
+                    <li class="cs-li cs-dropdown">
+                        <span class="cs-li-link">
+                            Locations
+                            <img class="cs-drop-icon" src="/assets/svgs/Icons_down.svg" alt="dropdown icon" width="15" height="15" decoding="async" aria-hidden="true">
+                        </span>
+                        <ul class="cs-drop-ul">
+                            <li class="cs-drop-li">
+                                <a href="/locations/alpharetta" class="cs-li-link cs-drop-link">Alpharetta</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/auburn" class="cs-li-link cs-drop-link">Auburn</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/braselton" class="cs-li-link cs-drop-link">Braselton</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/buford" class="cs-li-link cs-drop-link">Buford</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/chamblee" class="cs-li-link cs-drop-link">Chamblee</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/cumming" class="cs-li-link cs-drop-link">Cumming</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/dacula" class="cs-li-link cs-drop-link">Dacula</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/decatur" class="cs-li-link cs-drop-link">Decatur</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/doraville" class="cs-li-link cs-drop-link">Doraville</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/duluth" class="cs-li-link cs-drop-link">Duluth</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/grayson" class="cs-li-link cs-drop-link">Grayson</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/hoschton" class="cs-li-link cs-drop-link">Hoschton</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/johns-creek" class="cs-li-link cs-drop-link">Johns Creek</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/lawrenceville" class="cs-li-link cs-drop-link">Lawrenceville</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/marietta" class="cs-li-link cs-drop-link">Marietta</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/norcross" class="cs-li-link cs-drop-link">Norcross</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/roswell" class="cs-li-link cs-drop-link">Roswell</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/snellville" class="cs-li-link cs-drop-link">Snellville</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/suwanee" class="cs-li-link cs-drop-link">Suwanee</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/tucker" class="cs-li-link cs-drop-link">Tucker</a>
+                            </li>
+                            <li class="cs-drop-li">
+                                <a href="/locations/winder" class="cs-li-link cs-drop-link">Winder</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -635,15 +685,14 @@ import { Icon } from 'astro-icon/components';
             }
         }
         .cs-li-link.cs-dropdown-button {
-                    background-color: transparent; /* Change from light/white to your dark color */
-                    border: none; /* Remove border */
-                    color: #484848; /* Keep text white/visible */
+            background-color: transparent; /* Change from light/white to your dark color */
+            border: none; /* Remove border */
+            color: #484848; /* Keep text white/visible */
         }
         .cs-drop-icon {
             width: (15/16rem);
             height: auto;
             display: inline-block;
-            transform: rotate(180deg);
         }
 
         .cs-drop-ul {
@@ -658,7 +707,7 @@ import { Icon } from 'astro-icon/components';
             border-bottom: 5px solid var(--primary);
             visibility: hidden;
             /* if you have 8 or more links in your dropdown nav, uncomment the columns property to make the list into 2 even columns. Change it to 3 or 4 if you need extra columns. Then remove the transition delays on the cs-drop-li so they don't have weird scattered animations */
-            // columns: 2;
+            columns: 3;
             position: absolute;
             top: 100%;
             z-index: -100;
