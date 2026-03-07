@@ -56,7 +56,7 @@ Key business goals driving this codebase:
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/boutique-shutters-website.git
+git clone https://github.com/32ronin/astro-cms-boutiqueshutters.com.git
 cd boutique-shutters-website
 
 # Install dependencies
