@@ -23,10 +23,10 @@ import FAQ from "@components/FAQ.astro";
                 Premium window shutters, designer shades, and motorized blinds with expert installation. Transform your home with custom-designed window treatments from Boutique Shutters—serving Metro Atlanta homeowners with personalized service, superior craftsmanship, and a commitment to perfection in every installation.
             </p>
             <a href="/book" class="cs-button-solid">Schedule Free Consultation</a>
-            <div class="cs-hero-badge">
+            <a href="https://maps.app.goo.gl/314AZ4Dpz98b73GS8" target="_blank" rel="noopener noreferrer" class="cs-hero-badge">
                 <img src="https://csimg.nyc3.digitaloceanspaces.com/Reviews/stars-yellow.svg" alt="5 stars" width="96" height="16">
                 <span>4.9 from 50+ Google Reviews</span>
-            </div>
+            </a>
         </div>
     </div>
 
@@ -374,6 +374,12 @@ import FAQ from "@components/FAQ.astro";
                 </div>
             </li>
         </ul>
+        <div class="cs-reviews-cta">
+            <a href="https://maps.app.goo.gl/314AZ4Dpz98b73GS8" target="_blank" rel="noopener noreferrer" class="cs-reviews-link">
+                <img src="/assets/images/google.svg" alt="Google" width="24" height="24">
+                Read All Reviews on Google &rarr;
+            </a>
+        </div>
     </div>
 </section>
 
@@ -1753,6 +1759,36 @@ import FAQ from "@components/FAQ.astro";
             height: (16/16em);
             /* centers it with the rating to the left */
             margin-bottom: (3/16rem);
+        }
+
+        .cs-reviews-cta {
+            width: 100%;
+            text-align: center;
+            margin-top: (16/16rem);
+        }
+
+        .cs-reviews-link {
+            display: inline-flex;
+            align-items: center;
+            gap: (8/16rem);
+            font-size: (16/16rem);
+            font-weight: 700;
+            color: var(--secondary);
+            text-decoration: none;
+            padding: (12/16rem) (24/16rem);
+            border: 2px solid var(--secondary);
+            border-radius: (4/16rem);
+            transition: background 0.3s, color 0.3s;
+
+            img {
+                width: (24/16rem);
+                height: (24/16rem);
+            }
+
+            &:hover {
+                background: var(--secondary);
+                color: #000;
+            }
         }
     }
 }
