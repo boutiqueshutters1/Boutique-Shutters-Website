@@ -1,0 +1,332 @@
+---
+import BaseLayout from "src/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { formatDate } from "@js/utils";
+
+import {getOptimizedImage} from "@js/utils"
+import landingImage from "@assets/images/landing.jpg"
+const optimizedImage = await getOptimizedImage(landingImage)
+
+const posts = (await getCollection("blog")).sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+---
+
+<BaseLayout
+  title="Window Treatment Blog | Tips, Trends & Guides | Boutique Shutters"
+  description="Expert advice on plantation shutters, window shades, motorized treatments, and home design trends from Boutique Shutters in Metro Atlanta."
+  preloadedImage={optimizedImage}
+>
+
+<!-- ============================================ -->
+<!--                   Banner                     -->
+<!-- ============================================ -->
+
+<div id="banner-1106">
+    <div class="cs-container">
+        <span class="cs-int-title">Blog</span>
+        <div class="cs-breadcrumbs">
+            <a href="/" class="cs-link">Home</a>
+            <a href="/blog" class="cs-link cs-active">Blog</a>
+        </div>
+    </div>
+    <picture class="cs-background">
+        <source media="(max-width: 600px)" srcset="/assets/images/shades/cta-shades-1280x568-d.webp">
+        <source media="(min-width: 601px)" srcset="/assets/images/shades/cta-shades-1280x568-d.webp">
+        <img decoding="async" src="/assets/images/shades/cta-shades-1280x568-d.webp" alt="window treatment blog" width="1280" height="568" aria-hidden="true">
+    </picture>
+</div>
+
+<!-- ============================================ -->
+<!--                 Blog Grid                     -->
+<!-- ============================================ -->
+
+<section id="blog-grid">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">Our Blog</span>
+            <h2 class="cs-title">Tips, Trends & Expert Advice</h2>
+            <p class="cs-text">
+                Explore our latest articles on window treatments, home design trends, and expert tips to help you make the best choices for your home.
+            </p>
+        </div>
+        <ul class="cs-card-group">
+            {posts.map((post) => (
+                <li class="cs-item">
+                    <a href={`/blog/${post.id}`} class="cs-link">
+                        <picture class="cs-picture">
+                            <img loading="lazy" decoding="async" src="/assets/images/shutters/plantation-shutters-1800x860-d.webp" alt={post.data.imageAlt} width="413" height="240">
+                        </picture>
+                        <div class="cs-item-content">
+                            <div class="cs-meta">
+                                <span class="cs-date">{formatDate(post.data.date)}</span>
+                                <span class="cs-author">by {post.data.author}</span>
+                            </div>
+                            <h3 class="cs-h3">{post.data.title}</h3>
+                            <p class="cs-item-text">{post.data.description}</p>
+                            <span class="cs-read-more">Read More &rarr;</span>
+                        </div>
+                    </a>
+                </li>
+            ))}
+        </ul>
+    </div>
+</section>
+
+</BaseLayout>
+
+<style lang="less">
+/*-- -------------------------- -->
+<---          Banner            -->
+<--- -------------------------- -*/
+
+@media only screen and (min-width: 0rem) {
+    #banner-1106 {
+        padding: var(--sectionPadding);
+        padding-top: (250/16rem);
+        padding-bottom: (120/16rem);
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+
+        .cs-container {
+            text-align: center;
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: (12/16rem);
+        }
+
+        .cs-int-title {
+            font-size: clamp(2.4375rem, 6.4vw, 3.8125rem);
+            font-weight: 900;
+            line-height: 1.2em;
+            text-align: inherit;
+            margin: 0;
+            color: var(--bodyTextColorWhite);
+            position: relative;
+        }
+
+        .cs-breadcrumbs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cs-link {
+            font-size: (16/16rem);
+            line-height: 1.2em;
+            text-decoration: none;
+            color: var(--bodyTextColorWhite);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:last-of-type::after { display: none; }
+
+            &:after {
+                content: "";
+                width: (7/16rem);
+                height: (12/16rem);
+                margin: 0 (16/16rem);
+                background: url("https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/white-chev.svg");
+                background-size: contain;
+                background-position: center;
+                background-repeat: no-repeat;
+                position: relative;
+                display: block;
+            }
+
+            &.cs-active { color: var(--secondary); }
+        }
+
+        .cs-background {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+
+            &:before {
+                content: "";
+                position: absolute;
+                display: block;
+                height: 100%;
+                width: 100%;
+                background: -webkit-linear-gradient(left, rgba(26, 26, 26, 0.94) 0%, rgba(26, 26, 26, 0) 100%);
+                opacity: 1;
+                top: 0;
+                left: 0;
+                z-index: 1;
+            }
+
+            img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+}
+
+/*-- -------------------------- -->
+<---         Blog Grid          -->
+<--- -------------------------- -*/
+
+@media only screen and (min-width: 0rem) {
+    #blog-grid {
+        padding: var(--sectionPadding);
+
+        .cs-container {
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(2rem, 4vw, 3rem);
+        }
+
+        .cs-content {
+            text-align: center;
+            width: 100%;
+            max-width: (700/16rem);
+        }
+
+        .cs-title {
+            margin: 0 0 (16/16rem) 0;
+        }
+
+        .cs-card-group {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: (32/16rem);
+        }
+
+        .cs-item {
+            list-style: none;
+            overflow: hidden;
+            border-radius: (4/16rem);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+
+            &:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+
+                .cs-picture img {
+                    transform: scale(1.05);
+                }
+            }
+        }
+
+        .cs-link {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .cs-picture {
+            width: 100%;
+            height: (200/16rem);
+            overflow: hidden;
+            display: block;
+            position: relative;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.6s;
+            }
+        }
+
+        .cs-item-content {
+            padding: (24/16rem);
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .cs-meta {
+            display: flex;
+            align-items: center;
+            gap: (12/16rem);
+            margin-bottom: (12/16rem);
+        }
+
+        .cs-date,
+        .cs-author {
+            font-size: (13/16rem);
+            color: var(--bodyTextColor);
+        }
+
+        .cs-date {
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .cs-h3 {
+            font-size: clamp(1.125rem, 2vw, 1.375rem);
+            font-weight: 700;
+            line-height: 1.3em;
+            margin: 0 0 (8/16rem) 0;
+            color: var(--headerColor);
+        }
+
+        .cs-item-text {
+            font-size: (15/16rem);
+            line-height: 1.5em;
+            color: var(--bodyTextColor);
+            margin: 0 0 (16/16rem) 0;
+        }
+
+        .cs-read-more {
+            font-size: (15/16rem);
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: auto;
+        }
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #blog-grid {
+        .cs-card-group {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .cs-picture {
+            height: (220/16rem);
+        }
+    }
+}
+
+/* Desktop - 1024px */
+@media only screen and (min-width: 64rem) {
+    #blog-grid {
+        .cs-card-group {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .cs-picture {
+            height: (240/16rem);
+        }
+    }
+}
+</style>
