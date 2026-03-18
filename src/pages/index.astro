@@ -446,59 +446,78 @@ import FAQ from "@components/FAQ.astro";
 </BaseLayout>
 
 <!-- Before/After Slider Script -->
-<script>
-document.addEventListener('astro:page-load', () => {
-    const slider = document.getElementById('ba-slider');
-    const handle = document.getElementById('ba-handle');
-    if (!slider || !handle) return;
+<script is:inline>
+(function() {
+    function initSlider() {
+        const slider = document.getElementById('ba-slider');
+        const handle = document.getElementById('ba-handle');
+        if (!slider || !handle || slider.dataset.initialized) return;
+        slider.dataset.initialized = 'true';
 
-    let isDragging = false;
+        let isDragging = false;
 
-    const updateSlider = (x) => {
-        const rect = slider.getBoundingClientRect();
-        let pos = ((x - rect.left) / rect.width) * 100;
-        pos = Math.max(0, Math.min(100, pos));
-        slider.style.setProperty('--split', pos + '%');
-    };
+        const updateSlider = (x) => {
+            const rect = slider.getBoundingClientRect();
+            let pos = ((x - rect.left) / rect.width) * 100;
+            pos = Math.max(0, Math.min(100, pos));
+            slider.style.setProperty('--split', pos + '%');
+        };
 
-    handle.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        e.preventDefault();
-    });
+        slider.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            updateSlider(e.clientX);
+            e.preventDefault();
+        });
 
-    handle.addEventListener('touchstart', (e) => {
-        isDragging = true;
-    }, { passive: true });
+        slider.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            updateSlider(e.touches[0].clientX);
+        }, { passive: true });
 
-    document.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        updateSlider(e.clientX);
-    });
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            updateSlider(e.clientX);
+        });
 
-    document.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        updateSlider(e.touches[0].clientX);
-    }, { passive: true });
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            updateSlider(e.touches[0].clientX);
+        }, { passive: true });
 
-    document.addEventListener('mouseup', () => isDragging = false);
-    document.addEventListener('touchend', () => isDragging = false);
-});
+        document.addEventListener('mouseup', () => isDragging = false);
+        document.addEventListener('touchend', () => isDragging = false);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initSlider);
+    } else {
+        initSlider();
+    }
+})();
 </script>
 
 <!-- Sticky Bar Script -->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const stickyBar = document.getElementById('sticky-bar');
-    if (!stickyBar) return;
+<script is:inline>
+(function() {
+    function initStickyBar() {
+        const stickyBar = document.getElementById('sticky-bar');
+        if (!stickyBar) return;
 
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 600) {
-            stickyBar.classList.add('visible');
-        } else {
-            stickyBar.classList.remove('visible');
-        }
-    }, { passive: true });
-});
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) {
+                stickyBar.classList.add('visible');
+            } else {
+                stickyBar.classList.remove('visible');
+            }
+        }, { passive: true });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initStickyBar);
+    } else {
+        initStickyBar();
+    }
+})();
 </script>
 
 <!-- ============================================ -->
