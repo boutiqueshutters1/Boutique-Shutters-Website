@@ -8,7 +8,7 @@ tags:
   - sustainability
   - shutters
   - shades
-image: /src/assets/images/landing.jpg
+image: /src/assets/images/blog/energy-efficient.webp
 imageAlt: "Energy-efficient plantation shutters helping control temperature in Atlanta home"
 ---
 

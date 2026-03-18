@@ -7,7 +7,7 @@ tags:
   - motorized
   - smart home
   - technology
-image: /src/assets/images/landing.jpg
+image: /src/assets/images/blog/smart-home-shades.webp
 imageAlt: "Motorized smart shades controlled by voice assistant in modern home"
 ---
 

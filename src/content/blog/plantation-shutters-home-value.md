@@ -7,7 +7,7 @@ tags:
   - shutters
   - home value
   - investment
-image: /src/assets/images/landing.jpg
+image: /src/assets/images/blog/shutters-home-value.webp
 imageAlt: "Plantation shutters adding value to an Atlanta home"
 ---
 

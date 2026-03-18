@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "src/layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import { formatDate } from "@js/utils";
 
@@ -54,9 +55,9 @@ const posts = (await getCollection("blog")).sort(
             {posts.map((post) => (
                 <li class="cs-item">
                     <a href={`/blog/${post.id}`} class="cs-link">
-                        <picture class="cs-picture">
-                            <img loading="lazy" decoding="async" src="/assets/images/shutters/plantation-shutters-1800x860-d.webp" alt={post.data.imageAlt} width="413" height="240">
-                        </picture>
+                        <div class="cs-picture">
+                            <Image src={post.data.image} alt={post.data.imageAlt} width={413} height={240} loading="lazy" decoding="async" />
+                        </div>
                         <div class="cs-item-content">
                             <div class="cs-meta">
                                 <span class="cs-date">{formatDate(post.data.date)}</span>

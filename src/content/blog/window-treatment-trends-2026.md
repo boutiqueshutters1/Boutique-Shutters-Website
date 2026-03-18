@@ -7,7 +7,7 @@ tags:
   - trends
   - design
   - "2026"
-image: /src/assets/images/landing.jpg
+image: /src/assets/images/blog/trends-2026.webp
 imageAlt: "Modern window treatment trends in an Atlanta living room"
 ---
 

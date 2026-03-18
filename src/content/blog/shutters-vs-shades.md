@@ -7,7 +7,7 @@ tags:
   - shutters
   - shades
   - guide
-image: /src/assets/images/landing.jpg
+image: /src/assets/images/blog/shutters-comparison.webp
 imageAlt: "Plantation shutters and window shades comparison in Atlanta home"
 ---
 

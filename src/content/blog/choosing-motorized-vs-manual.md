@@ -8,7 +8,7 @@ tags:
   - manual
   - comparison
   - guide
-image: /src/assets/images/landing.jpg
+image: /src/assets/images/blog/motorized-vs-manual.webp
 imageAlt: "Comparison of motorized and manual window shades"
 ---
 
