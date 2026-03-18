@@ -9,29 +9,41 @@
     "url": "/about/",
     "children": []
   },
-    {
-    "key": "Shutters",
-    "url": "/shutters/",
+  {
+    "key": "Products",
+    "url": "",
+    "children": [
+      {
+        "key": "Plantation Shutters",
+        "url": "/shutters/"
+      },
+      {
+        "key": "Zebra Shades",
+        "url": "/zebra-shades/"
+      },
+      {
+        "key": "Motorized Shades",
+        "url": "/motorized-shades/"
+      },
+      {
+        "key": "Exterior Shades",
+        "url": "/exterior-shades/"
+      }
+    ]
+  },
+  {
+    "key": "Blog",
+    "url": "/blog/",
     "children": []
   },
   {
-    "key": "Zebra Shades",
-    "url": "/shades/",
-    "children": []
-  },
-  {
-    "key": "Motorized Shades",
-    "url": "/motorized/",
-    "children": []
-  },
-    {
-    "key": "Exterior Shades",
-    "url": "/exterior-shades/",
+    "key": "Warranty",
+    "url": "/warranty/",
     "children": []
   },
   {
     "key": "Locations",
-    "url": "/locations/",
+    "url": "",
     "children": [
       {
         "key": "Alpharetta",
