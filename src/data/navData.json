@@ -66,12 +66,20 @@
         "url": "/locations/marietta/"
       },
       {
+        "key": "Peachtree Corners",
+        "url": "/locations/peachtree-corners/"
+      },
+      {
         "key": "Roswell",
         "url": "/locations/roswell/"
       },
       {
         "key": "Snellville",
         "url": "/locations/snellville/"
+      },
+      {
+        "key": "Sugar Hill",
+        "url": "/locations/sugar-hill/"
       },
       {
         "key": "Suwanee",

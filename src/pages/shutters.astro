@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import CTA from "@components/CTA.astro";
+import Pricing from "@components/Pricing.astro";
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import {getOptimizedImage} from "@js/utils"
@@ -48,7 +49,7 @@ const optimizedImage = await getOptimizedImage(landingImage)
                 Discover the perfect blend of sophistication and functionality with Boutique Shutters' custom plantation shutters. Each shutter is meticulously crafted to your exact window specifications, ensuring a flawless fit and years of reliable operation. Our premium materials and expert craftsmanship create window treatments that enhance your home's beauty while providing superior light control and privacy.
             </p>
             <p class="cs-text">
-                Available in a variety of louver sizes, paint finishes, and stain options, our plantation shutters complement any architectural style from traditional to contemporary. Experience the luxury of custom window treatments that increase your home's value while reducing energy costs through enhanced insulation.
+                Available in a variety of louver sizes, paint finishes, and stain options, our plantation shutters complement any architectural style from traditional to contemporary. Crafted from responsibly sourced hardwoods and eco-friendly composite materials, our shutters reduce energy costs through enhanced insulation—homeowners report up to 25% savings on cooling bills during Atlanta's hot summers.
             </p>
             <picture class="cs-picture cs-picture1">
                 <!--Mobile Image-->
@@ -94,7 +95,7 @@ const optimizedImage = await getOptimizedImage(landingImage)
             <span class="cs-topper">Superior Craftsmanship</span>
             <h2 class="cs-title">Why Choose Boutique Shutters for Your Home</h2>
             <p class="cs-text">
-                At Boutique Shutters, we understand that plantation shutters are an investment in your home's beauty and functionality. Our commitment to excellence begins with premium materials sourced from trusted suppliers and extends through every step of our meticulous crafting process. Each shutter frame is precision-engineered for perfect alignment, while our reinforced louvers ensure smooth operation for decades to come.
+                At Boutique Shutters, we understand that plantation shutters are an investment in your home's beauty, functionality, and energy efficiency. Our commitment to excellence begins with premium materials—including sustainably sourced woods and recyclable composites—and extends through every step of our meticulous crafting process. Each shutter frame is precision-engineered for perfect alignment, while our reinforced louvers ensure smooth operation for decades to come.
             </p>
             <p class="cs-text">
                 Our certified installation team brings years of experience to every project, ensuring your custom shutters fit flawlessly and operate smoothly from day one. We handle complex window shapes, including arches, angles, and specialty configurations that other companies often avoid. The result is a stunning window treatment that perfectly complements your home's unique character.
@@ -132,7 +133,15 @@ const optimizedImage = await getOptimizedImage(landingImage)
         </div>
     </div>
 </section>
-                                
+
+
+<Pricing
+    items={[
+        { name: "Plantation Shutters", price: "From $25/sq ft" },
+        { name: "Composite Shutters", price: "From $20/sq ft" },
+    ]}
+    note="Final pricing based on window size, material, and customization. Get your exact quote with a free consultation."
+/>
 
 <CTA/>
 

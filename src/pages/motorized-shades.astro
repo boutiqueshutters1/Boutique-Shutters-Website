@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import CTA from "@components/CTA.astro";
+import Pricing from "@components/Pricing.astro";
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import {getOptimizedImage} from "@js/utils"
@@ -10,7 +11,7 @@ const optimizedImage = await getOptimizedImage(landingImage)
 
 <BaseLayout
   title="Custom Motorized Shades in Sugar Hill, Suwanee & Johns Creek | Boutique Shutters"
-  description="Transform your home with smart motorized shades from Boutique Shutters. Alexa & Google Home compatible window treatments in North Georgia. Free consultation."
+  description="Atlanta's smart window treatment specialists. Motorized shades with Alexa, Google Home & Apple HomeKit integration. Professional installation in Sugar Hill, Suwanee & Johns Creek."
   preloadedImage = {optimizedImage}
 >
 <!-- ============================================ -->
@@ -42,13 +43,13 @@ const optimizedImage = await getOptimizedImage(landingImage)
 <section id="sbs-1598">
     <div class="cs-container">
         <div class="cs-content">
-            <span class="cs-topper">Smart Technology</span>
-            <h2 class="cs-title">The Future of Window Treatments is Here</h2>
+            <span class="cs-topper">Smart Window Treatment Specialists</span>
+            <h2 class="cs-title">Atlanta's Smart Window Treatment Experts</h2>
             <p class="cs-text">
-                Experience the ultimate convenience and luxury with Boutique Shutters' custom motorized shades. Our cutting-edge smart window treatments seamlessly integrate with your lifestyle, offering precise light control, enhanced privacy, and energy efficiency at the touch of a button or voice command.
+                Smart motorized shades are no longer a luxury upgrade—they are the new standard for modern homes. Boutique Shutters is Metro Atlanta's dedicated smart window treatment specialist, delivering seamless integration with Alexa, Google Home, and Apple HomeKit so you can control every shade with your voice, your phone, or automated schedules.
             </p>
             <p class="cs-text">
-                Perfect for hard-to-reach windows, large glass expanses, or any homeowner seeking modern automation, our motorized shades combine sophisticated technology with elegant design to elevate your Sugar Hill, Suwanee, or Johns Creek home.
+                Perfect for hard-to-reach windows, two-story foyers, large glass expanses, or any homeowner who wants a connected home experience. Our motorized shades combine sophisticated technology with elegant design to elevate your Sugar Hill, Suwanee, or Johns Creek home while reducing energy costs through automated sun management.
             </p>
             <picture class="cs-picture cs-picture1">
                 <!--Mobile Image-->
@@ -122,17 +123,25 @@ const optimizedImage = await getOptimizedImage(landingImage)
                 </li>
                 <li class="cs-stat">
                     <span class="cs-number">3</span>
-                    <span class="cs-desc">Smart home platforms supported</span>
+                    <span class="cs-desc">Platforms: Alexa, Google Home, Apple HomeKit</span>
                 </li>
                 <li class="cs-stat">
                     <span class="cs-number">Free</span>
-                    <span class="cs-desc">In-home consultation & quote</span>
+                    <span class="cs-desc">In-home or virtual consultation</span>
                 </li>
             </ul>
         </div>
     </div>
 </section>
-                                
+
+
+<Pricing
+    items={[
+        { name: "Motorized Shades", price: "From $300/window" },
+        { name: "Smart Home Integration", price: "Included" },
+    ]}
+    note="Includes motor, remote, and smart home setup. Pricing varies by window size and fabric. Get your exact quote with a free consultation."
+/>
 
 <CTA/>
 

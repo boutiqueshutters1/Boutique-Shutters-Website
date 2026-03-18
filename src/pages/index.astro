@@ -21,7 +21,7 @@ import Projects from "@components/Projects.astro";
             <p class="cs-text">
                 Premium window shutters, designer shades, and motorized blinds with expert installation. Transform your home with custom-designed window treatments from Boutique Shutters—serving Metro Atlanta homeowners with personalized service, superior craftsmanship, and a commitment to perfection in every installation.
             </p>
-            <a href="https://calendar.app.google/LNDNRLKL9TYctGw98" class="cs-button-solid">Schedule Free Consultation</a>
+            <a href="/book" class="cs-button-solid">Schedule Free Consultation</a>
         </div>
     </div>
 
@@ -182,7 +182,7 @@ import Projects from "@components/Projects.astro";
                   <p class="cs-item-text">
                     Innovative dual-layer fabric shades offering seamless transition between sheer and privacy. Perfect light control with contemporary style for any room in your home.</p>
                   <span class="cs-fake-link">
-                    <a class="cs-button-solid" aria-label="learn more about our programs" href="https://calendar.app.google/LNDNRLKL9TYctGw98">Schedule Consultation</a>
+                    <a class="cs-button-solid" aria-label="learn more about our programs" href="/book">Schedule Consultation</a>
                   </span>
           </li>
           <li class="cs-item">
@@ -195,7 +195,7 @@ import Projects from "@components/Projects.astro";
                   <p class="cs-item-text">
                     Custom-crafted plantation shutters that add sophistication and value to your home. Superior light control, privacy, and energy efficiency with timeless elegance.</p>
                   <span class="cs-fake-link">
-                    <a class="cs-button-solid" aria-label="learn more about our programs" href="https://calendar.app.google/LNDNRLKL9TYctGw98">Schedule Consultation</a>
+                    <a class="cs-button-solid" aria-label="learn more about our programs" href="/book">Schedule Consultation</a>
                 </span>
           </li>
           <li class="cs-item">
@@ -208,7 +208,7 @@ import Projects from "@components/Projects.astro";
                   <p class="cs-item-text">
                     Custom cellular, roller, Roman, and woven wood shades in hundreds of premium fabrics. Choose varying opacity levels for perfect light and privacy control.</p>
                   <span class="cs-fake-link">
-                    <a class="cs-button-solid" aria-label="learn more about our programs" href="https://calendar.app.google/LNDNRLKL9TYctGw98">Schedule Consultation</a>
+                    <a class="cs-button-solid" aria-label="learn more about our programs" href="/book">Schedule Consultation</a>
                 </span>
           </li>
           <li class="cs-item">
@@ -221,7 +221,7 @@ import Projects from "@components/Projects.astro";
                   <p class="cs-item-text">
                     Smart motorized window treatments controlled via remote, smartphone app, or voice commands through Alexa or Google Home. Perfect for hard-to-reach windows.</p>
                   <span class="cs-fake-link">
-                    <a class="cs-button-solid" aria-label="learn more about our programs" href="https://calendar.app.google/LNDNRLKL9TYctGw98">Schedule Consultation</a>
+                    <a class="cs-button-solid" aria-label="learn more about our programs" href="/book">Schedule Consultation</a>
                 </span>
           </li>
       </ul>
@@ -334,6 +334,39 @@ import Projects from "@components/Projects.astro";
     </div>
 </section>
                                 
+<!-- ============================================ -->
+<!--               Trust Badges                    -->
+<!-- ============================================ -->
+
+<section id="trust-badges">
+    <div class="cs-container">
+        <span class="cs-topper">Why Trust Us</span>
+        <h2 class="cs-title">Your Confidence, Our Commitment</h2>
+        <ul class="cs-badge-group">
+            <li class="cs-badge">
+                <span class="cs-badge-icon">&#9989;</span>
+                <span class="cs-badge-title">Licensed & Insured</span>
+                <span class="cs-badge-desc">Fully licensed and insured for your protection</span>
+            </li>
+            <li class="cs-badge">
+                <span class="cs-badge-icon">&#128736;</span>
+                <span class="cs-badge-title">Certified Installers</span>
+                <span class="cs-badge-desc">Factory-trained professional installation team</span>
+            </li>
+            <li class="cs-badge">
+                <span class="cs-badge-icon">&#11088;</span>
+                <span class="cs-badge-title">5-Star Google Rated</span>
+                <span class="cs-badge-desc">Consistently top-rated by Atlanta homeowners</span>
+            </li>
+            <li class="cs-badge">
+                <span class="cs-badge-icon">&#128170;</span>
+                <span class="cs-badge-title">Satisfaction Guaranteed</span>
+                <span class="cs-badge-desc">We are not done until you are 100% happy</span>
+            </li>
+        </ul>
+    </div>
+</section>
+
   <!-- ============================================ -->
   <!--                   CTA                        -->
   <!-- ============================================ -->
@@ -347,6 +380,88 @@ import Projects from "@components/Projects.astro";
 <!-- ============================================ -->
  
 <style lang="less">
+
+/*-- -------------------------- -->
+<---       Trust Badges         -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #trust-badges {
+        padding: var(--sectionPadding);
+        background-color: #f7f7f7;
+        text-align: center;
+
+        .cs-container {
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+        }
+
+        .cs-title {
+            margin: 0 0 (40/16rem) 0;
+        }
+
+        .cs-badge-group {
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: (24/16rem);
+        }
+
+        .cs-badge {
+            list-style: none;
+            background: white;
+            padding: (32/16rem) (24/16rem);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: (8/16rem);
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        .cs-badge-icon {
+            font-size: (40/16rem);
+            line-height: 1;
+            display: block;
+            margin-bottom: (8/16rem);
+        }
+
+        .cs-badge-title {
+            font-size: (20/16rem);
+            font-weight: 700;
+            line-height: 1.2em;
+            color: var(--headerColor);
+        }
+
+        .cs-badge-desc {
+            font-size: (16/16rem);
+            line-height: 1.5em;
+            color: var(--bodyTextColor);
+        }
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #trust-badges {
+        .cs-badge-group {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+}
+
+/* Desktop - 1024px */
+@media only screen and (min-width: 64rem) {
+    #trust-badges {
+        .cs-badge-group {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+}
+
   /* STYLES FOR ABOVE THE FOLD */
 
 /*-- -------------------------- -->

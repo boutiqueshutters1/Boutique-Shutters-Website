@@ -1,0 +1,351 @@
+---
+import BaseLayout from "src/layouts/BaseLayout.astro";
+
+// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
+import {getOptimizedImage} from "@js/utils"
+import landingImage from "@assets/images/landing.jpg"
+const optimizedImage = await getOptimizedImage(landingImage)
+---
+
+<BaseLayout
+  title="Book Your Free Consultation | Boutique Shutters | Metro Atlanta"
+  description="Schedule your free in-home or virtual window treatment consultation with Boutique Shutters. Serving Sugar Hill, Suwanee, Johns Creek, Alpharetta & Metro Atlanta."
+  preloadedImage = {optimizedImage}
+>
+<!-- ============================================ -->
+<!--                   Banner                     -->
+<!-- ============================================ -->
+
+<div id="banner-1106">
+    <div class="cs-container">
+        <span class="cs-int-title">Book Your Consultation</span>
+        <div class="cs-breadcrumbs">
+            <a href="/" class="cs-link">Home</a>
+            <a href="/book" class="cs-link cs-active">Book</a>
+        </div>
+    </div>
+    <!--Background Image-->
+    <picture class="cs-background">
+        <!--Mobile Image-->
+        <source media="(max-width: 600px)" srcset="/assets/images/shades/cta-shades-1280x568-d.webp">
+        <!--Tablet and above Image-->
+        <source media="(min-width: 601px)" srcset="/assets/images/shades/cta-shades-1280x568-d.webp">
+        <img decoding="async" src="/assets/images/shades/cta-shades-1280x568-d.webp" alt="window treatment consultation booking" width="1280" height="568" aria-hidden="true">
+    </picture>
+</div>
+
+<!-- ============================================ -->
+<!--              Booking Section                  -->
+<!-- ============================================ -->
+
+<section id="booking-section">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">Free Consultation</span>
+            <h2 class="cs-title">Schedule Your Free Design Consultation</h2>
+            <p class="cs-text">
+                Select a date and time that works for you. We offer both in-home visits throughout Metro Atlanta and virtual video consultations for your convenience. Your consultation is completely free with no obligation.
+            </p>
+
+            <div class="cs-steps">
+                <div class="cs-step">
+                    <span class="cs-step-number">1</span>
+                    <div class="cs-step-content">
+                        <h3 class="cs-step-title">Book a Time</h3>
+                        <p class="cs-step-text">Choose a convenient date and time using the calendar below</p>
+                    </div>
+                </div>
+                <div class="cs-step">
+                    <span class="cs-step-number">2</span>
+                    <div class="cs-step-content">
+                        <h3 class="cs-step-title">We Visit Your Home</h3>
+                        <p class="cs-step-text">Our specialist measures your windows and shows you premium samples</p>
+                    </div>
+                </div>
+                <div class="cs-step">
+                    <span class="cs-step-number">3</span>
+                    <div class="cs-step-content">
+                        <h3 class="cs-step-title">Get Your Quote</h3>
+                        <p class="cs-step-text">Receive a detailed, transparent quote tailored to your home and budget</p>
+                    </div>
+                </div>
+                <div class="cs-step">
+                    <span class="cs-step-number">4</span>
+                    <div class="cs-step-content">
+                        <h3 class="cs-step-title">Professional Installation</h3>
+                        <p class="cs-step-text">Our certified team installs your custom window treatments</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cs-calendar-wrapper">
+            <h3 class="cs-calendar-title">Select a Date & Time</h3>
+            <iframe
+                src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0NLGxdYRjt7GKtqIITKUUXiATn6-vMfNl1mj5UMVIZmqy4lxwy0jh-ebqrWXjimpknX7M259tf?gv=true"
+                style="border: 0"
+                width="100%"
+                height="600"
+                frameborder="0"
+                title="Schedule an appointment with Boutique Shutters"
+                loading="lazy">
+            </iframe>
+        </div>
+
+        <div class="cs-contact-alt">
+            <p class="cs-text">Prefer to call? Reach us directly at <a href="tel:404-966-7419">404-966-7419</a> or email <a href="mailto:sales@boutiqueshutters.com">sales@boutiqueshutters.com</a></p>
+        </div>
+    </div>
+</section>
+
+</BaseLayout>
+
+<style lang="less">
+/*-- -------------------------- -->
+<---          Banner            -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #banner-1106 {
+        padding: var(--sectionPadding);
+        padding-top: (250/16rem);
+        padding-bottom: (120/16rem);
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+
+        .cs-container {
+            text-align: center;
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: (12/16rem);
+        }
+
+        .cs-int-title {
+            font-size: clamp(2.4375rem, 6.4vw, 3.8125rem);
+            font-weight: 900;
+            line-height: 1.2em;
+            text-align: inherit;
+            margin: 0;
+            color: var(--bodyTextColorWhite);
+            position: relative;
+        }
+
+        .cs-breadcrumbs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cs-link {
+            font-size: (16/16rem);
+            line-height: 1.2em;
+            text-decoration: none;
+            color: var(--bodyTextColorWhite);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:last-of-type {
+                &::after {
+                    display: none;
+                }
+            }
+
+            &:after {
+                content: "";
+                width: (7/16rem);
+                height: (12/16rem);
+                margin: 0 (16/16rem);
+                background: url("https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/white-chev.svg");
+                background-size: contain;
+                background-position: center;
+                background-repeat: no-repeat;
+                position: relative;
+                display: block;
+            }
+
+            &.cs-active {
+                color: var(--secondary);
+            }
+        }
+
+        .cs-background {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+
+            &:before {
+                content: "";
+                position: absolute;
+                display: block;
+                height: 100%;
+                width: 100%;
+                background: -moz-linear-gradient(left, rgba(26, 26, 26, 0.94) 0%, rgba(26, 26, 26, 0) 100%);
+                background: -webkit-linear-gradient(left, rgba(26, 26, 26, 0.94) 0%, rgba(26, 26, 26, 0) 100%);
+                opacity: 1;
+                top: 0;
+                left: 0;
+                z-index: 1;
+            }
+
+            img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+}
+
+/*-- -------------------------- -->
+<---      Booking Section       -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #booking-section {
+        padding: var(--sectionPadding);
+
+        .cs-container {
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(2rem, 4vw, 3rem);
+        }
+
+        .cs-content {
+            text-align: left;
+            width: 100%;
+        }
+
+        .cs-title {
+            margin: 0 0 (16/16rem) 0;
+        }
+
+        .cs-text {
+            margin-bottom: (24/16rem);
+        }
+
+        .cs-steps {
+            display: flex;
+            flex-direction: column;
+            gap: (20/16rem);
+            margin-bottom: (32/16rem);
+        }
+
+        .cs-step {
+            display: flex;
+            align-items: flex-start;
+            gap: (16/16rem);
+        }
+
+        .cs-step-number {
+            font-size: (20/16rem);
+            font-weight: 900;
+            color: white;
+            background-color: var(--secondary);
+            min-width: (40/16rem);
+            height: (40/16rem);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .cs-step-content {
+            padding-top: (4/16rem);
+        }
+
+        .cs-step-title {
+            font-size: (18/16rem);
+            font-weight: 700;
+            line-height: 1.2em;
+            margin: 0 0 (4/16rem) 0;
+        }
+
+        .cs-step-text {
+            font-size: (16/16rem);
+            line-height: 1.5em;
+            margin: 0;
+            color: var(--bodyTextColor);
+        }
+
+        .cs-calendar-wrapper {
+            width: 100%;
+            background: #f7f7f7;
+            padding: (24/16rem);
+            box-sizing: border-box;
+        }
+
+        .cs-calendar-title {
+            font-size: clamp(1.25rem, 2vw, 1.5rem);
+            font-weight: 700;
+            margin: 0 0 (16/16rem) 0;
+            text-align: center;
+        }
+
+        .cs-contact-alt {
+            text-align: center;
+            padding: (24/16rem);
+            background: #1a1a1a;
+
+            .cs-text {
+                color: #e0e0e0;
+                margin: 0;
+
+                a {
+                    color: var(--secondary);
+                    text-decoration: none;
+                    font-weight: 700;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #booking-section {
+        .cs-steps {
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .cs-step {
+            flex: 1;
+            min-width: 45%;
+        }
+    }
+}
+
+/* Desktop - 1024px */
+@media only screen and (min-width: 64rem) {
+    #booking-section {
+        .cs-step {
+            min-width: 0;
+        }
+    }
+}
+</style>
