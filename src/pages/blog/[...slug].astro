@@ -188,7 +188,8 @@ const { Content } = await render(post);
 
 @media only screen and (min-width: 0rem) {
     #blog-article {
-        padding: var(--sectionPadding);
+        /* tighter top padding to reduce gap after banner */
+        padding: clamp(2rem, 4vw, 3rem) (16/16rem) var(--sectionPadding);
 
         .cs-container {
             width: 100%;
@@ -204,8 +205,8 @@ const { Content } = await render(post);
             display: flex;
             align-items: center;
             gap: (12/16rem);
-            margin-bottom: (16/16rem);
-            padding-bottom: (16/16rem);
+            margin-bottom: (12/16rem);
+            padding-bottom: (12/16rem);
             border-bottom: 1px solid #e0e0e0;
         }
 
@@ -228,7 +229,7 @@ const { Content } = await render(post);
             display: flex;
             flex-wrap: wrap;
             gap: (8/16rem);
-            margin-bottom: (32/16rem);
+            margin-bottom: (24/16rem);
         }
 
         .cs-tag {
@@ -247,34 +248,40 @@ const { Content } = await render(post);
                 font-size: clamp(1.5rem, 3vw, 2rem);
                 font-weight: 900;
                 line-height: 1.3em;
-                margin: (40/16rem) 0 (16/16rem) 0;
+                /* more space above for section separation, tighter below */
+                margin: clamp(2rem, 4vw, 3rem) 0 (12/16rem) 0;
                 color: var(--headerColor);
+
+                &:first-child {
+                    margin-top: 0;
+                }
             }
 
             h3 {
                 font-size: clamp(1.25rem, 2.5vw, 1.5rem);
                 font-weight: 700;
                 line-height: 1.3em;
-                margin: (32/16rem) 0 (12/16rem) 0;
+                margin: clamp(1.5rem, 3vw, 2.25rem) 0 (8/16rem) 0;
                 color: var(--headerColor);
             }
 
             p {
                 font-size: (16/16rem);
-                line-height: 1.7em;
-                margin: 0 0 (20/16rem) 0;
+                line-height: 1.8em;
+                margin: 0 0 (24/16rem) 0;
                 color: var(--bodyTextColor);
             }
 
             ul, ol {
-                margin: 0 0 (20/16rem) (20/16rem);
+                margin: (8/16rem) 0 (28/16rem) (24/16rem);
                 padding: 0;
 
                 li {
                     font-size: (16/16rem);
-                    line-height: 1.7em;
-                    margin-bottom: (8/16rem);
+                    line-height: 1.8em;
+                    margin-bottom: (10/16rem);
                     color: var(--bodyTextColor);
+                    padding-left: (4/16rem);
                 }
             }
 
@@ -292,20 +299,26 @@ const { Content } = await render(post);
             }
 
             blockquote {
-                margin: (24/16rem) 0;
-                padding: (16/16rem) (24/16rem);
+                margin: (28/16rem) 0;
+                padding: (20/16rem) (28/16rem);
                 border-left: 4px solid var(--secondary);
                 background: #f7f7f7;
                 font-style: italic;
 
                 p {
                     margin: 0;
+                    line-height: 1.8em;
                 }
+            }
+
+            /* add a subtle separator between major sections */
+            h2 + p {
+                margin-top: (4/16rem);
             }
         }
 
         .cs-back-link {
-            margin-top: (40/16rem);
+            margin-top: clamp(2rem, 4vw, 3rem);
             padding-top: (24/16rem);
             border-top: 1px solid #e0e0e0;
 
