@@ -1,0 +1,402 @@
+---
+// Lead Capture Popup Form
+// Uses Formspree for form submissions (replace YOUR_FORM_ID with actual Formspree form ID)
+---
+
+<!-- Modal Overlay -->
+<div id="lead-modal" class="cs-modal-overlay" aria-hidden="true">
+    <div class="cs-modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+        <button class="cs-modal-close" type="button" aria-label="Close form">&times;</button>
+
+        <div class="cs-modal-header">
+            <h2 id="modal-title" class="cs-modal-title">Get Your Free Estimate</h2>
+            <p class="cs-modal-subtitle">Tell us about your project and we'll get back to you within 24 hours.</p>
+        </div>
+
+        <form class="cs-modal-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <div class="cs-form-row">
+                <div class="cs-form-group">
+                    <label for="lead-name" class="cs-label">Full Name *</label>
+                    <input type="text" id="lead-name" name="name" required class="cs-form-input" placeholder="John Smith" />
+                </div>
+                <div class="cs-form-group">
+                    <label for="lead-phone" class="cs-label">Phone *</label>
+                    <input type="tel" id="lead-phone" name="phone" required class="cs-form-input" placeholder="(404) 555-1234" />
+                </div>
+            </div>
+
+            <div class="cs-form-row">
+                <div class="cs-form-group">
+                    <label for="lead-email" class="cs-label">Email</label>
+                    <input type="email" id="lead-email" name="email" class="cs-form-input" placeholder="john@example.com" />
+                </div>
+                <div class="cs-form-group">
+                    <label for="lead-zip" class="cs-label">Zip Code *</label>
+                    <input type="text" id="lead-zip" name="zip" required class="cs-form-input" placeholder="30024" maxlength="5" pattern="[0-9]{5}" />
+                </div>
+            </div>
+
+            <div class="cs-form-group cs-full">
+                <label for="lead-product" class="cs-label">Product Interest</label>
+                <select id="lead-product" name="product" class="cs-form-input">
+                    <option value="">Select a product...</option>
+                    <option value="Plantation Shutters">Plantation Shutters</option>
+                    <option value="Zebra Shades">Zebra Shades</option>
+                    <option value="Motorized Shades">Motorized Shades</option>
+                    <option value="Exterior Shades">Exterior Shades</option>
+                    <option value="Not Sure">Not sure yet — need guidance</option>
+                </select>
+            </div>
+
+            <div class="cs-form-group cs-full">
+                <label for="lead-windows" class="cs-label">How many windows?</label>
+                <select id="lead-windows" name="window_count" class="cs-form-input">
+                    <option value="">Select...</option>
+                    <option value="1-3">1–3 windows</option>
+                    <option value="4-8">4–8 windows</option>
+                    <option value="9-15">9–15 windows</option>
+                    <option value="16+">16+ windows (whole home)</option>
+                </select>
+            </div>
+
+            <div class="cs-form-group cs-full">
+                <label for="lead-message" class="cs-label">Anything else we should know?</label>
+                <textarea id="lead-message" name="message" class="cs-form-input cs-textarea" rows="3" placeholder="e.g., new construction, specific rooms, timeline..."></textarea>
+            </div>
+
+            <!-- Hidden fields -->
+            <input type="hidden" name="_subject" value="New Lead from Boutique Shutters Website" />
+            <input type="hidden" name="_next" value="https://www.boutiqueshutters.com/book" />
+
+            <button type="submit" class="cs-button-solid cs-submit-btn">Request Free Estimate</button>
+
+            <p class="cs-form-disclaimer">
+                <img src="https://csimg.nyc3.digitaloceanspaces.com/Reviews/stars-yellow.svg" alt="5 stars" width="60" height="10" />
+                <span>4.9 from 50+ Google Reviews · No obligation · Response within 24hrs</span>
+            </p>
+        </form>
+
+        <!-- Success State -->
+        <div class="cs-modal-success" style="display: none;">
+            <span class="cs-success-icon">✓</span>
+            <h3>Thank You!</h3>
+            <p>We've received your request. A Boutique Shutters design consultant will reach out within 24 hours to schedule your free consultation.</p>
+            <a href="/book" class="cs-button-solid">Book a Time Now</a>
+        </div>
+    </div>
+</div>
+
+<script is:inline>
+(function() {
+    const modal = document.getElementById('lead-modal');
+    if (!modal) return;
+
+    const closeBtn = modal.querySelector('.cs-modal-close');
+    const form = modal.querySelector('.cs-modal-form');
+    const successEl = modal.querySelector('.cs-modal-success');
+
+    // Open modal
+    window.openLeadModal = function() {
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+            modal.querySelector('input')?.focus();
+        }, 100);
+    };
+
+    // Close modal
+    function closeModal() {
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+
+    // Close on overlay click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
+            closeModal();
+        }
+    });
+
+    // Handle form submission
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = form.querySelector('.cs-submit-btn');
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                form.style.display = 'none';
+                successEl.style.display = 'flex';
+            } else {
+                submitBtn.textContent = 'Request Free Estimate';
+                submitBtn.disabled = false;
+                alert('Something went wrong. Please call us at 404-966-7419.');
+            }
+        } catch (err) {
+            submitBtn.textContent = 'Request Free Estimate';
+            submitBtn.disabled = false;
+            alert('Something went wrong. Please call us at 404-966-7419.');
+        }
+    });
+
+    // Attach to all CTA buttons with data-lead-form attribute
+    document.querySelectorAll('[data-lead-form]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.openLeadModal();
+        });
+    });
+})();
+</script>
+
+<style lang="less" is:global>
+/* Modal Overlay */
+#lead-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 100000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: (16/16rem);
+    box-sizing: border-box;
+    opacity: 1;
+    transition: opacity 0.3s;
+
+    &[aria-hidden="true"] {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+.cs-modal {
+    background: white;
+    width: 100%;
+    max-width: (600/16rem);
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: (32/16rem);
+    position: relative;
+    box-sizing: border-box;
+    transform: translateY(0);
+    transition: transform 0.3s;
+
+    #lead-modal[aria-hidden="true"] & {
+        transform: translateY(20px);
+    }
+}
+
+.cs-modal-close {
+    position: absolute;
+    top: (12/16rem);
+    right: (16/16rem);
+    background: none;
+    border: none;
+    font-size: (28/16rem);
+    font-weight: 700;
+    color: #999;
+    cursor: pointer;
+    line-height: 1;
+    padding: (4/16rem) (8/16rem);
+    transition: color 0.3s;
+
+    &:hover {
+        color: #333;
+    }
+}
+
+.cs-modal-header {
+    text-align: center;
+    margin-bottom: (24/16rem);
+}
+
+.cs-modal-title {
+    font-size: clamp(1.5rem, 3vw, 1.75rem);
+    font-weight: 900;
+    margin: 0 0 (8/16rem) 0;
+    color: var(--headerColor);
+}
+
+.cs-modal-subtitle {
+    font-size: (14/16rem);
+    color: var(--bodyTextColor);
+    margin: 0;
+}
+
+.cs-modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: (12/16rem);
+}
+
+.cs-form-row {
+    display: flex;
+    flex-direction: column;
+    gap: (12/16rem);
+}
+
+.cs-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: (4/16rem);
+    flex: 1;
+}
+
+.cs-label {
+    font-size: (12/16rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #666;
+}
+
+.cs-form-input {
+    width: 100%;
+    padding: (10/16rem) (14/16rem);
+    border: 2px solid #e0e0e0;
+    font-size: (16/16rem);
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+    -webkit-appearance: none;
+
+    &:focus {
+        outline: none;
+        border-color: var(--secondary);
+    }
+
+    &::placeholder {
+        color: #bbb;
+    }
+}
+
+.cs-textarea {
+    resize: vertical;
+    min-height: (60/16rem);
+}
+
+select.cs-form-input {
+    background: white;
+    cursor: pointer;
+}
+
+.cs-submit-btn {
+    font-size: (16/16rem) !important;
+    line-height: clamp(2.875rem, 5.5vw, 3.5rem) !important;
+    text-decoration: none;
+    font-weight: 700;
+    text-align: center;
+    width: 100%;
+    padding: 0;
+    border: none;
+    border-radius: (4/16rem);
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    color: var(--csButtonTextColor);
+    background-color: var(--csButtonColor);
+    margin-top: (8/16rem);
+    font-family: inherit;
+
+    &:before {
+        content: "";
+        position: absolute;
+        height: 100%;
+        width: 0%;
+        background: var(--csButtonHoverColor);
+        opacity: 1;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        border-radius: (4/16rem);
+        transition: width 0.3s;
+    }
+
+    &:hover:before {
+        width: 100%;
+    }
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: wait;
+    }
+}
+
+.cs-form-disclaimer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: (8/16rem);
+    margin: (4/16rem) 0 0 0;
+
+    span {
+        font-size: (11/16rem);
+        color: #999;
+    }
+}
+
+.cs-modal-success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: (12/16rem);
+    padding: (24/16rem) 0;
+
+    .cs-success-icon {
+        font-size: (48/16rem);
+        color: white;
+        background: var(--secondary);
+        width: (72/16rem);
+        height: (72/16rem);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+
+    h3 {
+        font-size: (24/16rem);
+        font-weight: 900;
+        margin: 0;
+        color: var(--headerColor);
+    }
+
+    p {
+        font-size: (16/16rem);
+        line-height: 1.6em;
+        color: var(--bodyTextColor);
+        margin: 0;
+        max-width: (400/16rem);
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    .cs-form-row {
+        flex-direction: row;
+    }
+
+    .cs-modal {
+        padding: (40/16rem);
+    }
+}
+</style>
