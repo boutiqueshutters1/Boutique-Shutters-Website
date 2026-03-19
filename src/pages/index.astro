@@ -71,16 +71,6 @@ import ComparisonChart from "@components/ComparisonChart.astro";
 
 <section id="sbsr-2169">
     <div class="cs-container">
-        <div class="cs-media-row">
-            <div class="cs-media-video">
-                <video autoplay muted loop playsinline poster="/assets/images/zebra-shades/zebra-shades-630x400-d.webp">
-                    <source src="/assets/videos/why-choose-us.mp4" type="video/mp4">
-                </video>
-            </div>
-            <div class="cs-media-photo">
-                <img loading="lazy" decoding="async" src="/assets/images/shutters/danny-consultation.jpg" alt="Boutique Shutters owner Danny during a window treatment consultation">
-            </div>
-        </div>
         <div class="cs-content">
             <span class="cs-topper">Why Choose Us</span>
             <h2 class="cs-title">Why Homeowners Choose Boutique Shutters</h2>
@@ -101,6 +91,16 @@ import ComparisonChart from "@components/ComparisonChart.astro";
                     <span class="cs-desc">Satisfaction</span>
                 </li>
             </ul>
+        </div>
+        <div class="cs-media-row">
+            <div class="cs-media-video">
+                <video autoplay muted loop playsinline poster="/assets/images/zebra-shades/zebra-shades-630x400-d.webp">
+                    <source src="/assets/videos/why-choose-us.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="cs-media-photo">
+                <img loading="lazy" decoding="async" src="/assets/images/shutters/danny-consultation.jpg" alt="Boutique Shutters owner Danny during a window treatment consultation">
+            </div>
         </div>
     </div>
 </section>
@@ -926,12 +926,11 @@ import ComparisonChart from "@components/ComparisonChart.astro";
             gap: clamp(2rem, 4vw, 3rem);
         }
         .cs-content {
-            text-align: center;
+            text-align: left;
             width: 100%;
-            max-width: (700/16rem);
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
         }
 
         .cs-text {
@@ -942,8 +941,7 @@ import ComparisonChart from "@components/ComparisonChart.astro";
         .cs-media-row {
             width: 100%;
             display: flex;
-            gap: (16/16rem);
-            order: -1;
+            gap: (12/16rem);
         }
 
         .cs-media-video {
@@ -1013,15 +1011,23 @@ import ComparisonChart from "@components/ComparisonChart.astro";
     #sbsr-2169 {
         .cs-container {
             max-width: (1280/16rem);
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .cs-content {
+            width: 50%;
+            flex-shrink: 0;
         }
 
         .cs-media-row {
-            gap: (24/16rem);
+            width: 50%;
+            gap: (16/16rem);
         }
 
         .cs-media-video,
         .cs-media-photo {
-            max-height: (550/16rem);
+            max-height: (450/16rem);
         }
     }
 }
