@@ -111,7 +111,7 @@ const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}
 </section>
 
 <script is:inline define:vars={{ estimatorId, pricingModel, options }}>
-document.addEventListener('astro:page-load', () => {
+(function() {
     const section = document.querySelector(`[data-estimator-id="${estimatorId}"]`);
     if (!section) return;
 
@@ -224,10 +224,10 @@ document.addEventListener('astro:page-load', () => {
     section.querySelectorAll('.cs-radio').forEach(radio => {
         radio.addEventListener('change', calculateAll);
     });
-});
+})();
 </script>
 
-<style lang="less">
+<style lang="less" is:global>
 /* Mobile - 360px */
 @media only screen and (min-width: 0rem) {
     #estimator-section {
