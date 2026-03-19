@@ -1,4 +1,4 @@
-document.addEventListener("astro:page-load", () => {
+document.addEventListener("DOMContentLoaded", () => {
  // your javascript
     var CSbody = document.querySelector("body");
     const CSnavbarMenu = document.querySelector("#cs-navigation");
