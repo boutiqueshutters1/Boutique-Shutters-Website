@@ -79,14 +79,17 @@ import ComparisonChart from "@components/ComparisonChart.astro";
             </p>
             <ul class="cs-stats">
                 <li class="cs-stat">
-                    <span class="cs-number">500+</span>
+                    <span class="cs-stat-icon">🏠</span>
+                    <span class="cs-number">100+</span>
                     <span class="cs-desc">Homes Transformed</span>
                 </li>
                 <li class="cs-stat">
+                    <span class="cs-stat-icon">⭐</span>
                     <span class="cs-number">4.9</span>
                     <span class="cs-desc">Google Rating</span>
                 </li>
                 <li class="cs-stat">
+                    <span class="cs-stat-icon">✅</span>
                     <span class="cs-number">100%</span>
                     <span class="cs-desc">Satisfaction</span>
                 </li>
@@ -1220,13 +1223,17 @@ import ComparisonChart from "@components/ComparisonChart.astro";
             list-style: none;
             margin: 0;
             padding: 0 0 (24/16rem) 0;
-            /*border-bottom: 1px solid var(--primary);*/
-            /* making flex so we can align a heading with 1 line to the bottom */
             display: flex;
             grid-column: span 4;
             flex-direction: column;
             align-self: stretch;
             align-content: space-between;
+        }
+
+        .cs-stat-icon {
+            font-size: (24/16rem);
+            display: block;
+            margin-bottom: (4/16rem);
         }
 
         .cs-number {
