@@ -108,9 +108,18 @@
     function closeModal() {
         modal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
+        // Remember they dismissed it so it doesn't auto-show again this session
+        sessionStorage.setItem('leadFormDismissed', 'true');
     }
 
     closeBtn.addEventListener('click', closeModal);
+
+    // Auto-show after 3 seconds if not already dismissed or submitted
+    if (!sessionStorage.getItem('leadFormDismissed') && !localStorage.getItem('leadFormSubmitted')) {
+        setTimeout(() => {
+            window.openLeadModal();
+        }, 3000);
+    }
 
     // Close on overlay click
     modal.addEventListener('click', (e) => {
@@ -141,6 +150,7 @@
             if (response.ok) {
                 form.style.display = 'none';
                 successEl.style.display = 'flex';
+                localStorage.setItem('leadFormSubmitted', 'true');
             } else {
                 submitBtn.textContent = 'Request Free Estimate';
                 submitBtn.disabled = false;
