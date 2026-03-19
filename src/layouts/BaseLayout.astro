@@ -2,6 +2,7 @@
 import client from "@data/client.json";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
+import LeadFormModal from "@components/LeadFormModal.astro";
 import "@styles/root.less";
 const { description, title } = Astro.props;
 ---
@@ -43,6 +44,51 @@ const { description, title } = Astro.props;
             <meta name="msapplication-TileColor" content="#da532c">
             <meta name="theme-color" content="#ffffff">
 
+            <!-- JSON-LD Structured Data — LocalBusiness -->
+            <script type="application/ld+json" set:html={JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "HomeAndConstructionBusiness",
+                "name": "Boutique Shutters",
+                "description": "Custom plantation shutters, designer shades, and motorized window treatments with expert installation serving Metro Atlanta.",
+                "url": "https://www.boutiqueshutters.com",
+                "telephone": "+1-404-966-7419",
+                "email": "sales@boutiqueshutters.com",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Suwanee",
+                    "addressRegion": "GA",
+                    "postalCode": "30024",
+                    "addressCountry": "US"
+                },
+                "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": 34.0515,
+                    "longitude": -84.0713
+                },
+                "areaServed": [
+                    "Suwanee, GA", "Sugar Hill, GA", "Johns Creek, GA",
+                    "Duluth, GA", "Alpharetta, GA", "Buford, GA",
+                    "Lawrenceville, GA", "Peachtree Corners, GA", "Winder, GA"
+                ],
+                "priceRange": "$$",
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": "4.9",
+                    "reviewCount": "50",
+                    "bestRating": "5"
+                },
+                "sameAs": [
+                    "https://maps.app.goo.gl/314AZ4Dpz98b73GS8"
+                ],
+                "openingHoursSpecification": {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                    "opens": "08:00",
+                    "closes": "18:00"
+                },
+                "image": "https://www.boutiqueshutters.com/assets/images/main-logo-compressed.png"
+            })} />
+
             <!-- Additional head content -->
             <slot name="head" />
          
@@ -71,6 +117,7 @@ const { description, title } = Astro.props;
                 <slot/>
             </main>
             <Footer />
+            <LeadFormModal />
         </body>
 </html>
 

@@ -1,7 +1,8 @@
 ---
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import CTA from "@components/CTA.astro";
-import Pricing from "@components/Pricing.astro";
+import Estimator from "@components/Estimator.astro";
+import ProductSchema from "@components/ProductSchema.astro";
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import {getOptimizedImage} from "@js/utils"
@@ -14,6 +15,15 @@ const optimizedImage = await getOptimizedImage(landingImage)
   description="Atlanta's smart window treatment specialists. Motorized shades with Alexa, Google Home & Apple HomeKit integration. Professional installation in Sugar Hill, Suwanee & Johns Creek."
   preloadedImage = {optimizedImage}
 >
+<ProductSchema
+    slot="head"
+    name="Motorized Smart Shades"
+    description="Smart motorized shades with Alexa, Google Home, and Apple HomeKit integration. Professional installation included."
+    url="/motorized-shades"
+    image="/assets/images/zebra-shades/motorized-zebra-shades-608x662-d.webp"
+    lowPrice="300"
+    highPrice="800"
+/>
 <!-- ============================================ -->
 <!--                   Banner                     -->
 <!-- ============================================ -->
@@ -135,12 +145,13 @@ const optimizedImage = await getOptimizedImage(landingImage)
 </section>
 
 
-<Pricing
-    items={[
-        { name: "Motorized Shades", price: "From $300/window" },
-        { name: "Smart Home Integration", price: "Included" },
+<Estimator
+    productName="Motorized Shades"
+    pricingModel="perWindow"
+    options={[
+        { name: "Motorized Shades", price: 300 },
     ]}
-    note="Includes motor, remote, and smart home setup. Pricing varies by window size and fabric. Get your exact quote with a free consultation."
+    note="Includes motor, remote, and smart home setup. This is a rough estimate — pricing varies by window size and fabric."
 />
 
 <CTA/>

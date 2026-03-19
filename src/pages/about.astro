@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import CTA from "@components/CTA.astro";
-import FAQ from "@components/FAQ.astro";
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import {getOptimizedImage} from "@js/utils"
@@ -66,7 +65,7 @@ const optimizedImage = await getOptimizedImage(landingImage)
                     <span class="cs-desc">Homes Transformed</span>
                 </li>
                 <li class="cs-stat">
-                    <span class="cs-number">5.0</span>
+                    <span class="cs-number">4.9</span>
                     <span class="cs-desc">Google Rating</span>
                 </li>
                 <li class="cs-stat">
@@ -78,7 +77,172 @@ const optimizedImage = await getOptimizedImage(landingImage)
     </div>
 </section>
 
-<FAQ/>
+<!-- ============================================ -->
+<!--              Our Process                      -->
+<!-- ============================================ -->
+
+<section id="our-process">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">How It Works</span>
+            <h2 class="cs-title">Our Simple 4-Step Process</h2>
+            <p class="cs-text">From your first call to final installation, we make it easy.</p>
+        </div>
+        <div class="cs-process-steps">
+            <div class="cs-process-step">
+                <span class="cs-step-number">1</span>
+                <h3 class="cs-step-title">Free Consultation</h3>
+                <p class="cs-step-text">We visit your home (or connect virtually) to understand your style, needs, and budget. We bring premium samples so you can see and feel the materials in your own space.</p>
+            </div>
+            <div class="cs-process-connector"></div>
+            <div class="cs-process-step">
+                <span class="cs-step-number">2</span>
+                <h3 class="cs-step-title">Precise Measurement</h3>
+                <p class="cs-step-text">Our specialist takes exact measurements of every window. No guesswork — precision is key to a perfect fit and flawless operation.</p>
+            </div>
+            <div class="cs-process-connector"></div>
+            <div class="cs-process-step">
+                <span class="cs-step-number">3</span>
+                <h3 class="cs-step-title">Custom Fabrication</h3>
+                <p class="cs-step-text">Your window treatments are custom-built to your exact specifications. We use only premium materials for lasting quality and beauty.</p>
+            </div>
+            <div class="cs-process-connector"></div>
+            <div class="cs-process-step">
+                <span class="cs-step-number">4</span>
+                <h3 class="cs-step-title">Expert Installation</h3>
+                <p class="cs-step-text">Our certified installers handle everything. We leave your home spotless and walk you through operation and care for your new treatments.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!--           Core Values / Why Us                -->
+<!-- ============================================ -->
+
+<section id="core-values">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">Why Choose Us</span>
+            <h2 class="cs-title">The Boutique Shutters Difference</h2>
+        </div>
+        <div class="cs-values-grid">
+            <div class="cs-value-card">
+                <span class="cs-value-icon">🏠</span>
+                <h3 class="cs-value-title">Local & Owner-Operated</h3>
+                <p class="cs-value-text">We're your neighbors in Metro Atlanta, not a national franchise. You work directly with the owner on every project.</p>
+            </div>
+            <div class="cs-value-card">
+                <span class="cs-value-icon">✨</span>
+                <h3 class="cs-value-title">Premium Materials Only</h3>
+                <p class="cs-value-text">We never cut corners. Every product we offer is hand-selected for quality, durability, and timeless style.</p>
+            </div>
+            <div class="cs-value-card">
+                <span class="cs-value-icon">🛠️</span>
+                <h3 class="cs-value-title">White Glove Installation</h3>
+                <p class="cs-value-text">Our certified installers treat your home with respect — precise work, clean job site, and a final walkthrough every time.</p>
+            </div>
+            <div class="cs-value-card">
+                <span class="cs-value-icon">🤝</span>
+                <h3 class="cs-value-title">Lifetime Support</h3>
+                <p class="cs-value-text">Our relationship doesn't end at installation. We stand behind our work with warranty coverage and ongoing support.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!--           Customer Testimonials               -->
+<!-- ============================================ -->
+
+<section id="testimonials-about">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">What Our Customers Say</span>
+            <h2 class="cs-title">Real Reviews from Real Homeowners</h2>
+        </div>
+        <div class="cs-testimonials-grid">
+            <div class="cs-testimonial">
+                <div class="cs-stars">★★★★★</div>
+                <p class="cs-quote">"Danny was incredibly professional and knowledgeable. He helped us choose the perfect shutters for our new home in Johns Creek. The installation was flawless and the finished product looks amazing!"</p>
+                <span class="cs-reviewer">— Sarah M., Johns Creek</span>
+            </div>
+            <div class="cs-testimonial">
+                <div class="cs-stars">★★★★★</div>
+                <p class="cs-quote">"We got motorized shades for our living room and couldn't be happier. The smart home integration works perfectly with our Alexa. Boutique Shutters made the whole process easy from start to finish."</p>
+                <span class="cs-reviewer">— Michael T., Sugar Hill</span>
+            </div>
+            <div class="cs-testimonial">
+                <div class="cs-stars">★★★★★</div>
+                <p class="cs-quote">"Best decision we made for our home renovation. The plantation shutters transformed every room. Danny's attention to detail and follow-up after installation really sets this company apart."</p>
+                <span class="cs-reviewer">— Jennifer L., Suwanee</span>
+            </div>
+        </div>
+        <div class="cs-reviews-link">
+            <a href="https://maps.app.goo.gl/314AZ4Dpz98b73GS8" target="_blank" rel="noopener noreferrer" class="cs-button-solid">Read All Reviews on Google</a>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!--                    FAQ                        -->
+<!-- ============================================ -->
+
+<section id="about-faq">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">Common Questions</span>
+            <h2 class="cs-title">Frequently Asked Questions</h2>
+        </div>
+        <div class="cs-faq-group">
+            <div class="cs-faq-item cs-active">
+                <button class="cs-faq-button" type="button">
+                    <span class="cs-faq-question">What areas do you serve?</span>
+                    <span class="cs-faq-icon">▾</span>
+                </button>
+                <div class="cs-faq-answer">
+                    <p>We serve Sugar Hill, Suwanee, Johns Creek, Duluth, Alpharetta, Lawrenceville, Buford, Peachtree Corners, Winder, and the greater Metro Atlanta area. Free in-home consultations are available throughout our service area.</p>
+                </div>
+            </div>
+            <div class="cs-faq-item">
+                <button class="cs-faq-button" type="button">
+                    <span class="cs-faq-question">How much do custom shutters cost?</span>
+                    <span class="cs-faq-icon">▾</span>
+                </button>
+                <div class="cs-faq-answer">
+                    <p>Plantation shutters start from $20/sq ft for composite and $25/sq ft for premium wood. Use our <a href="/shutters">cost estimator</a> for a rough estimate, or book a free consultation for an exact quote tailored to your windows.</p>
+                </div>
+            </div>
+            <div class="cs-faq-item">
+                <button class="cs-faq-button" type="button">
+                    <span class="cs-faq-question">How long does installation take?</span>
+                    <span class="cs-faq-icon">▾</span>
+                </button>
+                <div class="cs-faq-answer">
+                    <p>From order to installation is typically 2-4 weeks depending on the product. The actual installation usually takes just a few hours for most homes. We'll give you an exact timeline during your consultation.</p>
+                </div>
+            </div>
+            <div class="cs-faq-item">
+                <button class="cs-faq-button" type="button">
+                    <span class="cs-faq-question">Do you offer financing?</span>
+                    <span class="cs-faq-icon">▾</span>
+                </button>
+                <div class="cs-faq-answer">
+                    <p>Yes! We offer flexible financing through Wisetack and Klarna. Apply during your consultation for quick approval and affordable monthly payments. No obligation to proceed.</p>
+                </div>
+            </div>
+            <div class="cs-faq-item">
+                <button class="cs-faq-button" type="button">
+                    <span class="cs-faq-question">What warranty do you provide?</span>
+                    <span class="cs-faq-icon">▾</span>
+                </button>
+                <div class="cs-faq-answer">
+                    <p>All our products come with manufacturer warranties, and we stand behind our installation work. Visit our <a href="/warranty">warranty page</a> for full details on coverage for each product line.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <CTA/>
 
@@ -372,5 +536,381 @@ const optimizedImage = await getOptimizedImage(landingImage)
         }
     }
 }
-                                                              
+
+/*-- -------------------------- -->
+<---       Our Process          -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #our-process {
+        padding: var(--sectionPadding);
+        background: #1a1a1a;
+
+        .cs-container {
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(2rem, 4vw, 3rem);
+        }
+
+        .cs-content {
+            text-align: center;
+            width: 100%;
+            max-width: (700/16rem);
+
+            .cs-title { color: #fff; margin: 0 0 (12/16rem) 0; }
+            .cs-text { color: #a7a7a7; margin: 0; }
+        }
+
+        .cs-process-steps {
+            width: 100%;
+            max-width: (900/16rem);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .cs-process-step {
+            text-align: center;
+            padding: (24/16rem);
+        }
+
+        .cs-step-number {
+            font-size: (20/16rem);
+            font-weight: 900;
+            color: #000;
+            background: var(--secondary);
+            width: (48/16rem);
+            height: (48/16rem);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            margin: 0 auto (12/16rem);
+        }
+
+        .cs-step-title {
+            font-size: (18/16rem);
+            font-weight: 700;
+            color: #fff;
+            margin: 0 0 (8/16rem) 0;
+        }
+
+        .cs-step-text {
+            font-size: (14/16rem);
+            line-height: 1.6em;
+            color: #a7a7a7;
+            margin: 0;
+            max-width: (280/16rem);
+        }
+
+        .cs-process-connector {
+            width: 2px;
+            height: (24/16rem);
+            background: var(--secondary);
+            opacity: 0.4;
+        }
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #our-process {
+        .cs-process-steps {
+            flex-direction: row;
+            align-items: flex-start;
+        }
+
+        .cs-process-connector {
+            width: (40/16rem);
+            height: 2px;
+            margin-top: (48/16rem);
+            flex-shrink: 0;
+        }
+
+        .cs-process-step {
+            flex: 1;
+        }
+    }
+}
+
+/*-- -------------------------- -->
+<---       Core Values          -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #core-values {
+        padding: var(--sectionPadding);
+
+        .cs-container {
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        .cs-content {
+            text-align: center;
+            width: 100%;
+            max-width: (700/16rem);
+
+            .cs-title { margin: 0; }
+        }
+
+        .cs-values-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: (16/16rem);
+        }
+
+        .cs-value-card {
+            background: #f7f7f7;
+            padding: (28/16rem) (24/16rem);
+            text-align: center;
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        .cs-value-icon {
+            font-size: (32/16rem);
+            display: block;
+            margin-bottom: (12/16rem);
+        }
+
+        .cs-value-title {
+            font-size: (18/16rem);
+            font-weight: 700;
+            margin: 0 0 (8/16rem) 0;
+            color: var(--headerColor);
+        }
+
+        .cs-value-text {
+            font-size: (14/16rem);
+            line-height: 1.6em;
+            color: var(--bodyTextColor);
+            margin: 0;
+        }
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #core-values {
+        .cs-values-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+}
+
+/* Desktop - 1024px */
+@media only screen and (min-width: 64rem) {
+    #core-values {
+        .cs-values-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+}
+
+/*-- -------------------------- -->
+<---      Testimonials          -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #testimonials-about {
+        padding: var(--sectionPadding);
+        background: #f7f7f7;
+
+        .cs-container {
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        .cs-content {
+            text-align: center;
+            width: 100%;
+            max-width: (700/16rem);
+
+            .cs-title { margin: 0; }
+        }
+
+        .cs-testimonials-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: (20/16rem);
+        }
+
+        .cs-testimonial {
+            background: white;
+            padding: (28/16rem);
+            border-left: 4px solid var(--secondary);
+        }
+
+        .cs-stars {
+            font-size: (18/16rem);
+            color: var(--secondary);
+            margin-bottom: (12/16rem);
+            letter-spacing: 0.1em;
+        }
+
+        .cs-quote {
+            font-size: (15/16rem);
+            line-height: 1.7em;
+            color: var(--bodyTextColor);
+            font-style: italic;
+            margin: 0 0 (16/16rem) 0;
+        }
+
+        .cs-reviewer {
+            font-size: (14/16rem);
+            font-weight: 700;
+            color: var(--headerColor);
+        }
+
+        .cs-reviews-link {
+            text-align: center;
+            margin-top: (8/16rem);
+        }
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #testimonials-about {
+        .cs-testimonials-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+}
+
+/*-- -------------------------- -->
+<---        About FAQ           -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #about-faq {
+        padding: var(--sectionPadding);
+
+        .cs-container {
+            width: 100%;
+            max-width: (800/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        .cs-content {
+            text-align: center;
+            width: 100%;
+
+            .cs-title { margin: 0; }
+        }
+
+        .cs-faq-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: (8/16rem);
+        }
+
+        .cs-faq-item {
+            border: 1px solid #e0e0e0;
+            overflow: hidden;
+        }
+
+        .cs-faq-button {
+            width: 100%;
+            padding: (16/16rem) (20/16rem);
+            background: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: (12/16rem);
+            font-family: inherit;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background: #fafafa;
+            }
+        }
+
+        .cs-faq-question {
+            font-size: (16/16rem);
+            font-weight: 700;
+            text-align: left;
+            color: var(--headerColor);
+        }
+
+        .cs-faq-icon {
+            font-size: (18/16rem);
+            color: var(--secondary);
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+
+        .cs-faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+
+            p {
+                font-size: (15/16rem);
+                line-height: 1.7em;
+                color: var(--bodyTextColor);
+                margin: 0;
+                padding: 0 (20/16rem) (20/16rem);
+
+                a {
+                    color: var(--secondary);
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .cs-faq-item.cs-active {
+            .cs-faq-icon {
+                transform: rotate(180deg);
+            }
+            .cs-faq-answer {
+                max-height: 300px;
+            }
+        }
+    }
+}
+
 </style>
+
+<script is:inline>
+(function() {
+    document.querySelectorAll('#about-faq .cs-faq-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.closest('.cs-faq-item');
+            const wasActive = item.classList.contains('cs-active');
+            // Close all
+            document.querySelectorAll('#about-faq .cs-faq-item').forEach(i => i.classList.remove('cs-active'));
+            // Toggle clicked
+            if (!wasActive) item.classList.add('cs-active');
+        });
+    });
+})();
+</script>
