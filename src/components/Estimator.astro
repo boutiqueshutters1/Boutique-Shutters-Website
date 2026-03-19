@@ -1,0 +1,560 @@
+---
+interface ProductOption {
+    name: string;
+    price: number;
+}
+
+interface Props {
+    productName: string;
+    options: ProductOption[];
+    pricingModel: "sqft" | "perWindow" | "contact";
+    note: string;
+}
+
+const { productName, options, pricingModel, note } = Astro.props;
+const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}`;
+---
+
+<section id="estimator-section" data-estimator-id={estimatorId}>
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">Cost Estimator</span>
+            <h2 class="cs-title">Estimate Your Investment</h2>
+            <p class="cs-text">
+                Enter your window measurements below to get a rough cost estimate.
+                {pricingModel === "contact"
+                    ? "Submit your window details and we'll provide a custom quote."
+                    : "This is an approximate range — your exact price will be determined during your free consultation."
+                }
+            </p>
+        </div>
+
+        <div class="cs-estimator-body">
+            {/* Product Option Selector - only show if multiple options */}
+            {options.length > 1 && (
+                <div class="cs-option-selector">
+                    <label class="cs-option-label">Select Product Type:</label>
+                    <div class="cs-option-group">
+                        {options.map((option, i) => (
+                            <label class="cs-radio-label">
+                                <input
+                                    type="radio"
+                                    name={`${estimatorId}-option`}
+                                    value={i.toString()}
+                                    checked={i === 0}
+                                    class="cs-radio"
+                                    data-price={option.price}
+                                    data-name={option.name}
+                                />
+                                <span class="cs-radio-text">
+                                    {option.name}
+                                    {pricingModel === "sqft" && <span class="cs-radio-price">${option.price}/sq ft</span>}
+                                    {pricingModel === "perWindow" && <span class="cs-radio-price">${option.price}/window</span>}
+                                </span>
+                            </label>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* Window Entries */}
+            <div class="cs-windows-container">
+                <div class="cs-window-row" data-window-index="0">
+                    <div class="cs-window-header">
+                        <span class="cs-window-label">Window 1</span>
+                    </div>
+                    <div class="cs-window-inputs">
+                        <div class="cs-input-group">
+                            <label class="cs-input-label">Width (inches)</label>
+                            <input type="number" class="cs-input cs-width" min="1" max="200" placeholder="36" />
+                        </div>
+                        <span class="cs-multiply">×</span>
+                        <div class="cs-input-group">
+                            <label class="cs-input-label">Height (inches)</label>
+                            <input type="number" class="cs-input cs-height" min="1" max="200" placeholder="48" />
+                        </div>
+                        {pricingModel !== "contact" && (
+                            <div class="cs-window-price">
+                                <span class="cs-price-value">$0</span>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+
+            <button class="cs-add-window" type="button">
+                <span>+</span> Add Another Window
+            </button>
+
+            {/* Results */}
+            {pricingModel !== "contact" ? (
+                <div class="cs-results">
+                    <div class="cs-total-row">
+                        <span class="cs-total-label">Estimated Total</span>
+                        <span class="cs-total-value">$0</span>
+                    </div>
+                    <p class="cs-disclaimer">{note}</p>
+                    <p class="cs-financing">Financing options available</p>
+                    <a href="/book" class="cs-button-solid">Get Your Exact Quote</a>
+                </div>
+            ) : (
+                <div class="cs-results">
+                    <div class="cs-contact-message">
+                        <p>Every exterior shade installation is unique. Submit your window details and we'll provide a personalized quote.</p>
+                    </div>
+                    <p class="cs-disclaimer">{note}</p>
+                    <a href="/book" class="cs-button-solid">Request Custom Quote</a>
+                </div>
+            )}
+        </div>
+    </div>
+</section>
+
+<script is:inline define:vars={{ estimatorId, pricingModel, options }}>
+document.addEventListener('astro:page-load', () => {
+    const section = document.querySelector(`[data-estimator-id="${estimatorId}"]`);
+    if (!section) return;
+
+    const container = section.querySelector('.cs-windows-container');
+    const addBtn = section.querySelector('.cs-add-window');
+    const totalEl = section.querySelector('.cs-total-value');
+    let windowCount = 1;
+
+    function getSelectedPrice() {
+        if (options.length === 1) return options[0].price;
+        const checked = section.querySelector(`input[name="${estimatorId}-option"]:checked`);
+        return checked ? parseFloat(checked.dataset.price) : options[0].price;
+    }
+
+    function calculateAll() {
+        const rows = container.querySelectorAll('.cs-window-row');
+        let grandTotal = 0;
+
+        rows.forEach(row => {
+            const w = parseFloat(row.querySelector('.cs-width').value) || 0;
+            const h = parseFloat(row.querySelector('.cs-height').value) || 0;
+            const priceEl = row.querySelector('.cs-price-value');
+            const price = getSelectedPrice();
+
+            let windowPrice = 0;
+            if (w > 0 && h > 0) {
+                if (pricingModel === 'sqft') {
+                    const sqft = (w * h) / 144;
+                    windowPrice = sqft * price;
+                } else if (pricingModel === 'perWindow') {
+                    windowPrice = price;
+                }
+            }
+
+            if (priceEl) {
+                priceEl.textContent = windowPrice > 0 ? `$${Math.round(windowPrice).toLocaleString()}` : '$0';
+            }
+            grandTotal += windowPrice;
+        });
+
+        if (totalEl) {
+            totalEl.textContent = grandTotal > 0 ? `$${Math.round(grandTotal).toLocaleString()}` : '$0';
+        }
+    }
+
+    function createWindowRow(index) {
+        const row = document.createElement('div');
+        row.className = 'cs-window-row';
+        row.dataset.windowIndex = index;
+
+        const priceHtml = pricingModel !== 'contact'
+            ? `<div class="cs-window-price"><span class="cs-price-value">$0</span></div>`
+            : '';
+
+        row.innerHTML = `
+            <div class="cs-window-header">
+                <span class="cs-window-label">Window ${index + 1}</span>
+                <button type="button" class="cs-remove-window" aria-label="Remove window">×</button>
+            </div>
+            <div class="cs-window-inputs">
+                <div class="cs-input-group">
+                    <label class="cs-input-label">Width (inches)</label>
+                    <input type="number" class="cs-input cs-width" min="1" max="200" placeholder="36" />
+                </div>
+                <span class="cs-multiply">×</span>
+                <div class="cs-input-group">
+                    <label class="cs-input-label">Height (inches)</label>
+                    <input type="number" class="cs-input cs-height" min="1" max="200" placeholder="48" />
+                </div>
+                ${priceHtml}
+            </div>
+        `;
+
+        row.querySelector('.cs-remove-window').addEventListener('click', () => {
+            row.remove();
+            renumberWindows();
+            calculateAll();
+        });
+
+        row.querySelectorAll('.cs-input').forEach(input => {
+            input.addEventListener('input', calculateAll);
+        });
+
+        return row;
+    }
+
+    function renumberWindows() {
+        const rows = container.querySelectorAll('.cs-window-row');
+        rows.forEach((row, i) => {
+            row.dataset.windowIndex = i;
+            row.querySelector('.cs-window-label').textContent = `Window ${i + 1}`;
+        });
+        windowCount = rows.length;
+    }
+
+    // Add window button
+    addBtn.addEventListener('click', () => {
+        const row = createWindowRow(windowCount);
+        container.appendChild(row);
+        windowCount++;
+        row.querySelector('.cs-width').focus();
+    });
+
+    // Listen on initial inputs
+    section.querySelectorAll('.cs-input').forEach(input => {
+        input.addEventListener('input', calculateAll);
+    });
+
+    // Listen on radio change
+    section.querySelectorAll('.cs-radio').forEach(radio => {
+        radio.addEventListener('change', calculateAll);
+    });
+});
+</script>
+
+<style lang="less">
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #estimator-section {
+        padding: var(--sectionPadding);
+        background-color: #f7f7f7;
+
+        .cs-container {
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        .cs-content {
+            text-align: center;
+            width: 100%;
+            max-width: (700/16rem);
+        }
+
+        .cs-title {
+            margin: 0 0 (16/16rem) 0;
+        }
+
+        .cs-estimator-body {
+            width: 100%;
+            max-width: (800/16rem);
+            display: flex;
+            flex-direction: column;
+            gap: (20/16rem);
+        }
+
+        .cs-option-selector {
+            background: white;
+            padding: (20/16rem);
+        }
+
+        .cs-option-label {
+            font-size: (14/16rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--bodyTextColor);
+            display: block;
+            margin-bottom: (12/16rem);
+        }
+
+        .cs-option-group {
+            display: flex;
+            flex-direction: column;
+            gap: (10/16rem);
+        }
+
+        .cs-radio-label {
+            display: flex;
+            align-items: center;
+            gap: (10/16rem);
+            cursor: pointer;
+            padding: (10/16rem) (12/16rem);
+            border: 2px solid #e0e0e0;
+            transition: border-color 0.3s, background-color 0.3s;
+
+            &:has(.cs-radio:checked) {
+                border-color: var(--secondary);
+                background-color: rgba(255, 191, 0, 0.05);
+            }
+        }
+
+        .cs-radio {
+            accent-color: var(--secondary);
+            width: (18/16rem);
+            height: (18/16rem);
+            cursor: pointer;
+        }
+
+        .cs-radio-text {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex: 1;
+            font-size: (16/16rem);
+            font-weight: 600;
+        }
+
+        .cs-radio-price {
+            font-size: (14/16rem);
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .cs-windows-container {
+            display: flex;
+            flex-direction: column;
+            gap: (12/16rem);
+        }
+
+        .cs-window-row {
+            background: white;
+            padding: (16/16rem) (20/16rem);
+            border-left: 4px solid var(--secondary);
+        }
+
+        .cs-window-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: (12/16rem);
+        }
+
+        .cs-window-label {
+            font-size: (16/16rem);
+            font-weight: 700;
+        }
+
+        .cs-remove-window {
+            background: none;
+            border: none;
+            font-size: (22/16rem);
+            font-weight: 700;
+            color: #999;
+            cursor: pointer;
+            padding: 0 (8/16rem);
+            line-height: 1;
+            transition: color 0.3s;
+
+            &:hover {
+                color: #e74c3c;
+            }
+        }
+
+        .cs-window-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            gap: (12/16rem);
+        }
+
+        .cs-input-group {
+            flex: 1;
+            min-width: (100/16rem);
+        }
+
+        .cs-input-label {
+            font-size: (12/16rem);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #888;
+            display: block;
+            margin-bottom: (6/16rem);
+        }
+
+        .cs-input {
+            width: 100%;
+            padding: (10/16rem) (14/16rem);
+            border: 2px solid #e0e0e0;
+            font-size: (18/16rem);
+            font-weight: 600;
+            text-align: center;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+
+            &:focus {
+                outline: none;
+                border-color: var(--secondary);
+            }
+
+            &::placeholder {
+                color: #ccc;
+            }
+        }
+
+        .cs-multiply {
+            font-size: (20/16rem);
+            font-weight: 700;
+            color: #999;
+            padding-bottom: (10/16rem);
+        }
+
+        .cs-window-price {
+            min-width: (80/16rem);
+            text-align: right;
+            padding-bottom: (10/16rem);
+
+            .cs-price-value {
+                font-size: (20/16rem);
+                font-weight: 900;
+                color: var(--secondary);
+            }
+        }
+
+        .cs-add-window {
+            background: white;
+            border: 2px dashed #d0d0d0;
+            padding: (14/16rem);
+            font-size: (16/16rem);
+            font-weight: 600;
+            color: #888;
+            cursor: pointer;
+            transition: border-color 0.3s, color 0.3s;
+            text-align: center;
+
+            span {
+                font-size: (20/16rem);
+                font-weight: 700;
+            }
+
+            &:hover {
+                border-color: var(--secondary);
+                color: var(--secondary);
+            }
+        }
+
+        .cs-results {
+            background: #1a1a1a;
+            padding: (28/16rem);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: (8/16rem);
+        }
+
+        .cs-total-row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: (4/16rem);
+            margin-bottom: (8/16rem);
+        }
+
+        .cs-total-label {
+            font-size: (14/16rem);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #999;
+        }
+
+        .cs-total-value {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 900;
+            color: var(--secondary);
+        }
+
+        .cs-disclaimer {
+            font-size: (13/16rem);
+            line-height: 1.5em;
+            color: #999;
+            max-width: (500/16rem);
+            margin: 0;
+        }
+
+        .cs-financing {
+            font-size: (13/16rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--secondary);
+            margin: 0;
+        }
+
+        .cs-contact-message {
+            p {
+                font-size: (16/16rem);
+                line-height: 1.5em;
+                color: #e0e0e0;
+                margin: 0 0 (8/16rem) 0;
+            }
+        }
+
+        .cs-button-solid {
+            font-size: (16/16rem);
+            line-height: clamp(2.875rem, 5.5vw, 3.5rem);
+            text-decoration: none;
+            font-weight: 700;
+            text-align: center;
+            min-width: (200/16rem);
+            padding: 0 (32/16rem);
+            border-radius: (4/16rem);
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            color: var(--csButtonTextColor);
+            background-color: var(--csButtonColor);
+            margin-top: (8/16rem);
+
+            &:before {
+                content: "";
+                position: absolute;
+                height: 100%;
+                width: 0%;
+                background: var(--csButtonHoverColor);
+                opacity: 1;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                border-radius: (4/16rem);
+                transition: width 0.3s;
+            }
+
+            &:hover {
+                &:before {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #estimator-section {
+        .cs-option-group {
+            flex-direction: row;
+        }
+
+        .cs-radio-label {
+            flex: 1;
+        }
+
+        .cs-total-row {
+            flex-direction: row;
+            gap: (16/16rem);
+        }
+    }
+}
+</style>

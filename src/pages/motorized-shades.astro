@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import CTA from "@components/CTA.astro";
-import Pricing from "@components/Pricing.astro";
+import Estimator from "@components/Estimator.astro";
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import {getOptimizedImage} from "@js/utils"
@@ -135,12 +135,13 @@ const optimizedImage = await getOptimizedImage(landingImage)
 </section>
 
 
-<Pricing
-    items={[
-        { name: "Motorized Shades", price: "From $300/window" },
-        { name: "Smart Home Integration", price: "Included" },
+<Estimator
+    productName="Motorized Shades"
+    pricingModel="perWindow"
+    options={[
+        { name: "Motorized Shades", price: 300 },
     ]}
-    note="Includes motor, remote, and smart home setup. Pricing varies by window size and fabric. Get your exact quote with a free consultation."
+    note="Includes motor, remote, and smart home setup. This is a rough estimate — pricing varies by window size and fabric."
 />
 
 <CTA/>
