@@ -966,9 +966,12 @@ import ComparisonChart from "@components/ComparisonChart.astro";
         }
 
         .cs-picture1 {
-            /* taller to fit portrait video */
-            height: clamp(18rem, 50vw, 30rem);
-            max-height: (480/16rem);
+            /* portrait box for vertical video */
+            width: 60%;
+            max-width: (350/16rem);
+            height: auto;
+            aspect-ratio: 9 / 16;
+            max-height: none;
             overflow: hidden;
             border-radius: (8/16rem);
         }
