@@ -1,0 +1,399 @@
+---
+import BaseLayout from "src/layouts/BaseLayout.astro";
+import CTA from "@components/CTA.astro";
+
+// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
+import {getOptimizedImage} from "@js/utils"
+import landingImage from "@assets/images/landing.jpg" // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+const optimizedImage = await getOptimizedImage(landingImage)
+---
+
+<BaseLayout
+  title="Warranty & Satisfaction Guarantee | Boutique Shutters"
+  description="Comprehensive warranty coverage on all window treatments. Lifetime craftsmanship warranty on shutters, 2-year motor warranty on motorized shades. Your satisfaction guaranteed."
+  preloadedImage = {optimizedImage}
+>
+<!-- ============================================ -->
+<!--                   Banner                     -->
+<!-- ============================================ -->
+
+<div id="banner-1106">
+    <div class="cs-container">
+        <span class="cs-int-title">Warranty & Guarantee</span>
+        <div class="cs-breadcrumbs">
+            <a href="/" class="cs-link">Home</a>
+            <a href="/warranty" class="cs-link cs-active">Warranty</a>
+        </div>
+    </div>
+    <!--Background Image-->
+    <picture class="cs-background">
+        <!--Mobile Image-->
+        <source media="(max-width: 600px)" srcset="/assets/images/shutters/plantation-shutters-1280x568-d.webp">
+        <!--Tablet and above Image-->
+        <source media="(min-width: 601px)" srcset="/assets/images/shutters/plantation-shutters-1280x568-d.webp">
+        <img decoding="async" src="/assets/images/shutters/plantation-shutters-1280x568-d.webp" alt="premium plantation shutters backed by warranty" width="1280" height="568" aria-hidden="true">
+    </picture>
+</div>
+
+<!-- ============================================ -->
+<!--              Warranty Overview                -->
+<!-- ============================================ -->
+
+<section id="warranty-content">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">Our Promise</span>
+            <h2 class="cs-title">The Boutique Shutters No-Surprises Guarantee</h2>
+            <p class="cs-text">
+                At Boutique Shutters, we stand behind every product we install and every service we deliver. Unlike national franchise models where service quality varies by dealer, we control every step of your experience—from your initial consultation through installation and beyond. That means consistent quality, transparent pricing, and a team that is personally accountable to you.
+            </p>
+            <p class="cs-text">
+                Our comprehensive warranty program covers materials, craftsmanship, and installation so you can invest in your home with complete confidence. If something is not right, we make it right—no excuses, no runaround.
+            </p>
+        </div>
+
+        <div class="cs-warranty-cards">
+            <div class="cs-card">
+                <h3 class="cs-h3">Plantation Shutters</h3>
+                <span class="cs-card-highlight">Lifetime Warranty</span>
+                <ul class="cs-card-list">
+                    <li>Lifetime warranty on craftsmanship and materials</li>
+                    <li>Coverage for warping, cracking, and peeling under normal use</li>
+                    <li>Includes frame, louvers, and hardware components</li>
+                    <li>Professional re-adjustment if needed after settlement</li>
+                </ul>
+            </div>
+            <div class="cs-card">
+                <h3 class="cs-h3">Motorized Shades</h3>
+                <span class="cs-card-highlight">2-Year Motor Warranty</span>
+                <ul class="cs-card-list">
+                    <li>2-year warranty on all motorized components</li>
+                    <li>Coverage for motor, remote, and smart home integration</li>
+                    <li>Free troubleshooting and recalibration support</li>
+                    <li>Extended warranty options available at installation</li>
+                </ul>
+            </div>
+            <div class="cs-card">
+                <h3 class="cs-h3">Roller & Zebra Shades</h3>
+                <span class="cs-card-highlight">5-Year Warranty</span>
+                <ul class="cs-card-list">
+                    <li>5-year warranty on fabric and operating mechanisms</li>
+                    <li>Coverage for material defects and chain/cord mechanisms</li>
+                    <li>Includes brackets, mounting hardware, and valances</li>
+                    <li>Color-fade protection under normal indoor conditions</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="cs-guarantee">
+            <h3 class="cs-h3">100% Satisfaction Guarantee</h3>
+            <p class="cs-text">
+                Every installation includes our satisfaction guarantee. We do not consider a project complete until you are completely happy with the results. Our certified installers will return to make any adjustments at no additional cost. With 500+ homes transformed across Metro Atlanta, our reputation is built on getting it right the first time—and making it right if we do not.
+            </p>
+        </div>
+
+        <div class="cs-process">
+            <h3 class="cs-h3">How to File a Warranty Claim</h3>
+            <div class="cs-steps">
+                <div class="cs-step">
+                    <span class="cs-step-number">1</span>
+                    <p class="cs-step-text">Contact us by phone at <a href="tel:404-966-7419">404-966-7419</a> or email <a href="mailto:sales@boutiqueshutters.com">sales@boutiqueshutters.com</a></p>
+                </div>
+                <div class="cs-step">
+                    <span class="cs-step-number">2</span>
+                    <p class="cs-step-text">Describe the issue and provide photos if possible. We will assess whether it falls under warranty coverage.</p>
+                </div>
+                <div class="cs-step">
+                    <span class="cs-step-number">3</span>
+                    <p class="cs-step-text">We schedule a service visit at your convenience to inspect, repair, or replace the covered component at no charge.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<CTA/>
+
+</BaseLayout>
+
+<style lang="less">
+/*-- -------------------------- -->
+<---          Banner            -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #banner-1106 {
+        padding: var(--sectionPadding);
+        padding-top: (250/16rem);
+        padding-bottom: (120/16rem);
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+
+        .cs-container {
+            text-align: center;
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+            gap: (12/16rem);
+        }
+
+        .cs-int-title {
+            font-size: clamp(2.4375rem, 6.4vw, 3.8125rem);
+            font-weight: 900;
+            line-height: 1.2em;
+            text-align: inherit;
+            margin: 0;
+            color: var(--bodyTextColorWhite);
+            position: relative;
+        }
+
+        .cs-breadcrumbs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cs-link {
+            font-size: (16/16rem);
+            line-height: 1.2em;
+            text-decoration: none;
+            color: var(--bodyTextColorWhite);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:last-of-type {
+                &::after {
+                    display: none;
+                }
+            }
+
+            &:after {
+                content: "";
+                width: (7/16rem);
+                height: (12/16rem);
+                margin: 0 (16/16rem);
+                background: url("https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/white-chev.svg");
+                background-size: contain;
+                background-position: center;
+                background-repeat: no-repeat;
+                position: relative;
+                display: block;
+            }
+
+            &.cs-active {
+                color: var(--secondary);
+            }
+        }
+
+        .cs-background {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+
+            &:before {
+                content: "";
+                position: absolute;
+                display: block;
+                height: 100%;
+                width: 100%;
+                background: -moz-linear-gradient(
+                    left,
+                    rgba(26, 26, 26, 0.94) 0%,
+                    rgba(26, 26, 26, 0) 100%
+                );
+                background: -webkit-linear-gradient(
+                    left,
+                    rgba(26, 26, 26, 0.94) 0%,
+                    rgba(26, 26, 26, 0) 100%
+                );
+                opacity: 1;
+                top: 0;
+                left: 0;
+                z-index: 1;
+            }
+
+            img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+}
+
+/*-- -------------------------- -->
+<---      Warranty Content      -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #warranty-content {
+        padding: var(--sectionPadding);
+
+        .cs-container {
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(2rem, 4vw, 3rem);
+        }
+
+        .cs-content {
+            text-align: left;
+            width: 100%;
+            max-width: (800/16rem);
+        }
+
+        .cs-title {
+            margin: 0 0 (24/16rem) 0;
+        }
+
+        .cs-text {
+            margin-bottom: (16/16rem);
+        }
+
+        .cs-warranty-cards {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: (24/16rem);
+        }
+
+        .cs-card {
+            background-color: #f7f7f7;
+            padding: (32/16rem) (24/16rem);
+            border-left: 4px solid var(--secondary);
+        }
+
+        .cs-h3 {
+            font-size: clamp(1.25rem, 2vw, 1.5rem);
+            font-weight: 700;
+            line-height: 1.2em;
+            margin: 0 0 (8/16rem) 0;
+        }
+
+        .cs-card-highlight {
+            font-size: (18/16rem);
+            font-weight: 700;
+            color: var(--secondary);
+            display: block;
+            margin-bottom: (16/16rem);
+        }
+
+        .cs-card-list {
+            padding-left: (20/16rem);
+            margin: 0;
+
+            li {
+                font-size: var(--bodyFontSize);
+                line-height: 1.5em;
+                margin-bottom: (8/16rem);
+                color: var(--bodyTextColor);
+            }
+        }
+
+        .cs-guarantee {
+            background-color: #1a1a1a;
+            padding: (40/16rem) (32/16rem);
+            color: white;
+
+            .cs-h3 {
+                color: var(--secondary);
+            }
+
+            .cs-text {
+                color: #e0e0e0;
+            }
+        }
+
+        .cs-process {
+            width: 100%;
+        }
+
+        .cs-steps {
+            display: flex;
+            flex-direction: column;
+            gap: (24/16rem);
+            margin-top: (24/16rem);
+        }
+
+        .cs-step {
+            display: flex;
+            align-items: flex-start;
+            gap: (16/16rem);
+        }
+
+        .cs-step-number {
+            font-size: (24/16rem);
+            font-weight: 900;
+            color: white;
+            background-color: var(--secondary);
+            min-width: (48/16rem);
+            height: (48/16rem);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .cs-step-text {
+            font-size: var(--bodyFontSize);
+            line-height: 1.5em;
+            margin: 0;
+            padding-top: (12/16rem);
+
+            a {
+                color: var(--secondary);
+                text-decoration: none;
+                font-weight: 700;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #warranty-content {
+        .cs-warranty-cards {
+            flex-direction: row;
+        }
+
+        .cs-card {
+            flex: 1;
+        }
+
+        .cs-steps {
+            flex-direction: row;
+        }
+
+        .cs-step {
+            flex: 1;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+    }
+}
+</style>

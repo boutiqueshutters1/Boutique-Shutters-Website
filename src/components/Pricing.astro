@@ -1,0 +1,175 @@
+---
+interface PricingItem {
+    name: string;
+    price: string;
+}
+
+interface Props {
+    items: PricingItem[];
+    note: string;
+}
+
+const { items, note } = Astro.props;
+---
+
+<section id="pricing-section">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">Transparent Pricing</span>
+            <h2 class="cs-title">Investment Guide</h2>
+            <p class="cs-text">
+                Every home is unique, so final pricing depends on window size, material selection, and customization options. These starting ranges give you an idea of the investment before your free consultation.
+            </p>
+        </div>
+        <div class="cs-pricing-cards">
+            {items.map((item) => (
+                <div class="cs-pricing-card">
+                    <h3 class="cs-pricing-name">{item.name}</h3>
+                    <span class="cs-pricing-price">{item.price}</span>
+                </div>
+            ))}
+        </div>
+        <div class="cs-pricing-footer">
+            <p class="cs-pricing-note">{note}</p>
+            <p class="cs-financing">Financing options available</p>
+            <a href="/book" class="cs-button-solid">Get Your Free Quote</a>
+        </div>
+    </div>
+</section>
+
+<style lang="less">
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #pricing-section {
+        padding: var(--sectionPadding);
+        background-color: #f7f7f7;
+
+        .cs-container {
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        .cs-content {
+            text-align: center;
+            width: 100%;
+            max-width: (700/16rem);
+        }
+
+        .cs-title {
+            margin: 0 0 (16/16rem) 0;
+        }
+
+        .cs-pricing-cards {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: (16/16rem);
+        }
+
+        .cs-pricing-card {
+            background: white;
+            padding: (24/16rem) (32/16rem);
+            border-left: 4px solid var(--secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: (16/16rem);
+        }
+
+        .cs-pricing-name {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-weight: 700;
+            line-height: 1.2em;
+            margin: 0;
+        }
+
+        .cs-pricing-price {
+            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+            font-weight: 900;
+            color: var(--secondary);
+            white-space: nowrap;
+        }
+
+        .cs-pricing-footer {
+            text-align: center;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: (8/16rem);
+        }
+
+        .cs-pricing-note {
+            font-size: (14/16rem);
+            line-height: 1.5em;
+            color: var(--bodyTextColor);
+            max-width: (600/16rem);
+            margin: 0;
+        }
+
+        .cs-financing {
+            font-size: (14/16rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--secondary);
+            margin: 0 0 (8/16rem) 0;
+        }
+
+        .cs-button-solid {
+            font-size: (16/16rem);
+            line-height: clamp(2.875rem, 5.5vw, 3.5rem);
+            text-decoration: none;
+            font-weight: 700;
+            text-align: center;
+            min-width: (150/16rem);
+            padding: 0 (24/16rem);
+            border-radius: (4/16rem);
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            color: var(--csButtonTextColor);
+
+            &:before {
+                content: "";
+                position: absolute;
+                height: 100%;
+                width: 0%;
+                background: var(--csButtonHoverColor);
+                opacity: 1;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                border-radius: (4/16rem);
+                transition: width 0.3s;
+            }
+
+            &:hover {
+                &:before {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #pricing-section {
+        .cs-pricing-cards {
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .cs-pricing-card {
+            flex: 1;
+            min-width: (250/16rem);
+        }
+    }
+}
+</style>

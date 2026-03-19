@@ -1,0 +1,326 @@
+---
+import BaseLayout from "src/layouts/BaseLayout.astro";
+import CTA from "@components/CTA.astro";
+import { getCollection, render } from "astro:content";
+import { formatDate } from "@js/utils";
+
+import {getOptimizedImage} from "@js/utils"
+import landingImage from "@assets/images/landing.jpg"
+const optimizedImage = await getOptimizedImage(landingImage)
+
+export async function getStaticPaths() {
+    const posts = await getCollection("blog");
+    return posts.map((post) => ({
+        params: { slug: post.id },
+        props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout
+  title={`${post.data.title} | Boutique Shutters Blog`}
+  description={post.data.description}
+  preloadedImage={optimizedImage}
+>
+
+<!-- ============================================ -->
+<!--                   Banner                     -->
+<!-- ============================================ -->
+
+<div id="banner-1106">
+    <div class="cs-container">
+        <span class="cs-int-title">{post.data.title}</span>
+        <div class="cs-breadcrumbs">
+            <a href="/" class="cs-link">Home</a>
+            <a href="/blog" class="cs-link">Blog</a>
+            <span class="cs-link cs-active">Article</span>
+        </div>
+    </div>
+    <picture class="cs-background">
+        <source media="(max-width: 600px)" srcset="/assets/images/shades/cta-shades-1280x568-d.webp">
+        <source media="(min-width: 601px)" srcset="/assets/images/shades/cta-shades-1280x568-d.webp">
+        <img decoding="async" src="/assets/images/shades/cta-shades-1280x568-d.webp" alt={post.data.imageAlt} width="1280" height="568" aria-hidden="true">
+    </picture>
+</div>
+
+<!-- ============================================ -->
+<!--                Blog Article                   -->
+<!-- ============================================ -->
+
+<section id="blog-article">
+    <div class="cs-container">
+        <article class="cs-article">
+            <div class="cs-article-meta">
+                <span class="cs-date">{formatDate(post.data.date)}</span>
+                <span class="cs-divider">|</span>
+                <span class="cs-author">by {post.data.author}</span>
+            </div>
+            <div class="cs-article-tags">
+                {post.data.tags.map((tag: string) => (
+                    <span class="cs-tag">{tag}</span>
+                ))}
+            </div>
+            <div class="cs-article-content">
+                <Content />
+            </div>
+            <div class="cs-back-link">
+                <a href="/blog">&larr; Back to Blog</a>
+            </div>
+        </article>
+    </div>
+</section>
+
+<CTA/>
+
+</BaseLayout>
+
+<style lang="less">
+/*-- -------------------------- -->
+<---          Banner            -->
+<--- -------------------------- -*/
+
+@media only screen and (min-width: 0rem) {
+    #banner-1106 {
+        padding: var(--sectionPadding);
+        padding-top: (250/16rem);
+        padding-bottom: (120/16rem);
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+
+        .cs-container {
+            text-align: center;
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: (12/16rem);
+        }
+
+        .cs-int-title {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 900;
+            line-height: 1.2em;
+            text-align: left;
+            margin: 0;
+            color: var(--bodyTextColorWhite);
+            position: relative;
+            max-width: (800/16rem);
+        }
+
+        .cs-breadcrumbs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cs-link {
+            font-size: (16/16rem);
+            line-height: 1.2em;
+            text-decoration: none;
+            color: var(--bodyTextColorWhite);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:last-of-type::after { display: none; }
+
+            &:after {
+                content: "";
+                width: (7/16rem);
+                height: (12/16rem);
+                margin: 0 (16/16rem);
+                background: url("https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/white-chev.svg");
+                background-size: contain;
+                background-position: center;
+                background-repeat: no-repeat;
+                position: relative;
+                display: block;
+            }
+
+            &.cs-active { color: var(--secondary); }
+        }
+
+        .cs-background {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+
+            &:before {
+                content: "";
+                position: absolute;
+                display: block;
+                height: 100%;
+                width: 100%;
+                background: -webkit-linear-gradient(left, rgba(26, 26, 26, 0.94) 0%, rgba(26, 26, 26, 0) 100%);
+                opacity: 1;
+                top: 0;
+                left: 0;
+                z-index: 1;
+            }
+
+            img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+}
+
+/*-- -------------------------- -->
+<---       Blog Article         -->
+<--- -------------------------- -*/
+
+@media only screen and (min-width: 0rem) {
+    #blog-article {
+        padding: var(--sectionPadding);
+
+        .cs-container {
+            width: 100%;
+            max-width: (800/16rem);
+            margin: auto;
+        }
+
+        .cs-article {
+            width: 100%;
+        }
+
+        .cs-article-meta {
+            display: flex;
+            align-items: center;
+            gap: (12/16rem);
+            margin-bottom: (16/16rem);
+            padding-bottom: (16/16rem);
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .cs-date {
+            font-size: (14/16rem);
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .cs-divider {
+            color: #ccc;
+        }
+
+        .cs-author {
+            font-size: (14/16rem);
+            color: var(--bodyTextColor);
+        }
+
+        .cs-article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: (8/16rem);
+            margin-bottom: (32/16rem);
+        }
+
+        .cs-tag {
+            font-size: (12/16rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: (4/16rem) (12/16rem);
+            background: #f7f7f7;
+            border-radius: (50/16rem);
+            color: var(--bodyTextColor);
+        }
+
+        .cs-article-content {
+            h2 {
+                font-size: clamp(1.5rem, 3vw, 2rem);
+                font-weight: 900;
+                line-height: 1.3em;
+                margin: (40/16rem) 0 (16/16rem) 0;
+                color: var(--headerColor);
+            }
+
+            h3 {
+                font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+                font-weight: 700;
+                line-height: 1.3em;
+                margin: (32/16rem) 0 (12/16rem) 0;
+                color: var(--headerColor);
+            }
+
+            p {
+                font-size: (16/16rem);
+                line-height: 1.7em;
+                margin: 0 0 (20/16rem) 0;
+                color: var(--bodyTextColor);
+            }
+
+            ul, ol {
+                margin: 0 0 (20/16rem) (20/16rem);
+                padding: 0;
+
+                li {
+                    font-size: (16/16rem);
+                    line-height: 1.7em;
+                    margin-bottom: (8/16rem);
+                    color: var(--bodyTextColor);
+                }
+            }
+
+            strong {
+                color: var(--headerColor);
+            }
+
+            a {
+                color: var(--secondary);
+                text-decoration: underline;
+
+                &:hover {
+                    color: var(--csButtonHoverColor);
+                }
+            }
+
+            blockquote {
+                margin: (24/16rem) 0;
+                padding: (16/16rem) (24/16rem);
+                border-left: 4px solid var(--secondary);
+                background: #f7f7f7;
+                font-style: italic;
+
+                p {
+                    margin: 0;
+                }
+            }
+        }
+
+        .cs-back-link {
+            margin-top: (40/16rem);
+            padding-top: (24/16rem);
+            border-top: 1px solid #e0e0e0;
+
+            a {
+                font-size: (16/16rem);
+                font-weight: 700;
+                color: var(--secondary);
+                text-decoration: none;
+                transition: color 0.3s;
+
+                &:hover {
+                    color: var(--csButtonHoverColor);
+                }
+            }
+        }
+    }
+}
+</style>

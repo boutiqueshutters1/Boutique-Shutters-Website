@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import CTA from "@components/CTA.astro";
+import Pricing from "@components/Pricing.astro";
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import {getOptimizedImage} from "@js/utils"
@@ -132,7 +133,14 @@ const optimizedImage = await getOptimizedImage(landingImage)
         </div>
     </div>
 </section>
-                                
+
+
+<Pricing
+    items={[
+        { name: "Exterior Shades", price: "Contact for Pricing" },
+    ]}
+    note="Exterior shade pricing varies widely based on size, material, and installation requirements. Book a free consultation to get a personalized quote."
+/>
 
 <CTA/>
 
