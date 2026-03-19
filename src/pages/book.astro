@@ -92,6 +92,16 @@ const optimizedImage = await getOptimizedImage(landingImage)
             </iframe>
         </div>
 
+        <div class="cs-financing-strip">
+            <p class="cs-financing-text">Flexible financing available through</p>
+            <div class="cs-financing-logos">
+                <img src="https://www.wisetack.com/hubfs/wisetack-logo.svg" alt="Wisetack financing" height="24" loading="lazy" />
+                <span class="cs-divider">|</span>
+                <img src="https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg" alt="Klarna financing" height="24" loading="lazy" />
+            </div>
+            <p class="cs-financing-note">Apply during your consultation — quick approval, flexible terms</p>
+        </div>
+
         <div class="cs-contact-alt">
             <p class="cs-text">Prefer to call? Reach us directly at <a href="tel:404-966-7419">404-966-7419</a> or email <a href="mailto:sales@boutiqueshutters.com">sales@boutiqueshutters.com</a></p>
         </div>
@@ -300,6 +310,42 @@ const optimizedImage = await getOptimizedImage(landingImage)
             font-weight: 700;
             margin: 0 0 (16/16rem) 0;
             text-align: center;
+        }
+
+        .cs-financing-strip {
+            text-align: center;
+            padding: (24/16rem);
+            background: white;
+            border: 2px solid #e0e0e0;
+        }
+
+        .cs-financing-text {
+            font-size: (14/16rem);
+            font-weight: 600;
+            color: var(--bodyTextColor);
+            margin: 0 0 (8/16rem) 0;
+        }
+
+        .cs-financing-logos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: (16/16rem);
+            margin-bottom: (8/16rem);
+
+            img {
+                height: (24/16rem);
+            }
+
+            .cs-divider {
+                color: #ccc;
+            }
+        }
+
+        .cs-financing-note {
+            font-size: (13/16rem);
+            color: #888;
+            margin: 0;
         }
 
         .cs-contact-alt {

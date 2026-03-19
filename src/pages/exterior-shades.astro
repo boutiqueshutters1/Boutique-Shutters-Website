@@ -2,6 +2,7 @@
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import CTA from "@components/CTA.astro";
 import Estimator from "@components/Estimator.astro";
+import ProductSchema from "@components/ProductSchema.astro";
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import {getOptimizedImage} from "@js/utils"
@@ -14,6 +15,15 @@ const optimizedImage = await getOptimizedImage(landingImage)
   description="Premium exterior shades for patios, decks & outdoor spaces. UV protection, weather-resistant materials, motorized options. Free consultation available."
   preloadedImage = {optimizedImage}
 >
+<ProductSchema
+    slot="head"
+    name="Exterior Window Shades"
+    description="Weather-resistant exterior shades for patios, decks, and outdoor spaces. UV protection with motorized options available."
+    url="/exterior-shades"
+    image="/assets/images/exterior/exterior-shades-413x420-d.webp"
+    lowPrice="200"
+    highPrice="600"
+/>
 <!-- ============================================ -->
 <!--                   Banner                     -->
 <!-- ============================================ -->

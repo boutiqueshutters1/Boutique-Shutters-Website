@@ -93,14 +93,26 @@ const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}
                         <span class="cs-total-label">Estimated Total</span>
                         <span class="cs-total-value">$0</span>
                     </div>
+                    <p class="cs-monthly-estimate">
+                        or as low as <span class="cs-monthly-value">$0</span>/mo with financing
+                    </p>
+                    <div class="cs-financing-badges">
+                        <img src="https://www.wisetack.com/hubfs/wisetack-logo.svg" alt="Wisetack" height="20" loading="lazy" />
+                        <span class="cs-financing-divider">|</span>
+                        <img src="https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg" alt="Klarna" height="20" loading="lazy" />
+                    </div>
                     <p class="cs-disclaimer">{note}</p>
-                    <p class="cs-financing">Financing options available</p>
                     <a href="/book" class="cs-button-solid">Get Your Exact Quote</a>
                 </div>
             ) : (
                 <div class="cs-results">
                     <div class="cs-contact-message">
                         <p>Every exterior shade installation is unique. Submit your window details and we'll provide a personalized quote.</p>
+                    </div>
+                    <div class="cs-financing-badges">
+                        <img src="https://www.wisetack.com/hubfs/wisetack-logo.svg" alt="Wisetack" height="20" loading="lazy" />
+                        <span class="cs-financing-divider">|</span>
+                        <img src="https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg" alt="Klarna" height="20" loading="lazy" />
                     </div>
                     <p class="cs-disclaimer">{note}</p>
                     <a href="/book" class="cs-button-solid">Request Custom Quote</a>
@@ -118,6 +130,7 @@ const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}
     const container = section.querySelector('.cs-windows-container');
     const addBtn = section.querySelector('.cs-add-window');
     const totalEl = section.querySelector('.cs-total-value');
+    const monthlyEl = section.querySelector('.cs-monthly-value');
     let windowCount = 1;
 
     function getSelectedPrice() {
@@ -154,6 +167,10 @@ const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}
 
         if (totalEl) {
             totalEl.textContent = grandTotal > 0 ? `$${Math.round(grandTotal).toLocaleString()}` : '$0';
+            if (monthlyEl) {
+                const monthly = grandTotal > 0 ? Math.round(grandTotal / 12) : 0;
+                monthlyEl.textContent = monthly > 0 ? `$${monthly.toLocaleString()}` : '$0';
+            }
         }
     }
 
@@ -482,13 +499,34 @@ const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}
             margin: 0;
         }
 
-        .cs-financing {
-            font-size: (13/16rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--secondary);
+        .cs-monthly-estimate {
+            font-size: (14/16rem);
+            color: #ccc;
             margin: 0;
+
+            .cs-monthly-value {
+                font-weight: 700;
+                color: var(--secondary);
+            }
+        }
+
+        .cs-financing-badges {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: (12/16rem);
+            margin: (4/16rem) 0;
+
+            img {
+                height: (20/16rem);
+                opacity: 0.85;
+                filter: brightness(0) invert(1);
+            }
+        }
+
+        .cs-financing-divider {
+            color: #555;
+            font-size: (14/16rem);
         }
 
         .cs-contact-message {
