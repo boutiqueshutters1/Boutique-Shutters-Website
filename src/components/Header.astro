@@ -33,13 +33,15 @@ import { Icon } from 'astro-icon/components';
             </div>
         </li>
         <li class="cs-item cs-remove">
-            <picture class="cs-picture">
-                <img class="cs-icon" src="/assets/images/icons/Icons_pin-stroke-green.svg" alt="icon" width="24" height="24" aria-hidden="true" decoding="async">
-            </picture>
-            <div class="cs-flex">
-                <span class="cs-header">Servicing</span>
-                <a href="https://g.co/kgs/KWBrmdv" class="cs-link">Atlanta Metro Area</a>
-            </div>
+            <a href="https://maps.app.goo.gl/314AZ4Dpz98b73GS8" target="_blank" rel="noopener noreferrer" class="cs-review-badge">
+                <img src="/assets/images/google.svg" alt="Google" width="24" height="24" decoding="async">
+                <div class="cs-flex">
+                    <span class="cs-header">
+                        <img src="https://csimg.nyc3.digitaloceanspaces.com/Reviews/stars-yellow.svg" alt="5 stars" width="80" height="13">
+                    </span>
+                    <span class="cs-link">4.9 from 50+ Reviews</span>
+                </div>
+            </a>
         </li>
     </ul>
     <div class="cs-bottom-bar">
@@ -972,6 +974,39 @@ import { Icon } from 'astro-icon/components';
             transition: color .3s;
             &:hover {
                 text-decoration: underline;
+            }
+        }
+
+        .cs-review-badge {
+            display: flex;
+            align-items: center;
+            gap: (12/16rem);
+            text-decoration: none;
+            transition: opacity 0.3s;
+
+            &:hover {
+                opacity: 0.8;
+            }
+
+            img:first-child {
+                width: (28/16rem);
+                height: (28/16rem);
+            }
+
+            .cs-header {
+                display: flex;
+                align-items: center;
+
+                img {
+                    width: (80/16rem);
+                    height: auto;
+                }
+            }
+
+            .cs-link {
+                font-size: (13/16rem);
+                font-weight: 600;
+                color: var(--csTextColor);
             }
         }
 
