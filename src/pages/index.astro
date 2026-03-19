@@ -71,26 +71,36 @@ import ComparisonChart from "@components/ComparisonChart.astro";
 
 <section id="sbsr-2169">
     <div class="cs-container">
+        <div class="cs-media-row">
+            <div class="cs-media-video">
+                <video autoplay muted loop playsinline poster="/assets/images/zebra-shades/zebra-shades-630x400-d.webp">
+                    <source src="/assets/videos/why-choose-us.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="cs-media-photo">
+                <img loading="lazy" decoding="async" src="/assets/images/shutters/danny-consultation.jpg" alt="Boutique Shutters owner Danny during a window treatment consultation">
+            </div>
+        </div>
         <div class="cs-content">
             <span class="cs-topper">Why Choose Us</span>
             <h2 class="cs-title">Why Homeowners Choose Boutique Shutters</h2>
             <p class="cs-text">
                 Boutique Shutters has been the trusted choice for custom window treatments in Metro Atlanta. We're not a big-box store or national franchise—we're a locally-owned business that takes pride in transforming homes throughout Suwanee, Johns Creek, Sugar Hill, and surrounding communities. We understand the unique architectural styles found throughout Metro Atlanta and provide complimentary in-home consultations where we measure your windows, discuss your vision, and provide honest recommendations tailored to your home and budget.
             </p>
-            <picture class="cs-picture cs-picture1">
-                <video autoplay muted loop playsinline poster="/assets/images/zebra-shades/zebra-shades-630x400-d.webp" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;">
-                    <source src="/assets/videos/why-choose-us.mp4" type="video/mp4">
-                </video>
-            </picture>
-        </div>
-        <div class="cs-image-group">
-            <picture class="cs-picture cs-picture2">
-                <!--Mobile Image-->
-                <source media="(max-width: 600px)" srcset="/assets/images/shutters/danny-consultation.jpg">
-                <!--Tablet and above Image-->
-                <source media="(min-width: 601px)" srcset="/assets/images/shutters/danny-consultation.jpg">
-                <img loading="lazy" decoding="async" src="/assets/images/shutters/danny-consultation.jpg" alt="Boutique Shutters owner Danny during a window treatment consultation" width="420" height="619">
-            </picture>
+            <ul class="cs-stats">
+                <li class="cs-stat">
+                    <span class="cs-number">500+</span>
+                    <span class="cs-desc">Homes Transformed</span>
+                </li>
+                <li class="cs-stat">
+                    <span class="cs-number">4.9</span>
+                    <span class="cs-desc">Google Rating</span>
+                </li>
+                <li class="cs-stat">
+                    <span class="cs-number">100%</span>
+                    <span class="cs-desc">Satisfaction</span>
+                </li>
+            </ul>
         </div>
     </div>
 </section>
@@ -908,84 +918,62 @@ import ComparisonChart from "@components/ComparisonChart.astro";
 
         .cs-container {
             width: 100%;
-            /* changes to 1280px at tablet */
-            max-width: (584/16rem);
+            max-width: (900/16rem);
             margin: auto;
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* 48px - 64px */
-            gap: clamp(3rem, 10vw, 8rem);
-        }
-        .cs-title {
-            /*color: #000;*/
+            gap: clamp(2rem, 4vw, 3rem);
         }
         .cs-content {
-            /* set text align to left if content needs to be left aligned */
-            text-align: left;
+            text-align: center;
             width: 100%;
+            max-width: (700/16rem);
             display: flex;
             flex-direction: column;
-            /* centers content horizontally, set to flex-start to left align */
-            align-items: flex-start;
+            align-items: center;
         }
 
         .cs-text {
-            /* Override.  cs-topper cs-title and first cs-text should be removed and put into your global css sheet so it can control every instance of them on your site and is consistent. This selector is a section specific override that stays inside this stitch */
             margin-bottom: (16/16rem);
-            &:last-of-type {
-                /* 32px - 80px */
-                margin-bottom: clamp(2rem, 7vw, 5rem);
+            text-align: left;
+        }
+
+        .cs-media-row {
+            width: 100%;
+            display: flex;
+            gap: (16/16rem);
+            order: -1;
+        }
+
+        .cs-media-video {
+            flex: 1;
+            aspect-ratio: 9 / 16;
+            max-height: (500/16rem);
+            overflow: hidden;
+            border-radius: (8/16rem);
+
+            video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
             }
         }
 
-        .cs-picture {
-            width: 100%;
-            display: block;
-            position: relative;
-            z-index: 1;
+        .cs-media-photo {
+            flex: 1;
+            aspect-ratio: 9 / 16;
+            max-height: (500/16rem);
+            overflow: hidden;
+            border-radius: (8/16rem);
 
             img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
-                position: absolute;
-                top: 0;
-                left: 0;
+                display: block;
             }
-        }
-
-        .cs-image-group {
-            width: 100%;
-            /* 520px - 740px */
-            height: clamp(32.3125rem, 100vw, 46.25rem);
-            flex: none;
-            position: relative;
-            z-index: 1;
-            order: -1;
-        }
-
-        .cs-picture1 {
-            /* portrait box for vertical video */
-            width: 60%;
-            max-width: (350/16rem);
-            height: auto;
-            aspect-ratio: 9 / 16;
-            max-height: none;
-            overflow: hidden;
-            border-radius: (8/16rem);
-        }
-
-        .cs-picture2 {
-            width: auto;
-            height: auto;
-            position: absolute;
-            top: 0;
-            /* changes to a clamp at tablet */
-            right: (40/16rem);
-            left: 0;
-            /* changes to clamp at tablet */
-            bottom: (55/16rem);
         }
 
         .cs-floater {
@@ -1025,29 +1013,15 @@ import ComparisonChart from "@components/ComparisonChart.astro";
     #sbsr-2169 {
         .cs-container {
             max-width: (1280/16rem);
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: stretch;
         }
 
-        .cs-content {
-            /* sends it to the right in the 2nd position */
-            order: 2;
+        .cs-media-row {
+            gap: (24/16rem);
         }
 
-        .cs-image-group {
-            width: 45vw;
-            max-width: (522/16rem);
-            height: auto;
-            margin-bottom: (50/16rem);
-            order: 2;
-        }
-
-        .cs-picture2 {
-            /* 60px - 100px */
-            right: clamp(3.75rem, 10vw, 6.5rem);
-            /* 80px - 120px */
-            bottom: clamp(5rem, 9vw, 7.5rem);
+        .cs-media-video,
+        .cs-media-photo {
+            max-height: (550/16rem);
         }
     }
 }
