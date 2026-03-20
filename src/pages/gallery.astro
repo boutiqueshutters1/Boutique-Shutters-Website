@@ -1,0 +1,378 @@
+---
+import BaseLayout from "src/layouts/BaseLayout.astro";
+import CTA from "@components/CTA.astro";
+
+import {getOptimizedImage} from "@js/utils"
+import landingImage from "@assets/images/landing.jpg"
+const optimizedImage = await getOptimizedImage(landingImage)
+
+// Gallery items — replace placeholder images/videos with real content
+const galleryItems = [
+    {
+        type: "video",
+        src: "/assets/videos/why-choose-us.mp4",
+        poster: "/assets/images/zebra-shades/zebra-shades-630x400-d.webp",
+        title: "Custom Shades Showcase",
+        location: "Sugar Hill, GA",
+        product: "Zebra Shades"
+    },
+    {
+        type: "image",
+        src: "/assets/images/shutters/danny-consultation.jpg",
+        title: "In-Home Consultation",
+        location: "Johns Creek, GA",
+        product: "Consultation"
+    },
+    {
+        type: "image",
+        src: "/assets/images/projects/shutter-project-3-345x345-d.webp",
+        title: "Plantation Shutters Install",
+        location: "Suwanee, GA",
+        product: "Plantation Shutters"
+    },
+    {
+        type: "image",
+        src: "/assets/images/projects/shutter-project-4-345x345-d.webp",
+        title: "Living Room Transformation",
+        location: "Alpharetta, GA",
+        product: "Plantation Shutters"
+    },
+    {
+        type: "image",
+        src: "/assets/images/projects/shutter-project-7-420x619-d.webp",
+        title: "Master Bedroom Shutters",
+        location: "Duluth, GA",
+        product: "Plantation Shutters"
+    },
+    {
+        type: "image",
+        src: "/assets/images/projects/shutter-project-10-345x345-d.webp",
+        title: "Kitchen Window Treatment",
+        location: "Lawrenceville, GA",
+        product: "Composite Shutters"
+    },
+];
+---
+
+<BaseLayout
+  title="Installation Gallery | Boutique Shutters | Metro Atlanta"
+  description="Browse our gallery of custom window treatment installations across Metro Atlanta. See real plantation shutters, zebra shades, and motorized shade projects in homes like yours."
+  preloadedImage={optimizedImage}
+>
+
+<!-- ============================================ -->
+<!--                   Banner                     -->
+<!-- ============================================ -->
+
+<div id="banner-1106">
+    <div class="cs-container">
+        <span class="cs-int-title">Installation Gallery</span>
+        <div class="cs-breadcrumbs">
+            <a href="/" class="cs-link">Home</a>
+            <a href="/gallery" class="cs-link cs-active">Gallery</a>
+        </div>
+    </div>
+    <picture class="cs-background">
+        <source media="(max-width: 600px)" srcset="/assets/images/shades/cta-shades-1280x568-d.webp">
+        <source media="(min-width: 601px)" srcset="/assets/images/shades/cta-shades-1280x568-d.webp">
+        <img decoding="async" src="/assets/images/shades/cta-shades-1280x568-d.webp" alt="window treatment installations" width="1280" height="568" aria-hidden="true">
+    </picture>
+</div>
+
+<!-- ============================================ -->
+<!--              Gallery Section                  -->
+<!-- ============================================ -->
+
+<section id="gallery-page">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">Our Work</span>
+            <h2 class="cs-title">Real Installations in Real Homes</h2>
+            <p class="cs-text">Browse our collection of custom window treatment installations across Metro Atlanta. Every project showcases our commitment to quality craftsmanship and personalized design.</p>
+        </div>
+
+        <div class="cs-gallery-grid">
+            {galleryItems.map((item) => (
+                <div class={`cs-gallery-item ${item.type === 'video' ? 'cs-video-item' : ''}`}>
+                    {item.type === 'video' ? (
+                        <video autoplay muted loop playsinline poster={item.poster}>
+                            <source src={item.src} type="video/mp4" />
+                        </video>
+                    ) : (
+                        <img loading="lazy" decoding="async" src={item.src} alt={item.title} />
+                    )}
+                    <div class="cs-gallery-overlay">
+                        <h3 class="cs-gallery-title">{item.title}</h3>
+                        <span class="cs-gallery-location">{item.location}</span>
+                        <span class="cs-gallery-product">{item.product}</span>
+                    </div>
+                    {item.type === 'video' && (
+                        <span class="cs-play-badge">▶ Video</span>
+                    )}
+                </div>
+            ))}
+        </div>
+
+        <div class="cs-gallery-cta">
+            <p>Want to see your home transformed like these? Book your free design consultation today.</p>
+            <a href="/book" class="cs-button-solid" data-lead-form>Get Your Free Estimate</a>
+        </div>
+    </div>
+</section>
+
+<CTA/>
+
+</BaseLayout>
+
+<style lang="less">
+/*-- -------------------------- -->
+<---          Banner            -->
+<--- -------------------------- -*/
+
+@media only screen and (min-width: 0rem) {
+    #banner-1106 {
+        padding: var(--sectionPadding);
+        padding-top: (250/16rem);
+        padding-bottom: (120/16rem);
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+
+        .cs-container {
+            text-align: center;
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: (12/16rem);
+        }
+
+        .cs-int-title {
+            font-size: clamp(2.4375rem, 6.4vw, 3.8125rem);
+            font-weight: 900;
+            line-height: 1.2em;
+            text-align: inherit;
+            margin: 0;
+            color: var(--bodyTextColorWhite);
+            position: relative;
+        }
+
+        .cs-breadcrumbs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cs-link {
+            font-size: (16/16rem);
+            line-height: 1.2em;
+            text-decoration: none;
+            color: var(--bodyTextColorWhite);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:last-of-type::after { display: none; }
+
+            &:after {
+                content: "";
+                width: (7/16rem);
+                height: (12/16rem);
+                margin: 0 (16/16rem);
+                background: url("https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/white-chev.svg");
+                background-size: contain;
+                background-position: center;
+                background-repeat: no-repeat;
+                position: relative;
+                display: block;
+            }
+
+            &.cs-active { color: var(--secondary); }
+        }
+
+        .cs-background {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+
+            &:before {
+                content: "";
+                position: absolute;
+                display: block;
+                height: 100%;
+                width: 100%;
+                background: -webkit-linear-gradient(left, rgba(26, 26, 26, 0.94) 0%, rgba(26, 26, 26, 0) 100%);
+                opacity: 1;
+                top: 0;
+                left: 0;
+                z-index: 1;
+            }
+
+            img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+}
+
+/*-- -------------------------- -->
+<---       Gallery Page         -->
+<--- -------------------------- -*/
+
+@media only screen and (min-width: 0rem) {
+    #gallery-page {
+        padding: var(--sectionPadding);
+
+        .cs-container {
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+        }
+
+        .cs-content {
+            text-align: center;
+            max-width: (700/16rem);
+            margin: 0 auto clamp(2rem, 4vw, 3rem);
+        }
+
+        .cs-title {
+            margin: 0 0 (16/16rem) 0;
+        }
+
+        .cs-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: (12/16rem);
+        }
+
+        .cs-gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: (8/16rem);
+            aspect-ratio: 1;
+            cursor: pointer;
+
+            &:hover {
+                .cs-gallery-overlay {
+                    opacity: 1;
+                }
+
+                img, video {
+                    transform: scale(1.05);
+                }
+            }
+
+            img, video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                transition: transform 0.4s ease;
+            }
+        }
+
+        .cs-gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: (16/16rem);
+            opacity: 0;
+            transition: opacity 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .cs-gallery-title {
+            font-size: (16/16rem);
+            font-weight: 700;
+            color: white;
+            margin: 0 0 (4/16rem) 0;
+        }
+
+        .cs-gallery-location {
+            font-size: (13/16rem);
+            color: #ccc;
+        }
+
+        .cs-gallery-product {
+            font-size: (11/16rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--secondary);
+            margin-top: (4/16rem);
+        }
+
+        .cs-play-badge {
+            position: absolute;
+            top: (12/16rem);
+            left: (12/16rem);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: (11/16rem);
+            font-weight: 700;
+            padding: (4/16rem) (10/16rem);
+            border-radius: (4/16rem);
+        }
+
+        .cs-gallery-cta {
+            text-align: center;
+            margin-top: clamp(2rem, 4vw, 3rem);
+
+            p {
+                font-size: (16/16rem);
+                line-height: 1.6em;
+                color: var(--bodyTextColor);
+                margin: 0 0 (16/16rem) 0;
+                max-width: (500/16rem);
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #gallery-page {
+        .cs-gallery-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: (16/16rem);
+        }
+    }
+}
+
+/* Desktop - 1024px */
+@media only screen and (min-width: 64rem) {
+    #gallery-page {
+        .cs-gallery-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: (20/16rem);
+        }
+
+        .cs-gallery-item {
+            &:first-child {
+                grid-column: span 2;
+                grid-row: span 2;
+                aspect-ratio: auto;
+            }
+        }
+    }
+}
+</style>
