@@ -7,49 +7,99 @@ import landingImage from "@assets/images/landing.jpg"
 const optimizedImage = await getOptimizedImage(landingImage)
 
 // Gallery items — replace placeholder images/videos with real content
+// Categories for filtering
+const categories = ["All", "Shutters", "Shades", "Blinds"];
+
+// Gallery items — add your photos/videos here
+// Drop files in public/assets/images/gallery/ and update paths
 const galleryItems = [
-    {
-        type: "video",
-        src: "/assets/videos/why-choose-us.mp4",
-        poster: "/assets/images/zebra-shades/zebra-shades-630x400-d.webp",
-        title: "Custom Shades Showcase",
-        location: "Sugar Hill, GA",
-        product: "Zebra Shades"
-    },
-    {
-        type: "image",
-        src: "/assets/images/shutters/danny-consultation.jpg",
-        title: "In-Home Consultation",
-        location: "Johns Creek, GA",
-        product: "Consultation"
-    },
+    // === SHUTTERS ===
     {
         type: "image",
         src: "/assets/images/projects/shutter-project-3-345x345-d.webp",
-        title: "Plantation Shutters Install",
+        title: "Plantation Shutters",
         location: "Suwanee, GA",
-        product: "Plantation Shutters"
+        category: "Shutters"
     },
     {
         type: "image",
         src: "/assets/images/projects/shutter-project-4-345x345-d.webp",
-        title: "Living Room Transformation",
+        title: "Living Room Shutters",
         location: "Alpharetta, GA",
-        product: "Plantation Shutters"
+        category: "Shutters"
     },
     {
         type: "image",
         src: "/assets/images/projects/shutter-project-7-420x619-d.webp",
         title: "Master Bedroom Shutters",
         location: "Duluth, GA",
-        product: "Plantation Shutters"
+        category: "Shutters"
     },
     {
         type: "image",
         src: "/assets/images/projects/shutter-project-10-345x345-d.webp",
-        title: "Kitchen Window Treatment",
+        title: "Kitchen Shutters",
         location: "Lawrenceville, GA",
-        product: "Composite Shutters"
+        category: "Shutters"
+    },
+    {
+        type: "image",
+        src: "/assets/images/shutters/plantationshutters-608x662-d.webp",
+        title: "White Plantation Shutters",
+        location: "Johns Creek, GA",
+        category: "Shutters"
+    },
+    {
+        type: "image",
+        src: "/assets/images/shutters/plantation-shutters-white-542x728-d.webp",
+        title: "Bathroom Shutters",
+        location: "Sugar Hill, GA",
+        category: "Shutters"
+    },
+    // === SHADES ===
+    {
+        type: "video",
+        src: "/assets/videos/why-choose-us.mp4",
+        poster: "/assets/images/zebra-shades/zebra-shades-630x400-d.webp",
+        title: "Custom Shades Showcase",
+        location: "Sugar Hill, GA",
+        category: "Shades"
+    },
+    {
+        type: "image",
+        src: "/assets/images/zebra-shades/zebra-shades-630x400-d.webp",
+        title: "Zebra Shades",
+        location: "Suwanee, GA",
+        category: "Shades"
+    },
+    {
+        type: "image",
+        src: "/assets/images/zebra-shades/whitezebrashades-608x662-d.webp",
+        title: "White Zebra Shades",
+        location: "Johns Creek, GA",
+        category: "Shades"
+    },
+    {
+        type: "image",
+        src: "/assets/images/zebra-shades/customzebrashades-608x406-d.webp",
+        title: "Custom Zebra Shades",
+        location: "Alpharetta, GA",
+        category: "Shades"
+    },
+    {
+        type: "image",
+        src: "/assets/images/zebra-shades/motorized-zebra-shades-608x662-d.webp",
+        title: "Motorized Zebra Shades",
+        location: "Duluth, GA",
+        category: "Shades"
+    },
+    // === BLINDS ===
+    {
+        type: "image",
+        src: "/assets/images/shutters/danny-consultation.jpg",
+        title: "In-Home Consultation",
+        location: "Johns Creek, GA",
+        category: "Blinds"
     },
 ];
 ---
@@ -91,9 +141,15 @@ const galleryItems = [
             <p class="cs-text">Browse our collection of custom window treatment installations across Metro Atlanta. Every project showcases our commitment to quality craftsmanship and personalized design.</p>
         </div>
 
+        <div class="cs-filter-tabs">
+            {categories.map((cat) => (
+                <button class={`cs-filter-btn ${cat === 'All' ? 'cs-active' : ''}`} data-filter={cat}>{cat}</button>
+            ))}
+        </div>
+
         <div class="cs-gallery-grid">
             {galleryItems.map((item) => (
-                <div class={`cs-gallery-item ${item.type === 'video' ? 'cs-video-item' : ''}`}>
+                <div class={`cs-gallery-item ${item.type === 'video' ? 'cs-video-item' : ''}`} data-category={item.category}>
                     {item.type === 'video' ? (
                         <video autoplay muted loop playsinline poster={item.poster}>
                             <source src={item.src} type="video/mp4" />
@@ -104,7 +160,7 @@ const galleryItems = [
                     <div class="cs-gallery-overlay">
                         <h3 class="cs-gallery-title">{item.title}</h3>
                         <span class="cs-gallery-location">{item.location}</span>
-                        <span class="cs-gallery-product">{item.product}</span>
+                        <span class="cs-gallery-product">{item.category}</span>
                     </div>
                     {item.type === 'video' && (
                         <span class="cs-play-badge">▶ Video</span>
@@ -252,6 +308,39 @@ const galleryItems = [
             margin: 0 0 (16/16rem) 0;
         }
 
+        .cs-filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: (8/16rem);
+            margin-bottom: clamp(1.5rem, 3vw, 2rem);
+            flex-wrap: wrap;
+        }
+
+        .cs-filter-btn {
+            font-size: (14/16rem);
+            font-weight: 700;
+            font-family: inherit;
+            padding: (8/16rem) (20/16rem);
+            border: 2px solid #e0e0e0;
+            background: white;
+            color: var(--bodyTextColor);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+
+            &:hover {
+                border-color: var(--secondary);
+                color: var(--secondary);
+            }
+
+            &.cs-active {
+                background: var(--secondary);
+                border-color: var(--secondary);
+                color: #000;
+            }
+        }
+
         .cs-gallery-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -375,4 +464,34 @@ const galleryItems = [
         }
     }
 }
+
+/* Hidden items during filtering */
+.cs-gallery-item.cs-hidden {
+    display: none !important;
+}
 </style>
+
+<script is:inline>
+(function() {
+    const btns = document.querySelectorAll('.cs-filter-btn');
+    const items = document.querySelectorAll('.cs-gallery-item');
+
+    btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Update active tab
+            btns.forEach(b => b.classList.remove('cs-active'));
+            btn.classList.add('cs-active');
+
+            const filter = btn.dataset.filter;
+
+            items.forEach(item => {
+                if (filter === 'All' || item.dataset.category === filter) {
+                    item.classList.remove('cs-hidden');
+                } else {
+                    item.classList.add('cs-hidden');
+                }
+            });
+        });
+    });
+})();
+</script>
