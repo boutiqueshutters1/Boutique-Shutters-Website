@@ -40,7 +40,10 @@ const catalogDataJSON = JSON.stringify(catalogs);
                 <div class="fb-click-zone fb-zone-next" id="fb-zone-next" title="Next page">
                     <span class="fb-zone-arrow">›</span>
                 </div>
-                <img class="fb-page" id="fb-page-img" src="" alt="Catalog page" />
+                <div class="fb-spread">
+                    <img class="fb-page fb-page-left" id="fb-page-img" src="" alt="Catalog page" />
+                    <img class="fb-page fb-page-right" id="fb-page-img-right" src="" alt="Catalog page" />
+                </div>
             </div>
 
             <!-- Controls -->
@@ -55,8 +58,12 @@ const catalogDataJSON = JSON.stringify(catalogs);
 
             {onSelectFabric && (
                 <div class="fb-select-bar" id="fb-select-bar">
-                    <p class="fb-select-text">See a fabric you like on this page?</p>
-                    <button class="fb-select-btn" id="fb-select-fabric">Select This Fabric →</button>
+                    <p class="fb-select-text">See a fabric you like? Enter the code and select it.</p>
+                    <div class="fb-select-form">
+                        <input type="text" id="fb-fabric-code" class="fb-fabric-input" placeholder="Fabric code (e.g. WH-201)" />
+                        <button class="fb-select-btn" id="fb-select-fabric">Select Fabric →</button>
+                    </div>
+                    <div class="fb-selected-list" id="fb-selected-list"></div>
                 </div>
             )}
         </div>
@@ -70,8 +77,13 @@ const catalogDataJSON = JSON.stringify(catalogs);
     let currentPage = 1;
 
     const pageImg = document.getElementById('fb-page-img');
+    const pageImgRight = document.getElementById('fb-page-img-right');
     const pageInfo = document.getElementById('fb-page-info');
     const thumbsContainer = document.getElementById('fb-thumbnails');
+
+    function isSpreadMode() {
+        return window.innerWidth >= 768;
+    }
     const prevBtn = document.getElementById('fb-prev');
     const nextBtn = document.getElementById('fb-next');
 
@@ -108,20 +120,44 @@ const catalogDataJSON = JSON.stringify(catalogs);
 
     function showPage(num) {
         if (num < 1 || num > currentCatalog.pages) return;
+
+        // In spread mode, snap to odd pages (left page is always odd)
+        if (isSpreadMode() && num > 1) {
+            num = num % 2 === 0 ? num - 1 : num;
+        }
+
         currentPage = num;
 
         // Animate page transition
         pageImg.style.opacity = '0';
         pageImg.style.transform = 'scale(0.98)';
+        pageImgRight.style.opacity = '0';
+        pageImgRight.style.transform = 'scale(0.98)';
 
         setTimeout(() => {
             pageImg.src = getPageUrl(currentCatalog, num);
             pageImg.alt = currentCatalog.name + ' - Page ' + num;
             pageImg.style.opacity = '1';
             pageImg.style.transform = 'scale(1)';
+
+            // Show right page in spread mode
+            const rightPage = num + 1;
+            if (isSpreadMode() && rightPage <= currentCatalog.pages) {
+                pageImgRight.src = getPageUrl(currentCatalog, rightPage);
+                pageImgRight.alt = currentCatalog.name + ' - Page ' + rightPage;
+                pageImgRight.style.display = 'block';
+                pageImgRight.style.opacity = '1';
+                pageImgRight.style.transform = 'scale(1)';
+            } else {
+                pageImgRight.style.display = 'none';
+            }
         }, 150);
 
-        pageInfo.textContent = num + ' / ' + currentCatalog.pages;
+        if (isSpreadMode() && num + 1 <= currentCatalog.pages) {
+            pageInfo.textContent = num + '-' + (num + 1) + ' / ' + currentCatalog.pages;
+        } else {
+            pageInfo.textContent = num + ' / ' + currentCatalog.pages;
+        }
 
         // Update prev/next states
         prevBtn.disabled = num <= 1;
@@ -147,13 +183,15 @@ const catalogDataJSON = JSON.stringify(catalogs);
         });
     });
 
-    // Nav buttons
-    prevBtn.addEventListener('click', () => showPage(currentPage - 1));
-    nextBtn.addEventListener('click', () => showPage(currentPage + 1));
+    // Nav buttons — skip by 2 in spread mode
+    function prevPage() { showPage(currentPage - (isSpreadMode() ? 2 : 1)); }
+    function nextPage() { showPage(currentPage + (isSpreadMode() ? 2 : 1)); }
+    prevBtn.addEventListener('click', prevPage);
+    nextBtn.addEventListener('click', nextPage);
 
     // Click zones on the image
-    document.getElementById('fb-zone-prev').addEventListener('click', () => showPage(currentPage - 1));
-    document.getElementById('fb-zone-next').addEventListener('click', () => showPage(currentPage + 1));
+    document.getElementById('fb-zone-prev').addEventListener('click', prevPage);
+    document.getElementById('fb-zone-next').addEventListener('click', nextPage);
 
     // Thumbnail clicks
     thumbsContainer.addEventListener('click', (e) => {
@@ -163,26 +201,85 @@ const catalogDataJSON = JSON.stringify(catalogs);
 
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') showPage(currentPage - 1);
-        if (e.key === 'ArrowRight') showPage(currentPage + 1);
+        if (e.key === 'ArrowLeft') prevPage();
+        if (e.key === 'ArrowRight') nextPage();
     });
 
     // Select fabric button
     const selectBtn = document.getElementById('fb-select-fabric');
-    if (selectBtn) {
+    const fabricCodeInput = document.getElementById('fb-fabric-code');
+    const selectedList = document.getElementById('fb-selected-list');
+    const selectedFabrics = [];
+
+    if (selectBtn && fabricCodeInput) {
         selectBtn.addEventListener('click', () => {
-            const fabricRef = currentCatalog.name + ' — Page ' + currentPage;
-            // Dispatch custom event for configurator to listen to
+            const code = fabricCodeInput.value.trim();
+            if (!code) {
+                fabricCodeInput.style.borderColor = '#e74c3c';
+                fabricCodeInput.placeholder = 'Please enter a fabric code';
+                setTimeout(() => {
+                    fabricCodeInput.style.borderColor = '';
+                    fabricCodeInput.placeholder = 'Fabric code (e.g. WH-201)';
+                }, 2000);
+                return;
+            }
+
+            const fabricRef = code + ' (' + currentCatalog.name + ', p.' + currentPage + ')';
+            selectedFabrics.push({ code: code, catalog: currentCatalog.name, page: currentPage, reference: fabricRef });
+
+            // Dispatch custom event for configurator
             window.dispatchEvent(new CustomEvent('fabricSelected', {
-                detail: { catalog: currentCatalog.name, page: currentPage, reference: fabricRef }
+                detail: { catalog: currentCatalog.name, page: currentPage, code: code, reference: fabricRef, allSelections: selectedFabrics }
             }));
+
+            // Update selected list
+            renderSelectedList();
+
+            // Reset input
+            fabricCodeInput.value = '';
+
             // Visual feedback
-            selectBtn.textContent = '✓ Selected: ' + fabricRef;
+            selectBtn.textContent = '✓ Added!';
             selectBtn.classList.add('fb-selected');
             setTimeout(() => {
-                selectBtn.textContent = 'Select This Fabric →';
+                selectBtn.textContent = 'Select Fabric →';
                 selectBtn.classList.remove('fb-selected');
-            }, 2000);
+            }, 1500);
+        });
+
+        // Allow Enter key to submit
+        fabricCodeInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { e.preventDefault(); selectBtn.click(); }
+        });
+    }
+
+    function renderSelectedList() {
+        if (!selectedList) return;
+        if (selectedFabrics.length === 0) { selectedList.innerHTML = ''; return; }
+
+        let html = '<div class="fb-selected-header">Selected Fabrics:</div>';
+        selectedFabrics.forEach((fab, i) => {
+            html += '<div class="fb-selected-item">';
+            html += '<span class="fb-selected-code">' + fab.code + '</span>';
+            html += '<span class="fb-selected-ref">' + fab.catalog + ', p.' + fab.page + '</span>';
+            html += '<button class="fb-selected-remove" data-index="' + i + '">✕</button>';
+            html += '</div>';
+        });
+        selectedList.innerHTML = html;
+    }
+
+    // Remove fabric from list
+    if (selectedList) {
+        selectedList.addEventListener('click', (e) => {
+            const removeBtn = e.target.closest('.fb-selected-remove');
+            if (!removeBtn) return;
+            const idx = parseInt(removeBtn.dataset.index);
+            selectedFabrics.splice(idx, 1);
+            renderSelectedList();
+            // Update configurator
+            window.dispatchEvent(new CustomEvent('fabricSelected', {
+                detail: { allSelections: selectedFabrics, reference: selectedFabrics.map(f => f.reference).join('; ') }
+            }));
         });
     }
 
@@ -318,6 +415,11 @@ const catalogDataJSON = JSON.stringify(catalogs);
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
 
+        .fb-spread {
+            display: flex;
+            width: 100%;
+        }
+
         .fb-page {
             width: 100%;
             height: auto;
@@ -325,6 +427,10 @@ const catalogDataJSON = JSON.stringify(catalogs);
             transition: opacity 0.15s, transform 0.15s;
             user-select: none;
             -webkit-user-drag: none;
+        }
+
+        .fb-page-right {
+            display: none;
         }
 
         /* Controls */
@@ -426,19 +532,89 @@ const catalogDataJSON = JSON.stringify(catalogs);
 
         /* Select Fabric Bar */
         .fb-select-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: (12/16rem) (16/16rem);
+            padding: (16/16rem);
             background: #1a1a1a;
-            gap: (12/16rem);
-            flex-wrap: wrap;
         }
 
         .fb-select-text {
             font-size: (14/16rem);
             color: #e0e0e0;
-            margin: 0;
+            margin: 0 0 (10/16rem) 0;
+        }
+
+        .fb-select-form {
+            display: flex;
+            gap: (8/16rem);
+            margin-bottom: (8/16rem);
+        }
+
+        .fb-fabric-input {
+            flex: 1;
+            font-family: inherit;
+            font-size: (14/16rem);
+            padding: (8/16rem) (12/16rem);
+            border: 2px solid #444;
+            background: #2a2a2a;
+            color: white;
+            transition: border-color 0.3s;
+
+            &:focus {
+                outline: none;
+                border-color: var(--secondary);
+            }
+
+            &::placeholder {
+                color: #888;
+            }
+        }
+
+        .fb-selected-list {
+            margin-top: (8/16rem);
+        }
+
+        .fb-selected-header {
+            font-size: (12/16rem);
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: (6/16rem);
+        }
+
+        .fb-selected-item {
+            display: flex;
+            align-items: center;
+            gap: (8/16rem);
+            padding: (6/16rem) 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .fb-selected-code {
+            font-size: (14/16rem);
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .fb-selected-ref {
+            font-size: (12/16rem);
+            color: #888;
+            flex: 1;
+        }
+
+        .fb-selected-remove {
+            font-family: inherit;
+            font-size: (12/16rem);
+            padding: (2/16rem) (6/16rem);
+            border: 1px solid #555;
+            background: transparent;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.2s;
+
+            &:hover {
+                border-color: #e74c3c;
+                color: #e74c3c;
+            }
         }
 
         .fb-select-btn {
@@ -463,9 +639,26 @@ const catalogDataJSON = JSON.stringify(catalogs);
     }
 }
 
-/* Tablet */
+/* Tablet — spread mode */
 @media only screen and (min-width: 48rem) {
     #catalog-flipbook {
+        .fb-spread {
+            display: flex;
+        }
+
+        .fb-page-left, .fb-page-right {
+            width: 50%;
+            flex-shrink: 0;
+        }
+
+        .fb-page-right {
+            border-left: 1px solid #e0e0e0;
+        }
+
+        .fb-book {
+            box-shadow: 0 4px 30px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.08);
+        }
+
         .fb-thumb {
             width: (80/16rem);
             height: (100/16rem);
