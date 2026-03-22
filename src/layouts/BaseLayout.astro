@@ -96,7 +96,11 @@ const { description, title } = Astro.props;
 
             <!-- Additional head content -->
             <slot name="head" />
-         
+
+            <!-- Snipcart E-Commerce -->
+            <link rel="preconnect" href="https://cdn.snipcart.com">
+            <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.7.1/default/snipcart.css" />
+
             <title>Boutique Shutters</title>
 
             <!-- Sitewide Scripts -->
@@ -112,6 +116,9 @@ const { description, title } = Astro.props;
             </main>
             <Footer />
             <LeadFormModal />
+            <!-- Snipcart Container -->
+            <div hidden id="snipcart" data-api-key="YOUR_SNIPCART_PUBLIC_API_KEY" data-config-modal-style="side"></div>
+            <script is:inline src="https://cdn.snipcart.com/themes/v3.7.1/default/snipcart.js"></script>
         </body>
 </html>
 
