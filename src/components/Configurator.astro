@@ -394,6 +394,9 @@ const productDataJSON = JSON.stringify(products);
         const h = (state.heightWhole || 0) + state.heightFrac;
         const price = calculatePrice();
         const total = price * state.quantity;
+        const today = new Date();
+        const dateStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        const orderNum = 'BS-' + today.getFullYear() + '-' + String(Math.floor(Math.random() * 9000) + 1000);
 
         let subtypeName = '';
         if (p.subtypes && state.subtypeId) {
@@ -403,17 +406,14 @@ const productDataJSON = JSON.stringify(products);
 
         const selectedColor = p.options.color ? p.options.color.find(c => c.id === state.options.color) : null;
 
-        let rows = '';
-        rows += '<div class="cfg-review-row"><span>Product</span><span>' + p.name + (subtypeName ? ' — ' + subtypeName : '') + '</span></div>';
-        rows += '<div class="cfg-review-row"><span>Size</span><span>' + w + '" × ' + h + '"</span></div>';
-        rows += '<div class="cfg-review-row"><span>Quantity</span><span>' + state.quantity + '</span></div>';
-
         const labels = {
-            mount: 'Mount', slatSize: 'Slat Size', color: 'Color',
-            cordless: 'Lift System', fabric: 'Fabric', motorized: 'Operation',
-            motorProtocol: 'Motor', operation: 'Operation'
+            mount: 'Mount Type', slatSize: 'Slat Size', color: 'Color',
+            cordless: 'Lift System', fabric: 'Fabric Type', motorized: 'Operation',
+            motorProtocol: 'Motor Protocol', operation: 'Operation'
         };
 
+        // Build specs rows
+        let specsRows = '';
         Object.keys(state.options).forEach(key => {
             const optGroup = p.options[key];
             if (!optGroup) return;
@@ -421,29 +421,92 @@ const productDataJSON = JSON.stringify(products);
             if (!selected) return;
             const label = labels[key] || key;
             let value = selected.name;
-            if (key === 'color' && selectedColor) {
-                value = '<span class="cfg-review-color" style="background:' + selectedColor.hex + ';"></span> ' + selected.name;
+            let deltaStr = '';
+            if (key !== 'color' && selected.priceDelta > 0) {
+                deltaStr = '<span class="cfg-inv-delta">+$' + selected.priceDelta.toFixed(2) + '</span>';
             }
-            rows += '<div class="cfg-review-row"><span>' + label + '</span><span>' + value + '</span></div>';
+            if (key === 'color' && selectedColor) {
+                value = '<span class="cfg-review-color" style="background:' + selectedColor.hex + ';border:1px solid #ccc;"></span> ' + selected.name;
+            }
+            specsRows += '<tr><td>' + label + '</td><td>' + value + '</td><td class="cfg-inv-right">' + deltaStr + '</td></tr>';
         });
 
-        let priceHTML = '';
+        let html = '';
+
+        // Invoice header
+        html += '<div class="cfg-inv-header">';
+        html += '<div class="cfg-inv-logo">';
+        html += '<img src="/assets/images/main-logo-compressed.png" alt="Boutique Shutters" height="28" />';
+        html += '<span class="cfg-inv-tagline">Custom Window Treatments</span>';
+        html += '</div>';
+        html += '<div class="cfg-inv-meta">';
+        html += '<span class="cfg-inv-label">Estimate</span>';
+        html += '<span class="cfg-inv-num">' + orderNum + '</span>';
+        html += '<span class="cfg-inv-date">' + dateStr + '</span>';
+        html += '</div>';
+        html += '</div>';
+
+        // Product line item
+        html += '<table class="cfg-inv-table">';
+        html += '<thead><tr><th>Item</th><th>Details</th><th class="cfg-inv-right">Amount</th></tr></thead>';
+        html += '<tbody>';
+        html += '<tr class="cfg-inv-product-row">';
+        html += '<td><strong>' + p.name + (subtypeName ? '<br><small>' + subtypeName + '</small>' : '') + '</strong></td>';
+        html += '<td>' + w + '" W × ' + h + '" H &nbsp;·&nbsp; Qty: ' + state.quantity + '</td>';
+
+        let basePrice = p.basePrice || 0;
+        if (p.subtypes && state.subtypeId) {
+            const st = p.subtypes.find(s => s.id === state.subtypeId);
+            if (st) basePrice = st.basePrice;
+        }
         if (p.checkoutEnabled) {
-            priceHTML = '<div class="cfg-review-price">';
-            priceHTML += '<div class="cfg-review-row"><span>Unit Price</span><span>$' + price.toFixed(2) + '</span></div>';
-            if (state.quantity > 1) {
-                priceHTML += '<div class="cfg-review-row"><span>× ' + state.quantity + '</span><span></span></div>';
-            }
-            priceHTML += '<div class="cfg-review-total"><span>Total</span><span>$' + total.toFixed(2) + '</span></div>';
-            priceHTML += '<div class="cfg-review-monthly">As low as $' + Math.round(total / 12) + '/mo with financing</div>';
-            priceHTML += '</div>';
+            html += '<td class="cfg-inv-right">$' + basePrice.toFixed(2) + '</td>';
         } else {
-            priceHTML = '<div class="cfg-review-price"><div class="cfg-review-total"><span>Pricing</span><span>Custom Quote</span></div></div>';
+            html += '<td class="cfg-inv-right">—</td>';
+        }
+        html += '</tr>';
+        html += '</tbody></table>';
+
+        // Specifications
+        html += '<div class="cfg-inv-section-label">Specifications</div>';
+        html += '<table class="cfg-inv-table cfg-inv-specs">';
+        html += '<tbody>' + specsRows + '</tbody>';
+        html += '</table>';
+
+        // Totals
+        if (p.checkoutEnabled) {
+            const oversizeNote = (w > 72 || h > 72) ? '<tr><td colspan="2">Oversize surcharge (15%)</td><td class="cfg-inv-right">Included</td></tr>' : '';
+            html += '<div class="cfg-inv-totals">';
+            html += '<table class="cfg-inv-table">';
+            html += '<tbody>';
+            html += '<tr><td colspan="2">Unit Price</td><td class="cfg-inv-right">$' + price.toFixed(2) + '</td></tr>';
+            html += oversizeNote;
+            html += '<tr><td colspan="2">Quantity</td><td class="cfg-inv-right">× ' + state.quantity + '</td></tr>';
+            html += '<tr class="cfg-inv-subtotal"><td colspan="2">Subtotal</td><td class="cfg-inv-right">$' + total.toFixed(2) + '</td></tr>';
+            html += '</tbody></table>';
+            html += '<div class="cfg-inv-grand-total">';
+            html += '<span>Estimated Total</span>';
+            html += '<span>$' + total.toFixed(2) + '</span>';
+            html += '</div>';
+            html += '<div class="cfg-inv-financing">As low as <strong>$' + Math.round(total / 12) + '/mo</strong> with Wisetack or Klarna financing</div>';
+            html += '</div>';
+        } else {
+            html += '<div class="cfg-inv-totals">';
+            html += '<div class="cfg-inv-grand-total">';
+            html += '<span>Pricing</span>';
+            html += '<span>Custom Quote Required</span>';
+            html += '</div>';
+            html += '</div>';
         }
 
-        card.innerHTML = rows + priceHTML;
+        // Footer note
+        html += '<div class="cfg-inv-footer">';
+        html += '<p>This is an estimate only. Final pricing may vary based on installation requirements. Free shipping on all orders. Professional installation available.</p>';
+        html += '<p>Questions? Call <a href="tel:404-966-7419">404-966-7419</a> or email <a href="mailto:sales@boutiqueshutters.com">sales@boutiqueshutters.com</a></p>';
+        html += '</div>';
 
-        // Update the next button text
+        card.innerHTML = html;
+
         const nextBtn = document.getElementById('cfg-review-next');
         nextBtn.textContent = p.checkoutEnabled ? 'Add to Cart →' : 'Request Custom Quote →';
     }
@@ -973,62 +1036,201 @@ const productDataJSON = JSON.stringify(products);
             &:hover { background: var(--csButtonHoverColor); }
         }
 
-        /* Step 4: Review */
+        /* Step 4: Invoice-style Review */
         .cfg-review-card {
-            background: #f7f7f7;
-            padding: (24/16rem);
+            background: white;
+            border: 1px solid #e0e0e0;
+            padding: clamp(1.25rem, 3vw, 2rem);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
         }
 
-        .cfg-review-row {
+        .cfg-inv-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: (10/16rem) 0;
-            border-bottom: 1px solid #e0e0e0;
-            font-size: (15/16rem);
+            align-items: flex-start;
+            padding-bottom: (16/16rem);
+            margin-bottom: (16/16rem);
+            border-bottom: 2px solid #1a1a1a;
+        }
 
-            span:first-child {
-                font-weight: 600;
-                color: #666;
-            }
+        .cfg-inv-logo {
+            display: flex;
+            flex-direction: column;
+            gap: (4/16rem);
 
-            span:last-child {
+            img { height: (28/16rem); width: auto; }
+        }
+
+        .cfg-inv-tagline {
+            font-size: (11/16rem);
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .cfg-inv-meta {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: (2/16rem);
+        }
+
+        .cfg-inv-label {
+            font-size: (22/16rem);
+            font-weight: 900;
+            font-family: 'Playfair Display', serif;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #1a1a1a;
+        }
+
+        .cfg-inv-num {
+            font-size: (12/16rem);
+            font-weight: 600;
+            color: #888;
+            font-family: monospace;
+        }
+
+        .cfg-inv-date {
+            font-size: (12/16rem);
+            color: #aaa;
+        }
+
+        .cfg-inv-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: (14/16rem);
+
+            th {
+                text-align: left;
+                font-size: (11/16rem);
                 font-weight: 700;
-                display: flex;
-                align-items: center;
-                gap: (6/16rem);
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: #888;
+                padding: (8/16rem) 0;
+                border-bottom: 1px solid #e0e0e0;
             }
+
+            td {
+                padding: (8/16rem) 0;
+                border-bottom: 1px solid #f0f0f0;
+                vertical-align: top;
+                color: #333;
+            }
+
+            strong { color: #1a1a1a; }
+            small { color: #888; font-weight: 400; }
+        }
+
+        .cfg-inv-right { text-align: right !important; }
+
+        .cfg-inv-delta {
+            font-size: (12/16rem);
+            color: #888;
+        }
+
+        .cfg-inv-product-row td {
+            padding: (12/16rem) 0;
+            font-size: (15/16rem);
+        }
+
+        .cfg-inv-section-label {
+            font-size: (11/16rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #888;
+            margin-top: (20/16rem);
+            margin-bottom: (4/16rem);
+        }
+
+        .cfg-inv-specs td {
+            font-size: (13/16rem);
+            padding: (6/16rem) 0;
         }
 
         .cfg-review-color {
             display: inline-block;
-            width: (16/16rem);
-            height: (16/16rem);
+            width: (14/16rem);
+            height: (14/16rem);
             border-radius: 50%;
-            border: 1px solid #ccc;
+            vertical-align: middle;
+            margin-right: (4/16rem);
         }
 
-        .cfg-review-price {
-            margin-top: (16/16rem);
-            padding-top: (16/16rem);
+        .cfg-inv-totals {
+            margin-top: (20/16rem);
+            padding-top: (12/16rem);
+            border-top: 2px solid #1a1a1a;
         }
 
-        .cfg-review-total {
+        .cfg-inv-totals .cfg-inv-table td {
+            padding: (6/16rem) 0;
+            font-size: (14/16rem);
+            border-bottom: none;
+        }
+
+        .cfg-inv-subtotal td {
+            padding-top: (10/16rem) !important;
+            border-top: 1px solid #e0e0e0 !important;
+            font-weight: 600;
+        }
+
+        .cfg-inv-grand-total {
             display: flex;
             justify-content: space-between;
-            font-size: (20/16rem);
-            font-weight: 900;
-            padding: (12/16rem) 0;
+            align-items: center;
+            padding: (16/16rem) 0;
+            margin-top: (8/16rem);
+            background: #1a1a1a;
+            padding: (16/16rem) (20/16rem);
+
+            span:first-child {
+                font-size: (16/16rem);
+                font-weight: 700;
+                color: white;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
 
             span:last-child {
+                font-size: (24/16rem);
+                font-weight: 900;
                 color: var(--secondary);
             }
         }
 
-        .cfg-review-monthly {
-            text-align: right;
+        .cfg-inv-financing {
+            text-align: center;
             font-size: (13/16rem);
             color: #888;
+            margin-top: (12/16rem);
+            padding: (8/16rem);
+            background: #f7f7f7;
+
+            strong { color: var(--secondary); }
+        }
+
+        .cfg-inv-footer {
+            margin-top: (20/16rem);
+            padding-top: (12/16rem);
+            border-top: 1px solid #e0e0e0;
+
+            p {
+                font-size: (12/16rem);
+                color: #aaa;
+                margin: 0 0 (4/16rem) 0;
+                line-height: 1.5;
+            }
+
+            a {
+                color: var(--secondary);
+                text-decoration: none;
+                font-weight: 600;
+
+                &:hover { text-decoration: underline; }
+            }
         }
 
         /* Step 5: Cart */
