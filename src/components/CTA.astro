@@ -15,7 +15,10 @@
                 Choose the consultation style that works best for you. We offer both in-home visits and virtual video consultations to assess your needs, show you premium samples, and provide personalized recommendations tailored to your style and budget. Serving all Gwinnett County communities with prompt, professional service and guaranteed satisfaction.
             </p>
             <span class="cs-note">In-home & virtual video consultations available</span>
-            <a href="/book" class="cs-button-solid">Schedule Now</a>
+            <div class="cs-cta-buttons">
+                <a href="/book" class="cs-button-solid">Schedule Now</a>
+                <a href="/configure" class="cs-button-outline-cta">Or Configure & Buy Online →</a>
+            </div>
         </div>
     </div>
     <!--Background Image-->
@@ -156,6 +159,25 @@
                 &:before {
                     width: 100%;
                 }
+            }
+        }
+
+        .cs-cta-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: (8/16rem);
+        }
+
+        .cs-button-outline-cta {
+            font-size: (14/16rem);
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+
+            &:hover {
+                color: var(--secondary);
             }
         }
     }
