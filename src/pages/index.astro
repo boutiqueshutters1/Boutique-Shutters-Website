@@ -23,8 +23,20 @@ import ComparisonChart from "@components/ComparisonChart.astro";
             <p class="cs-text">
                 Premium window shutters, designer shades, and motorized blinds with expert installation. Transform your home with custom-designed window treatments from Boutique Shutters—serving Metro Atlanta homeowners with personalized service, superior craftsmanship, and a commitment to perfection in every installation.
             </p>
-            <a href="/book" class="cs-button-solid" data-lead-form>Get Your Free Estimate</a>
-            <a href="/configure" class="cs-button-outline">Configure & Buy Online →</a>
+            <div class="cs-hero-paths">
+                <a href="/book" class="cs-path-card" data-lead-form>
+                    <span class="cs-path-icon">🏠</span>
+                    <span class="cs-path-title">Professional Install</span>
+                    <span class="cs-path-desc">Free in-home consultation, expert measurement & installation by our certified team</span>
+                    <span class="cs-path-cta">Book Free Estimate →</span>
+                </a>
+                <a href="/configure" class="cs-path-card cs-path-diy">
+                    <span class="cs-path-icon">🛒</span>
+                    <span class="cs-path-title">DIY — Order Online</span>
+                    <span class="cs-path-desc">Configure your custom window treatments, order online & install yourself</span>
+                    <span class="cs-path-cta">Configure & Buy →</span>
+                </a>
+            </div>
             <a href="https://maps.app.goo.gl/314AZ4Dpz98b73GS8" target="_blank" rel="noopener noreferrer" class="cs-hero-badge">
                 <img src="https://csimg.nyc3.digitaloceanspaces.com/Reviews/stars-yellow.svg" alt="5 stars" width="96" height="16">
                 <span>4.9 from 50+ Google Reviews</span>
@@ -228,8 +240,8 @@ import ComparisonChart from "@components/ComparisonChart.astro";
                     Innovative dual-layer fabric shades offering seamless transition between sheer and privacy. Perfect light control with contemporary style for any room in your home.</p>
                   <div class="cs-button-group">
                     <a class="cs-link-learn" href="/zebra-shades">Learn More</a>
-                    <a class="cs-button-solid" href="/book">Schedule Consultation</a>
-                    <a class="cs-link-configure" href="/configure">Order Online →</a>
+                    <a class="cs-button-solid" href="/book">Get Estimate</a>
+                    <a class="cs-link-configure" href="/configure">DIY — Order Online →</a>
                   </div>
           </li>
           <li class="cs-item">
@@ -247,8 +259,8 @@ import ComparisonChart from "@components/ComparisonChart.astro";
                     Custom-crafted plantation shutters that add sophistication and value to your home. Superior light control, privacy, and energy efficiency with timeless elegance.</p>
                   <div class="cs-button-group">
                     <a class="cs-link-learn" href="/shutters">Learn More</a>
-                    <a class="cs-button-solid" href="/book">Schedule Consultation</a>
-                    <a class="cs-link-configure" href="/configure">Order Online →</a>
+                    <a class="cs-button-solid" href="/book">Get Estimate</a>
+                    <a class="cs-link-configure" href="/configure">DIY — Order Online →</a>
                   </div>
           </li>
           <li class="cs-item">
@@ -266,8 +278,8 @@ import ComparisonChart from "@components/ComparisonChart.astro";
                     Custom cellular, roller, Roman, and woven wood shades in hundreds of premium fabrics. Choose varying opacity levels for perfect light and privacy control.</p>
                   <div class="cs-button-group">
                     <a class="cs-link-learn" href="/motorized-shades">Learn More</a>
-                    <a class="cs-button-solid" href="/book">Schedule Consultation</a>
-                    <a class="cs-link-configure" href="/configure">Order Online →</a>
+                    <a class="cs-button-solid" href="/book">Get Estimate</a>
+                    <a class="cs-link-configure" href="/configure">DIY — Order Online →</a>
                   </div>
           </li>
           <li class="cs-item">
@@ -285,8 +297,8 @@ import ComparisonChart from "@components/ComparisonChart.astro";
                     Smart motorized window treatments controlled via remote, smartphone app, or voice commands through Alexa or Google Home. Perfect for hard-to-reach windows.</p>
                   <div class="cs-button-group">
                     <a class="cs-link-learn" href="/exterior-shades">Learn More</a>
-                    <a class="cs-button-solid" href="/book">Schedule Consultation</a>
-                    <a class="cs-link-configure" href="/configure">Order Online →</a>
+                    <a class="cs-button-solid" href="/book">Get Estimate</a>
+                    <a class="cs-link-configure" href="/configure">DIY — Order Online →</a>
                   </div>
           </li>
       </ul>
@@ -787,6 +799,66 @@ import ComparisonChart from "@components/ComparisonChart.astro";
                     width: 100%;
                 }
             }
+        }
+
+        .cs-hero-paths {
+            display: flex;
+            flex-direction: column;
+            gap: (12/16rem);
+            width: 100%;
+            max-width: (500/16rem);
+        }
+
+        .cs-path-card {
+            display: flex;
+            flex-direction: column;
+            gap: (4/16rem);
+            padding: (16/16rem) (20/16rem);
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.15);
+                border-color: var(--secondary);
+                transform: translateY(-2px);
+            }
+
+            &.cs-path-diy {
+                border-color: var(--secondary);
+                background: rgba(255, 191, 0, 0.08);
+
+                .cs-path-cta {
+                    color: var(--secondary);
+                }
+            }
+        }
+
+        .cs-path-icon {
+            font-size: (24/16rem);
+        }
+
+        .cs-path-title {
+            font-size: (18/16rem);
+            font-weight: 900;
+            color: white;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .cs-path-desc {
+            font-size: (13/16rem);
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.4;
+        }
+
+        .cs-path-cta {
+            font-size: (14/16rem);
+            font-weight: 700;
+            color: white;
+            margin-top: (4/16rem);
         }
 
         .cs-button-outline {

@@ -10,14 +10,20 @@
 <section id="cta-403">
     <div class="cs-container">
         <div class="cs-content">
-            <h2 class="cs-title">Schedule Your Free</br> Design Consultation</h2>
+            <h2 class="cs-title">Ready to Transform</br> Your Windows?</h2>
             <p class="cs-text">
-                Choose the consultation style that works best for you. We offer both in-home visits and virtual video consultations to assess your needs, show you premium samples, and provide personalized recommendations tailored to your style and budget. Serving all Gwinnett County communities with prompt, professional service and guaranteed satisfaction.
+                Whether you want our experts to handle everything or prefer to DIY, we've got you covered. Choose the path that works best for you.
             </p>
-            <span class="cs-note">In-home & virtual video consultations available</span>
-            <div class="cs-cta-buttons">
-                <a href="/book" class="cs-button-solid">Schedule Now</a>
-                <a href="/configure" class="cs-button-outline-cta">Or Configure & Buy Online →</a>
+            <div class="cs-cta-paths">
+                <a href="/book" class="cs-cta-path-btn">
+                    <span class="cs-cta-path-label">🏠 Professional Install</span>
+                    <span class="cs-cta-path-sub">Free consultation & expert installation</span>
+                </a>
+                <span class="cs-cta-or">or</span>
+                <a href="/configure" class="cs-cta-path-btn cs-cta-path-diy">
+                    <span class="cs-cta-path-label">🛒 DIY — Order Online</span>
+                    <span class="cs-cta-path-sub">Configure, buy & install yourself</span>
+                </a>
             </div>
         </div>
     </div>
@@ -162,23 +168,57 @@
             }
         }
 
-        .cs-cta-buttons {
+        .cs-cta-paths {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: (8/16rem);
+            gap: (12/16rem);
+            width: 100%;
+            max-width: (500/16rem);
+            margin: 0 auto;
         }
 
-        .cs-button-outline-cta {
+        .cs-cta-or {
             font-size: (14/16rem);
             font-weight: 600;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .cs-cta-path-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: (4/16rem);
+            width: 100%;
+            padding: (14/16rem) (24/16rem);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             text-decoration: none;
-            transition: color 0.3s;
+            text-align: center;
+            transition: all 0.3s;
 
             &:hover {
-                color: var(--secondary);
+                border-color: var(--secondary);
+                background: rgba(255, 255, 255, 0.05);
+                transform: translateY(-2px);
             }
+
+            &.cs-cta-path-diy {
+                border-color: var(--secondary);
+                background: rgba(255, 191, 0, 0.1);
+            }
+        }
+
+        .cs-cta-path-label {
+            font-size: (16/16rem);
+            font-weight: 700;
+            color: white;
+        }
+
+        .cs-cta-path-sub {
+            font-size: (13/16rem);
+            color: rgba(255, 255, 255, 0.6);
         }
     }
 }
