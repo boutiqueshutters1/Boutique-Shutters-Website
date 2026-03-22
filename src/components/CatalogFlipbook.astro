@@ -532,24 +532,27 @@ const catalogDataJSON = JSON.stringify(catalogs);
 
         /* Select Fabric Bar */
         .fb-select-bar {
-            padding: (16/16rem);
+            padding: (12/16rem);
             background: #1a1a1a;
         }
 
         .fb-select-text {
-            font-size: (14/16rem);
+            font-size: (13/16rem);
             color: #e0e0e0;
-            margin: 0 0 (10/16rem) 0;
+            margin: 0 0 (8/16rem) 0;
+            overflow-wrap: break-word;
         }
 
         .fb-select-form {
             display: flex;
             gap: (8/16rem);
             margin-bottom: (8/16rem);
+            flex-wrap: wrap;
         }
 
         .fb-fabric-input {
             flex: 1;
+            min-width: (120/16rem);
             font-family: inherit;
             font-size: (14/16rem);
             padding: (8/16rem) (12/16rem);
@@ -557,6 +560,7 @@ const catalogDataJSON = JSON.stringify(catalogs);
             background: #2a2a2a;
             color: white;
             transition: border-color 0.3s;
+            box-sizing: border-box;
 
             &:focus {
                 outline: none;
@@ -619,15 +623,15 @@ const catalogDataJSON = JSON.stringify(catalogs);
 
         .fb-select-btn {
             font-family: inherit;
-            font-size: (14/16rem);
+            font-size: (13/16rem);
             font-weight: 700;
-            padding: (8/16rem) (20/16rem);
+            padding: (8/16rem) (16/16rem);
             border: none;
             background: var(--secondary);
             color: #000;
             cursor: pointer;
             transition: all 0.3s;
-            white-space: nowrap;
+            flex-shrink: 0;
 
             &:hover { background: var(--csButtonHoverColor); }
 
