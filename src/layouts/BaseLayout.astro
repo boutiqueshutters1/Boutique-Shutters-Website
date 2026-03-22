@@ -97,18 +97,7 @@ const { description, title } = Astro.props;
             <!-- Additional head content -->
             <slot name="head" />
          
-            <title>
-                {Astro.url.pathname === "/" ?  (`${ title }
-                |
-                ${ client.name }
-                |
-                ${ client.address.city },
-                ${ client.address.state }`) :
-                (`${ title }
-                    |
-                    ${ client.name }`)
-            }
-            </title>
+            <title>Boutique Shutters</title>
 
             <!-- Sitewide Scripts -->
             <script src="@js/nav.js"></script>
