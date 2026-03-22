@@ -69,7 +69,8 @@ const catalogDataJSON = JSON.stringify(catalogs);
     const nextBtn = document.getElementById('fb-next');
 
     function getPageUrl(catalog, pageNum) {
-        const padded = String(pageNum).padStart(catalog.pages > 99 ? 3 : 2, '0');
+        // Match actual file naming: 10+ pages use zero-padding, under 10 don't
+        const padded = catalog.pages >= 10 ? String(pageNum).padStart(2, '0') : String(pageNum);
         return '/assets/catalogs/' + catalog.folder + '/page-' + padded + '.jpg';
     }
 
