@@ -288,30 +288,37 @@ import { Icon } from 'astro-icon/components';
         .cs-top-bar {
             margin: 0;
             padding: 0;
+            padding-top: (4/16rem);
             position: relative;
             z-index: -3;
             transition: height .3s, padding-bottom .3s, opacity .3s;
             border-bottom: 1px solid #EFF1F0;
+            overflow: visible;
         }
 
         .cs-top-bar-inner {
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            gap: (8/16rem);
-            padding: (6/16rem) 0;
+            gap: (6/16rem);
+            padding: (8/16rem) 0;
+            padding-left: (150/16rem);
             flex-wrap: wrap;
         }
 
         .cs-top-item {
-            font-size: (12/16rem);
+            font-size: (11/16rem);
             font-weight: 600;
             color: var(--bodyTextColor);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: (4/16rem);
+            gap: (3/16rem);
             transition: color 0.3s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 100%;
 
             &:hover {
                 color: var(--secondary);
@@ -319,12 +326,14 @@ import { Icon } from 'astro-icon/components';
         }
 
         .cs-top-icon {
-            font-size: (11/16rem);
+            font-size: (10/16rem);
+            flex-shrink: 0;
         }
 
         .cs-top-divider {
             color: #ddd;
-            font-size: (12/16rem);
+            font-size: (10/16rem);
+            flex-shrink: 0;
         }
 
         .cs-hide-mobile {
