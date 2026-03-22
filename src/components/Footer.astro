@@ -20,6 +20,17 @@ const currentYear = getCurrentYear()
             <p class="cs-text">
                 Transform your home with custom plantation shutters and designer window treatments. Professional installation and exceptional craftsmanship backed by years of experience. Financing options available. Call us today for a free consultation.
             </p>
+            <div class="cs-social">
+                <a class="cs-social-link" aria-label="visit us on facebook" href="https://www.facebook.com/boutiqueshutters" target="_blank" rel="noopener">
+                    <img class="cs-social-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Social/Facebook.svg" alt="facebook" width="12" height="12">
+                </a>
+                <a class="cs-social-link" aria-label="visit us on instagram" href="https://www.instagram.com/boutiqueshutters" target="_blank" rel="noopener">
+                    <img class="cs-social-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Social/instagram.svg" alt="instagram" width="12" height="12">
+                </a>
+                <a class="cs-social-link" aria-label="visit us on google" href="https://maps.app.goo.gl/314AZ4Dpz98b73GS8" target="_blank" rel="noopener">
+                    <img class="cs-social-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Social/google.svg" alt="google" width="12" height="12">
+                </a>
+            </div>
         </div>
         <!-- Links -->
         <ul class="cs-nav">
@@ -55,6 +66,9 @@ const currentYear = getCurrentYear()
             </li>
             <li class="cs-nav-li">
                 <a class="cs-nav-link" href="/exterior-shades">Exterior Shades</a>
+            </li>
+            <li class="cs-nav-li">
+                <a class="cs-nav-link" href="/blinds">Blinds</a>
             </li>
         </ul>
         <!-- Contact Info -->
@@ -129,6 +143,35 @@ const currentYear = getCurrentYear()
         .cs-text {
             color: white;
         }
+
+        .cs-social {
+            display: flex;
+            gap: (8/16rem);
+            margin-top: (16/16rem);
+        }
+
+        .cs-social-link {
+            width: (32/16rem);
+            height: (32/16rem);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s;
+
+            &:hover {
+                background: var(--secondary);
+            }
+        }
+
+        .cs-social-img {
+            width: (12/16rem);
+            height: auto;
+            display: block;
+            filter: brightness(0) invert(1);
+        }
+
         .cs-nav {
             width: 100%;
             padding: 0;

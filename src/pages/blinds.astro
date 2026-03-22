@@ -1,0 +1,184 @@
+---
+import BaseLayout from "src/layouts/BaseLayout.astro";
+import CTA from "@components/CTA.astro";
+import Estimator from "@components/Estimator.astro";
+import ProductSchema from "@components/ProductSchema.astro";
+
+import {getOptimizedImage} from "@js/utils"
+import landingImage from "@assets/images/landing.jpg"
+const optimizedImage = await getOptimizedImage(landingImage)
+---
+
+<BaseLayout
+  title="Custom Blinds | Faux Wood & Wood Blinds | Boutique Shutters"
+  description="Premium custom blinds for every room. Faux wood and wood blinds with professional measurement and installation. Affordable, durable, and stylish. Free consultations in Metro Atlanta."
+  preloadedImage={optimizedImage}
+>
+<ProductSchema
+    slot="head"
+    name="Custom Window Blinds"
+    description="Premium faux wood and wood blinds custom-fitted for your windows. Durable, affordable, and available in multiple colors and slat sizes."
+    url="/blinds"
+    image="/assets/images/gallery/blinds-bay-window-dining.jpg"
+    lowPrice="50"
+    highPrice="200"
+/>
+<!-- ============================================ -->
+<!--                   Banner                     -->
+<!-- ============================================ -->
+
+<div id="banner-1106">
+    <div class="cs-container">
+        <span class="cs-int-title">Custom Blinds</span>
+        <div class="cs-breadcrumbs">
+            <a href="/" class="cs-link">Home</a>
+            <a href="/blinds" class="cs-link cs-active">Blinds</a>
+        </div>
+    </div>
+    <picture class="cs-background">
+        <source media="(max-width: 600px)" srcset="/assets/images/gallery/blinds-bay-window-dining.jpg">
+        <source media="(min-width: 601px)" srcset="/assets/images/gallery/blinds-bay-window-dining.jpg">
+        <img decoding="async" src="/assets/images/gallery/blinds-bay-window-dining.jpg" alt="custom blinds in dining room bay window" width="1280" height="568" aria-hidden="true">
+    </picture>
+</div>
+
+<!-- ============================================ -->
+<!--                Side By Side                  -->
+<!-- ============================================ -->
+
+<section id="sbs-1598">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">Classic & Versatile</span>
+            <h2 class="cs-title">Custom Blinds for Every Room in Your Home</h2>
+            <p class="cs-text">
+                Our premium blinds combine classic style with modern durability. Available in faux wood and real wood options, each blind is custom-measured and cut to fit your windows perfectly. With horizontal slats that tilt for precise light control, blinds remain one of the most versatile and affordable window treatment options.
+            </p>
+            <p class="cs-text">
+                Choose from a wide range of colors, stains, and slat sizes to match any décor. Our faux wood blinds are moisture-resistant and ideal for kitchens, bathrooms, and high-humidity areas, while our wood blinds add natural warmth and elegance to living rooms and bedrooms.
+            </p>
+            <!-- Best For Tags -->
+            <div class="cs-best-for">
+                <span class="cs-best-for-label">Best For:</span>
+                <span class="cs-best-for-tag">Bedrooms</span>
+                <span class="cs-best-for-tag">Kitchens</span>
+                <span class="cs-best-for-tag">Bathrooms</span>
+                <span class="cs-best-for-tag">Home Offices</span>
+                <span class="cs-best-for-tag">Living Rooms</span>
+            </div>
+            <picture class="cs-picture cs-picture1">
+                <source media="(max-width: 600px)" srcset="/assets/images/gallery/blinds-large-bedroom.jpg">
+                <source media="(min-width: 601px)" srcset="/assets/images/gallery/blinds-large-bedroom.jpg">
+                <img loading="lazy" decoding="async" src="/assets/images/gallery/blinds-large-bedroom.jpg" alt="custom faux wood blinds in bedroom" width="608" height="406">
+            </picture>
+        </div>
+        <div class="cs-stats-group">
+            <picture class="cs-picture cs-picture2">
+                <source media="(max-width: 600px)" srcset="/assets/images/gallery/blinds-dining-wainscot.jpg">
+                <source media="(min-width: 601px)" srcset="/assets/images/gallery/blinds-dining-wainscot.jpg">
+                <img loading="lazy" decoding="async" src="/assets/images/gallery/blinds-dining-wainscot.jpg" alt="blinds in dining room with wainscoting" width="608" height="662">
+            </picture>
+            <ul class="cs-stats">
+                <li class="cs-stat">
+                    <span class="cs-number">10+</span>
+                    <span class="cs-desc">Color & stain options</span>
+                </li>
+                <li class="cs-stat">
+                    <span class="cs-number">100%</span>
+                    <span class="cs-desc">Custom measured & fitted</span>
+                </li>
+                <li class="cs-stat">
+                    <span class="cs-number">2-3 Weeks</span>
+                    <span class="cs-desc">Average turnaround</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!--            Side By Side Reverse              -->
+<!-- ============================================ -->
+
+<section id="sbsr-1599">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">Durable & Affordable</span>
+            <h2 class="cs-title">Built to Last, Priced to Please</h2>
+            <p class="cs-text">
+                Our blinds are engineered for everyday life. Faux wood blinds resist warping, fading, and moisture damage — making them the smart choice for kitchens, bathrooms, and laundry rooms. Real wood blinds offer the rich, natural beauty that only genuine hardwood can provide, with protective finishes that ensure lasting durability.
+            </p>
+            <p class="cs-text">
+                Every installation includes professional measurement, custom fabrication, and expert fitting by our certified team. We handle bay windows, French doors, and specialty shapes that big-box stores can't match. The result is a clean, polished look that transforms any room.
+            </p>
+            <picture class="cs-picture cs-picture1">
+                <source media="(max-width: 600px)" srcset="/assets/images/gallery/blinds-fireplace.jpg">
+                <source media="(min-width: 601px)" srcset="/assets/images/gallery/blinds-fireplace.jpg">
+                <img loading="lazy" decoding="async" src="/assets/images/gallery/blinds-fireplace.jpg" alt="blinds next to fireplace in living room" width="608" height="406">
+            </picture>
+        </div>
+        <div class="cs-stats-group">
+            <picture class="cs-picture cs-picture2">
+                <source media="(max-width: 600px)" srcset="/assets/images/gallery/blinds-tall-living.jpg">
+                <source media="(min-width: 601px)" srcset="/assets/images/gallery/blinds-tall-living.jpg">
+                <img loading="lazy" decoding="async" src="/assets/images/gallery/blinds-tall-living.jpg" alt="two-story living room blinds installation" width="608" height="662">
+            </picture>
+            <ul class="cs-stats">
+                <li class="cs-stat">
+                    <span class="cs-number">100+</span>
+                    <span class="cs-desc">Satisfied homeowners</span>
+                </li>
+                <li class="cs-stat">
+                    <span class="cs-number">Moisture</span>
+                    <span class="cs-desc">Resistant faux wood option</span>
+                </li>
+                <li class="cs-stat">
+                    <span class="cs-number">5-Star</span>
+                    <span class="cs-desc">Customer satisfaction rating</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<Estimator
+    productName="Blinds"
+    pricingModel="perWindow"
+    options={[
+        { name: "Faux Wood Blinds", pricePerSqFt: 80 },
+        { name: "Real Wood Blinds", pricePerSqFt: 120 },
+    ]}
+    note="Pricing varies by window size, slat width, and material. Get your exact quote with a free consultation."
+/>
+
+<CTA/>
+
+</BaseLayout>
+
+<style lang="less">
+/* Best For Tags */
+@media only screen and (min-width: 0rem) {
+    .cs-best-for {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: (6/16rem);
+        margin-bottom: (20/16rem);
+    }
+    .cs-best-for-label {
+        font-size: (13/16rem);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #888;
+    }
+    .cs-best-for-tag {
+        font-size: (12/16rem);
+        font-weight: 600;
+        padding: (4/16rem) (10/16rem);
+        background: #f0f0f0;
+        border-radius: (12/16rem);
+        color: var(--bodyTextColor);
+    }
+}
+</style>
