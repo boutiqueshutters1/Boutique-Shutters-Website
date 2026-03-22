@@ -1,0 +1,418 @@
+---
+interface Catalog {
+    id: string;
+    name: string;
+    pages: number;
+    folder: string;
+}
+
+interface Props {
+    catalogs: Catalog[];
+    onSelectFabric?: boolean;
+}
+
+const { catalogs, onSelectFabric = false } = Astro.props;
+const catalogDataJSON = JSON.stringify(catalogs);
+---
+
+<section id="catalog-flipbook">
+    <div class="fb-container">
+        <div class="fb-content">
+            <span class="cs-topper">Browse Fabrics</span>
+            <h2 class="cs-title">Fabric & Material Catalogs</h2>
+            <p class="cs-text">Flip through our catalogs to explore fabric options, colors, and textures. Find the perfect material for your window treatments.</p>
+        </div>
+
+        <!-- Catalog Tabs -->
+        <div class="fb-tabs">
+            {catalogs.map((cat, i) => (
+                <button class={`fb-tab ${i === 0 ? 'fb-tab-active' : ''}`} data-catalog-id={cat.id}>{cat.name}</button>
+            ))}
+        </div>
+
+        <!-- Flipbook Viewer -->
+        <div class="fb-viewer">
+            <div class="fb-book" id="fb-book">
+                <img class="fb-page" id="fb-page-img" src="" alt="Catalog page" />
+            </div>
+
+            <!-- Controls -->
+            <div class="fb-controls">
+                <button class="fb-nav-btn" id="fb-prev" title="Previous page">‹</button>
+                <span class="fb-page-info" id="fb-page-info">1 / 1</span>
+                <button class="fb-nav-btn" id="fb-next" title="Next page">›</button>
+            </div>
+
+            <!-- Page thumbnails strip -->
+            <div class="fb-thumbnails" id="fb-thumbnails"></div>
+
+            {onSelectFabric && (
+                <div class="fb-select-bar" id="fb-select-bar">
+                    <p class="fb-select-text">See a fabric you like on this page?</p>
+                    <button class="fb-select-btn" id="fb-select-fabric">Select This Fabric →</button>
+                </div>
+            )}
+        </div>
+    </div>
+</section>
+
+<script is:inline define:vars={{ catalogDataJSON }}>
+(function() {
+    const catalogs = JSON.parse(catalogDataJSON);
+    let currentCatalog = catalogs[0];
+    let currentPage = 1;
+
+    const pageImg = document.getElementById('fb-page-img');
+    const pageInfo = document.getElementById('fb-page-info');
+    const thumbsContainer = document.getElementById('fb-thumbnails');
+    const prevBtn = document.getElementById('fb-prev');
+    const nextBtn = document.getElementById('fb-next');
+
+    function getPageUrl(catalog, pageNum) {
+        const padded = String(pageNum).padStart(catalog.pages > 99 ? 3 : 2, '0');
+        return '/assets/catalogs/' + catalog.folder + '/page-' + padded + '.jpg';
+    }
+
+    function loadCatalog(catalog) {
+        currentCatalog = catalog;
+        currentPage = 1;
+
+        // Update tabs
+        document.querySelectorAll('.fb-tab').forEach(tab => {
+            tab.classList.toggle('fb-tab-active', tab.dataset.catalogId === catalog.id);
+        });
+
+        // Build thumbnails
+        let thumbsHTML = '';
+        const maxThumbs = Math.min(catalog.pages, 20);
+        for (let i = 1; i <= maxThumbs; i++) {
+            thumbsHTML += '<button class="fb-thumb ' + (i === 1 ? 'fb-thumb-active' : '') + '" data-page="' + i + '">';
+            thumbsHTML += '<img src="' + getPageUrl(catalog, i) + '" alt="Page ' + i + '" loading="lazy" />';
+            thumbsHTML += '</button>';
+        }
+        if (catalog.pages > 20) {
+            thumbsHTML += '<span class="fb-thumb-more">+' + (catalog.pages - 20) + ' more</span>';
+        }
+        thumbsContainer.innerHTML = thumbsHTML;
+
+        showPage(1);
+    }
+
+    function showPage(num) {
+        if (num < 1 || num > currentCatalog.pages) return;
+        currentPage = num;
+
+        // Animate page transition
+        pageImg.style.opacity = '0';
+        pageImg.style.transform = 'scale(0.98)';
+
+        setTimeout(() => {
+            pageImg.src = getPageUrl(currentCatalog, num);
+            pageImg.alt = currentCatalog.name + ' - Page ' + num;
+            pageImg.style.opacity = '1';
+            pageImg.style.transform = 'scale(1)';
+        }, 150);
+
+        pageInfo.textContent = num + ' / ' + currentCatalog.pages;
+
+        // Update prev/next states
+        prevBtn.disabled = num <= 1;
+        nextBtn.disabled = num >= currentCatalog.pages;
+
+        // Update thumbnail active state
+        document.querySelectorAll('.fb-thumb').forEach(thumb => {
+            thumb.classList.toggle('fb-thumb-active', parseInt(thumb.dataset.page) === num);
+        });
+
+        // Scroll active thumbnail into view
+        const activeThumb = document.querySelector('.fb-thumb-active');
+        if (activeThumb) {
+            activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+    }
+
+    // Tab clicks
+    document.querySelectorAll('.fb-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            const catalog = catalogs.find(c => c.id === tab.dataset.catalogId);
+            if (catalog) loadCatalog(catalog);
+        });
+    });
+
+    // Nav buttons
+    prevBtn.addEventListener('click', () => showPage(currentPage - 1));
+    nextBtn.addEventListener('click', () => showPage(currentPage + 1));
+
+    // Thumbnail clicks
+    thumbsContainer.addEventListener('click', (e) => {
+        const thumb = e.target.closest('.fb-thumb');
+        if (thumb) showPage(parseInt(thumb.dataset.page));
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') showPage(currentPage - 1);
+        if (e.key === 'ArrowRight') showPage(currentPage + 1);
+    });
+
+    // Select fabric button
+    const selectBtn = document.getElementById('fb-select-fabric');
+    if (selectBtn) {
+        selectBtn.addEventListener('click', () => {
+            const fabricRef = currentCatalog.name + ' — Page ' + currentPage;
+            // Dispatch custom event for configurator to listen to
+            window.dispatchEvent(new CustomEvent('fabricSelected', {
+                detail: { catalog: currentCatalog.name, page: currentPage, reference: fabricRef }
+            }));
+            // Visual feedback
+            selectBtn.textContent = '✓ Selected: ' + fabricRef;
+            selectBtn.classList.add('fb-selected');
+            setTimeout(() => {
+                selectBtn.textContent = 'Select This Fabric →';
+                selectBtn.classList.remove('fb-selected');
+            }, 2000);
+        });
+    }
+
+    // Touch swipe support
+    let touchStartX = 0;
+    const book = document.getElementById('fb-book');
+    book.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    book.addEventListener('touchend', (e) => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) showPage(currentPage + 1); // swipe left = next
+            else showPage(currentPage - 1); // swipe right = prev
+        }
+    });
+
+    // Initialize
+    loadCatalog(catalogs[0]);
+})();
+</script>
+
+<style lang="less">
+@media only screen and (min-width: 0rem) {
+    #catalog-flipbook {
+        padding: var(--sectionPadding);
+        background: #f7f7f7;
+
+        .fb-container {
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+        }
+
+        .fb-content {
+            text-align: center;
+            margin-bottom: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        .cs-title { margin: 0 0 (8/16rem) 0; }
+
+        /* Tabs */
+        .fb-tabs {
+            display: flex;
+            justify-content: center;
+            gap: (8/16rem);
+            margin-bottom: (20/16rem);
+            flex-wrap: wrap;
+        }
+
+        .fb-tab {
+            font-family: inherit;
+            font-size: (13/16rem);
+            font-weight: 700;
+            padding: (8/16rem) (16/16rem);
+            border: 2px solid #e0e0e0;
+            background: white;
+            color: #666;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s;
+
+            &:hover { border-color: var(--secondary); color: var(--secondary); }
+
+            &.fb-tab-active {
+                background: var(--secondary);
+                border-color: var(--secondary);
+                color: #000;
+            }
+        }
+
+        /* Viewer */
+        .fb-viewer {
+            max-width: (800/16rem);
+            margin: 0 auto;
+        }
+
+        .fb-book {
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.05);
+            overflow: hidden;
+            position: relative;
+            min-height: (300/16rem);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+
+            &:active { cursor: grabbing; }
+        }
+
+        .fb-page {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: opacity 0.15s, transform 0.15s;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        /* Controls */
+        .fb-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: (16/16rem);
+            padding: (16/16rem) 0;
+        }
+
+        .fb-nav-btn {
+            width: (44/16rem);
+            height: (44/16rem);
+            border: 2px solid #e0e0e0;
+            background: white;
+            font-size: (24/16rem);
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            border-radius: 50%;
+
+            &:hover:not(:disabled) {
+                border-color: var(--secondary);
+                background: var(--secondary);
+                color: #000;
+            }
+
+            &:disabled {
+                opacity: 0.3;
+                cursor: not-allowed;
+            }
+        }
+
+        .fb-page-info {
+            font-size: (14/16rem);
+            font-weight: 600;
+            color: #666;
+            min-width: (60/16rem);
+            text-align: center;
+        }
+
+        /* Thumbnails */
+        .fb-thumbnails {
+            display: flex;
+            gap: (8/16rem);
+            overflow-x: auto;
+            padding: (8/16rem) 0 (16/16rem);
+            scrollbar-width: thin;
+
+            &::-webkit-scrollbar {
+                height: 4px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: #ccc;
+                border-radius: 2px;
+            }
+        }
+
+        .fb-thumb {
+            flex-shrink: 0;
+            width: (60/16rem);
+            height: (80/16rem);
+            border: 2px solid #e0e0e0;
+            padding: 0;
+            background: white;
+            cursor: pointer;
+            overflow: hidden;
+            transition: border-color 0.3s;
+
+            &:hover { border-color: var(--secondary); }
+
+            &.fb-thumb-active {
+                border-color: var(--secondary);
+                box-shadow: 0 0 0 2px var(--secondary);
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .fb-thumb-more {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            font-size: (12/16rem);
+            font-weight: 600;
+            color: #999;
+            padding: 0 (8/16rem);
+        }
+
+        /* Select Fabric Bar */
+        .fb-select-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: (12/16rem) (16/16rem);
+            background: #1a1a1a;
+            gap: (12/16rem);
+            flex-wrap: wrap;
+        }
+
+        .fb-select-text {
+            font-size: (14/16rem);
+            color: #e0e0e0;
+            margin: 0;
+        }
+
+        .fb-select-btn {
+            font-family: inherit;
+            font-size: (14/16rem);
+            font-weight: 700;
+            padding: (8/16rem) (20/16rem);
+            border: none;
+            background: var(--secondary);
+            color: #000;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+
+            &:hover { background: var(--csButtonHoverColor); }
+
+            &.fb-selected {
+                background: #2ecc71;
+                color: white;
+            }
+        }
+    }
+}
+
+/* Tablet */
+@media only screen and (min-width: 48rem) {
+    #catalog-flipbook {
+        .fb-thumb {
+            width: (80/16rem);
+            height: (100/16rem);
+        }
+    }
+}
+</style>

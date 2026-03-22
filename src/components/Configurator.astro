@@ -566,6 +566,12 @@ const productDataJSON = JSON.stringify(products);
             customIdx++;
         });
 
+        // Add fabric reference if selected
+        if (state.fabricReference) {
+            customFields += ' data-item-custom' + customIdx + '-name="Fabric Reference" data-item-custom' + customIdx + '-value="' + state.fabricReference + '"';
+            customIdx++;
+        }
+
         area.innerHTML = `
             <div class="cfg-cart-icon">✓</div>
             <h2 class="cfg-title">Ready to Add to Cart</h2>
@@ -634,8 +640,21 @@ const productDataJSON = JSON.stringify(products);
         try { sessionStorage.setItem('cfgState', JSON.stringify(state)); } catch(e) {}
     }
 
-    // Save on every step change
-    const origGoToStep = goToStep;
+    // Listen for fabric selection from CatalogFlipbook
+    window.addEventListener('fabricSelected', function(e) {
+        state.fabricReference = e.detail.reference;
+        // Show confirmation banner
+        let banner = document.getElementById('cfg-fabric-banner');
+        if (!banner) {
+            banner = document.createElement('div');
+            banner.id = 'cfg-fabric-banner';
+            banner.style.cssText = 'position:fixed;top:80px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:white;padding:12px 24px;z-index:10001;display:flex;align-items:center;gap:12px;box-shadow:0 4px 20px rgba(0,0,0,0.3);font-size:14px;';
+            document.body.appendChild(banner);
+        }
+        banner.innerHTML = '<span style="color:#2ecc71;font-weight:700;">✓</span> Fabric selected: <strong style="color:#ffbf00;">' + e.detail.reference + '</strong> <a href="#configurator" style="color:#ffbf00;margin-left:12px;font-weight:700;text-decoration:none;">Go to Configurator ↑</a>';
+        banner.style.display = 'flex';
+        setTimeout(() => { banner.style.display = 'none'; }, 5000);
+    });
 
     // Initialize
     goToStep(1);

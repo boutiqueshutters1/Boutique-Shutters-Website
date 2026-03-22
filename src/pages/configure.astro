@@ -1,7 +1,14 @@
 ---
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import Configurator from "@components/Configurator.astro";
+import CatalogFlipbook from "@components/CatalogFlipbook.astro";
 import CTA from "@components/CTA.astro";
+
+const catalogs = [
+    { id: "blinds", name: "Blinds Catalog", pages: 65, folder: "blinds-catalog" },
+    { id: "smart-curtain", name: "Smart Curtain", pages: 10, folder: "smart-curtain" },
+    { id: "roman", name: "Roman Shade Swatches", pages: 6, folder: "roman-swatches" },
+];
 
 import {getOptimizedImage} from "@js/utils"
 import landingImage from "@assets/images/landing.jpg"
@@ -31,6 +38,8 @@ const optimizedImage = await getOptimizedImage(landingImage)
 </div>
 
 <Configurator />
+
+<CatalogFlipbook catalogs={catalogs} onSelectFabric={true} />
 
 <CTA />
 
