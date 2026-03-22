@@ -7,8 +7,15 @@ import landingImage from "@assets/images/landing.jpg"
 const optimizedImage = await getOptimizedImage(landingImage)
 
 // Gallery items — replace placeholder images/videos with real content
-// Categories for filtering
+// Main categories for filtering
 const categories = ["All", "Shutters", "Shades", "Blinds"];
+
+// Sub-categories within each main category
+const subCategories: Record<string, string[]> = {
+    "Shutters": ["All Shutters", "Full Height", "Cafe Style", "Bay Window", "Tier on Tier", "Shaped & Custom"],
+    "Shades": ["All Shades", "Zebra Shades", "Motorized"],
+    "Blinds": ["All Blinds"],
+};
 
 // Gallery items — add your photos/videos here
 // Drop files in public/assets/images/gallery/ and update paths
@@ -19,84 +26,96 @@ const galleryItems = [
         src: "/assets/images/gallery/cover-shutters.jpg",
         title: "Full Height Plantation Shutters",
         location: "Living Room",
-        category: "Shutters"
+        category: "Shutters",
+        subCategory: "Full Height"
     },
     {
         type: "image",
         src: "/assets/images/gallery/full-height-dining.jpg",
         title: "Full Height Shutters",
         location: "Dining Room",
-        category: "Shutters"
+        category: "Shutters",
+        subCategory: "Full Height"
     },
     {
         type: "image",
         src: "/assets/images/gallery/tier-on-tier-kitchen.jpg",
         title: "Tier on Tier Shutters",
         location: "Kitchen & Bay Window",
-        category: "Shutters"
+        category: "Shutters",
+        subCategory: "Tier on Tier"
     },
     {
         type: "image",
         src: "/assets/images/gallery/bay-window-living.jpg",
         title: "Bay Window Shutters",
         location: "Living Room",
-        category: "Shutters"
+        category: "Shutters",
+        subCategory: "Bay Window"
     },
     {
         type: "image",
         src: "/assets/images/gallery/cafe-style-living.jpg",
         title: "Cafe Style Shutters",
         location: "Modern Living Room",
-        category: "Shutters"
+        category: "Shutters",
+        subCategory: "Cafe Style"
     },
     {
         type: "image",
         src: "/assets/images/gallery/shaped-arched.jpg",
         title: "Shaped & Arched Shutters",
         location: "Bathroom & Custom",
-        category: "Shutters"
+        category: "Shutters",
+        subCategory: "Shaped & Custom"
     },
     {
         type: "image",
         src: "/assets/images/projects/shutter-project-3-345x345-d.webp",
         title: "Plantation Shutters Install",
         location: "Suwanee, GA",
-        category: "Shutters"
+        category: "Shutters",
+        subCategory: "Full Height"
     },
     {
         type: "image",
         src: "/assets/images/projects/shutter-project-4-345x345-d.webp",
         title: "Living Room Shutters",
         location: "Alpharetta, GA",
-        category: "Shutters"
+        category: "Shutters",
+        subCategory: "Full Height"
     },
     {
         type: "image",
         src: "/assets/images/projects/shutter-project-7-420x619-d.webp",
         title: "Master Bedroom Shutters",
         location: "Duluth, GA",
-        category: "Shutters"
+        category: "Shutters",
+        subCategory: "Full Height"
     },
     {
         type: "image",
         src: "/assets/images/projects/shutter-project-10-345x345-d.webp",
         title: "Kitchen Shutters",
         location: "Lawrenceville, GA",
-        category: "Shutters"
+        category: "Shutters",
+        subCategory: "Cafe Style"
     },
     {
         type: "image",
         src: "/assets/images/shutters/plantationshutters-608x662-d.webp",
         title: "White Plantation Shutters",
         location: "Johns Creek, GA",
-        category: "Shutters"
+        category: "Shutters",
+        subCategory: "Full Height"
     },
     {
         type: "image",
         src: "/assets/images/shutters/plantation-shutters-white-542x728-d.webp",
         title: "Bathroom Shutters",
         location: "Sugar Hill, GA",
-        category: "Shutters"
+        category: "Shutters",
+        subCategory: "Full Height"
     },
     // === SHADES ===
     {
@@ -105,35 +124,40 @@ const galleryItems = [
         poster: "/assets/images/zebra-shades/zebra-shades-630x400-d.webp",
         title: "Custom Shades Showcase",
         location: "Sugar Hill, GA",
-        category: "Shades"
+        category: "Shades",
+        subCategory: "Zebra Shades"
     },
     {
         type: "image",
         src: "/assets/images/zebra-shades/zebra-shades-630x400-d.webp",
         title: "Zebra Shades",
         location: "Suwanee, GA",
-        category: "Shades"
+        category: "Shades",
+        subCategory: "Zebra Shades"
     },
     {
         type: "image",
         src: "/assets/images/zebra-shades/whitezebrashades-608x662-d.webp",
         title: "White Zebra Shades",
         location: "Johns Creek, GA",
-        category: "Shades"
+        category: "Shades",
+        subCategory: "Zebra Shades"
     },
     {
         type: "image",
         src: "/assets/images/zebra-shades/customzebrashades-608x406-d.webp",
         title: "Custom Zebra Shades",
         location: "Alpharetta, GA",
-        category: "Shades"
+        category: "Shades",
+        subCategory: "Zebra Shades"
     },
     {
         type: "image",
         src: "/assets/images/zebra-shades/motorized-zebra-shades-608x662-d.webp",
         title: "Motorized Zebra Shades",
         location: "Duluth, GA",
-        category: "Shades"
+        category: "Shades",
+        subCategory: "Motorized"
     },
     // === BLINDS ===
     {
@@ -141,7 +165,8 @@ const galleryItems = [
         src: "/assets/images/shutters/danny-consultation.jpg",
         title: "In-Home Consultation",
         location: "Johns Creek, GA",
-        category: "Blinds"
+        category: "Blinds",
+        subCategory: "All Blinds"
     },
 ];
 ---
@@ -183,15 +208,25 @@ const galleryItems = [
             <p class="cs-text">Browse our collection of custom window treatment installations across Metro Atlanta. Every project showcases our commitment to quality craftsmanship and personalized design.</p>
         </div>
 
-        <div class="cs-filter-tabs">
+        <div class="cs-filter-tabs" id="main-tabs">
             {categories.map((cat) => (
                 <button class={`cs-filter-btn ${cat === 'All' ? 'cs-active' : ''}`} data-filter={cat}>{cat}</button>
             ))}
         </div>
 
+        <div class="cs-sub-tabs" id="sub-tabs" style="display:none;">
+            {Object.entries(subCategories).map(([parent, subs]) => (
+                <div class="cs-sub-tab-group" data-parent={parent} style="display:none;">
+                    {subs.map((sub, i) => (
+                        <button class={`cs-sub-btn ${i === 0 ? 'cs-active' : ''}`} data-sub={sub}>{sub}</button>
+                    ))}
+                </div>
+            ))}
+        </div>
+
         <div class="cs-gallery-grid">
             {galleryItems.map((item) => (
-                <div class={`cs-gallery-item ${item.type === 'video' ? 'cs-video-item' : ''}`} data-category={item.category}>
+                <div class={`cs-gallery-item ${item.type === 'video' ? 'cs-video-item' : ''}`} data-category={item.category} data-sub={item.subCategory}>
                     {item.type === 'video' ? (
                         <video autoplay muted loop playsinline poster={item.poster}>
                             <source src={item.src} type="video/mp4" />
@@ -507,6 +542,43 @@ const galleryItems = [
     }
 }
 
+/* Sub-category tabs */
+.cs-sub-tabs {
+    text-align: center;
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+}
+
+.cs-sub-tab-group {
+    display: flex;
+    justify-content: center;
+    gap: (6/16rem);
+    flex-wrap: wrap;
+}
+
+.cs-sub-btn {
+    font-size: (12/16rem);
+    font-weight: 600;
+    font-family: inherit;
+    padding: (5/16rem) (14/16rem);
+    border: 1.5px solid #d0d0d0;
+    border-radius: (20/16rem);
+    background: white;
+    color: var(--bodyTextColor);
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+        border-color: var(--secondary);
+        color: var(--secondary);
+    }
+
+    &.cs-active {
+        background: var(--secondary);
+        border-color: var(--secondary);
+        color: #000;
+    }
+}
+
 /* Hidden items during filtering */
 .cs-gallery-item.cs-hidden {
     display: none !important;
@@ -515,24 +587,67 @@ const galleryItems = [
 
 <script is:inline>
 (function() {
-    const btns = document.querySelectorAll('.cs-filter-btn');
+    const mainBtns = document.querySelectorAll('.cs-filter-btn');
+    const subTabsWrap = document.getElementById('sub-tabs');
+    const subGroups = document.querySelectorAll('.cs-sub-tab-group');
     const items = document.querySelectorAll('.cs-gallery-item');
 
-    btns.forEach(btn => {
+    let activeCategory = 'All';
+    let activeSubCategory = null;
+
+    function filterItems() {
+        items.forEach(item => {
+            const catMatch = activeCategory === 'All' || item.dataset.category === activeCategory;
+            const subMatch = !activeSubCategory ||
+                             activeSubCategory.startsWith('All ') ||
+                             item.dataset.sub === activeSubCategory;
+
+            if (catMatch && subMatch) {
+                item.classList.remove('cs-hidden');
+            } else {
+                item.classList.add('cs-hidden');
+            }
+        });
+    }
+
+    // Main category tabs
+    mainBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Update active tab
-            btns.forEach(b => b.classList.remove('cs-active'));
+            mainBtns.forEach(b => b.classList.remove('cs-active'));
             btn.classList.add('cs-active');
 
-            const filter = btn.dataset.filter;
+            activeCategory = btn.dataset.filter;
+            activeSubCategory = null;
 
-            items.forEach(item => {
-                if (filter === 'All' || item.dataset.category === filter) {
-                    item.classList.remove('cs-hidden');
-                } else {
-                    item.classList.add('cs-hidden');
+            // Show/hide sub-tabs
+            subGroups.forEach(g => g.style.display = 'none');
+            if (activeCategory !== 'All') {
+                const subGroup = document.querySelector('[data-parent="' + activeCategory + '"]');
+                if (subGroup) {
+                    subTabsWrap.style.display = 'block';
+                    subGroup.style.display = 'flex';
+                    // Reset sub-tab active state
+                    subGroup.querySelectorAll('.cs-sub-btn').forEach((b, i) => {
+                        b.classList.toggle('cs-active', i === 0);
+                    });
                 }
-            });
+            } else {
+                subTabsWrap.style.display = 'none';
+            }
+
+            filterItems();
+        });
+    });
+
+    // Sub-category tabs
+    document.querySelectorAll('.cs-sub-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const group = btn.closest('.cs-sub-tab-group');
+            group.querySelectorAll('.cs-sub-btn').forEach(b => b.classList.remove('cs-active'));
+            btn.classList.add('cs-active');
+
+            activeSubCategory = btn.dataset.sub;
+            filterItems();
         });
     });
 })();
