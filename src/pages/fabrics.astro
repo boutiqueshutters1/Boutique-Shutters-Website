@@ -12,44 +12,66 @@ const collections = [
         name: "Zebra & Combi Shades",
         description: "Our most popular collection. Alternating sheer and opaque bands let you control light and privacy with a simple adjustment. Available in blackout and light-filtering options.",
         features: ["Light Filtering", "Blackout Options", "10+ Colors", "Custom Widths"],
+        popular: true,
+        popularLabel: "Most Popular",
+        price: "From $150/window",
+        colors: ["#ffffff", "#f5f5dc", "#d3d3d3", "#c4a882", "#8b7355", "#4a4a4a", "#2c2c2c", "#e8d5b7", "#b8a088", "#e0cfc0"],
         images: [
             { src: "/assets/images/fabrics/dk-page-20.jpg", label: "White Combi Collection" },
             { src: "/assets/images/fabrics/dk-page-25.jpg", label: "Cielo Collection" },
             { src: "/assets/images/fabrics/dk-page-10.jpg", label: "Blackout Solus" },
-        ]
+        ],
+        inspirationImg: "/assets/images/gallery/zebra-shade-bathroom.jpg",
+        inspirationLabel: "See in a real home →"
     },
     {
         id: "triple-shades",
         name: "Triple & Lohas Shades",
         description: "Premium three-layer fabric shades with natural textures. The Lohas collection features eco-friendly materials with a sophisticated woven look, while Triple Shades offer enhanced light control.",
         features: ["Natural Textures", "Eco-Friendly", "Woven Fabrics", "UV Protection"],
+        popular: false,
+        price: "From $200/window",
+        colors: ["#ffffff", "#f0ead6", "#c9b99a", "#a89279", "#7d6b5d", "#5c4a3a", "#d4c4a8"],
         images: [
             { src: "/assets/images/fabrics/dk-page-05.jpg", label: "Natural Lohas" },
             { src: "/assets/images/fabrics/dk-page-15.jpg", label: "Triple Shade 55/70mm" },
             { src: "/assets/images/fabrics/dk-page-02.jpg", label: "Full Fabric Collection" },
-        ]
+        ],
+        inspirationImg: "/assets/images/gallery/shades-sunroom-4panel.jpg",
+        inspirationLabel: "See in a real home →"
     },
     {
         id: "smart-curtains",
         name: "Unislat Smart Curtains",
         description: "A revolutionary product combining the elegance of curtains with the functionality of blinds. The slats can be freely opened and closed for four-season comfort. Available with motorized smart home integration.",
         features: ["Smart Home Ready", "Antibacterial", "UV Blocking", "13 Colors"],
+        popular: false,
+        price: "From $300/window",
+        colors: ["#ffffff", "#f5f0e8", "#e8e0d0", "#c0b8a8", "#a09888", "#787068", "#585048", "#383028", "#f0e0d0", "#d8c8b0", "#b0a090", "#686058", "#282018"],
         images: [
             { src: "/assets/images/fabrics/unislat-page-01.jpg", label: "Unislat Modern" },
             { src: "/assets/images/fabrics/unislat-page-02.jpg", label: "Color Options" },
             { src: "/assets/images/fabrics/unislat-page-03.jpg", label: "Unislat Dew" },
-        ]
+        ],
+        inspirationImg: "/assets/images/gallery/shades-modern-light.jpg",
+        inspirationLabel: "See in a real home →"
     },
     {
         id: "roman-shades",
         name: "Roman Shades",
         description: "Classic elegance meets modern craftsmanship. Our Roman shade fabrics feature rich textures and patterns that fold beautifully. Available in Mercury (geometric patterns) and Natural (organic weaves) collections.",
         features: ["Patterned & Solid", "Cordless Options", "Thermal Insulation", "5+ Colors Each"],
+        popular: false,
+        price: "From $180/window",
+        colors: ["#ffffff", "#eee8dc", "#c8b898", "#a09078", "#786850", "#d0c0a8"],
         images: [
             { src: "/assets/images/fabrics/roman-page-1.jpg", label: "Mercury Collection" },
             { src: "/assets/images/fabrics/roman-page-2.jpg", label: "Mercury Swatches" },
             { src: "/assets/images/fabrics/roman-page-3.jpg", label: "Natural Collection" },
-        ]
+            { src: "/assets/images/fabrics/roman-page-4.jpg", label: "Natural Swatches" },
+        ],
+        inspirationImg: "/assets/images/gallery/shades-farmhouse-kitchen.jpg",
+        inspirationLabel: "See in a real home →"
     },
 ];
 ---
@@ -76,6 +98,18 @@ const collections = [
     </picture>
 </div>
 
+<!-- Sticky Collection Nav -->
+<nav id="fabric-nav">
+    <div class="cs-nav-container">
+        {collections.map((c) => (
+            <a href={`#${c.id}`} class="cs-nav-link">
+                {c.name}
+                {c.popular && <span class="cs-popular-dot"></span>}
+            </a>
+        ))}
+    </div>
+</nav>
+
 <!-- Intro -->
 <section id="fabrics-intro">
     <div class="cs-container">
@@ -85,7 +119,6 @@ const collections = [
             <p class="cs-text">
                 We source our materials from the world's leading textile manufacturers. Browse our collections below to discover the perfect color, texture, and opacity for your home. Want to see and feel the fabrics in person? Book a free consultation and we'll bring samples directly to you.
             </p>
-            <a href="/book" class="cs-button-solid">Request Free Samples</a>
         </div>
     </div>
 </section>
@@ -95,27 +128,131 @@ const collections = [
     <section id={collection.id} class={`cs-fabric-section ${index % 2 === 1 ? 'cs-alt' : ''}`}>
         <div class="cs-container">
             <div class="cs-content">
-                <span class="cs-topper">Collection</span>
-                <h2 class="cs-title">{collection.name}</h2>
+                <div class="cs-title-row">
+                    <div>
+                        <span class="cs-topper">Collection</span>
+                        <h2 class="cs-title">{collection.name}</h2>
+                    </div>
+                    {collection.popular && (
+                        <span class="cs-popular-badge">★ {collection.popularLabel}</span>
+                    )}
+                </div>
                 <p class="cs-text">{collection.description}</p>
                 <div class="cs-features">
                     {collection.features.map((feature) => (
                         <span class="cs-feature-tag">{feature}</span>
                     ))}
                 </div>
+
+                <!-- Color Swatches -->
+                <div class="cs-colors">
+                    <span class="cs-colors-label">Available Colors</span>
+                    <div class="cs-color-dots">
+                        {collection.colors.map((color) => (
+                            <span class="cs-color-dot" style={`background-color: ${color};`}></span>
+                        ))}
+                    </div>
+                </div>
+
+                <!-- Pricing -->
+                <div class="cs-price-hint">
+                    <span class="cs-price">{collection.price}</span>
+                    <span class="cs-price-note">Exact pricing with free consultation</span>
+                </div>
+
                 <a href="/book" class="cs-button-solid">See These In Person</a>
             </div>
             <div class="cs-image-grid">
                 {collection.images.map((img) => (
-                    <div class="cs-fabric-card">
+                    <div class="cs-fabric-card" data-lightbox>
                         <img loading="lazy" decoding="async" src={img.src} alt={img.label} />
                         <span class="cs-fabric-label">{img.label}</span>
+                        <span class="cs-zoom-icon">🔍</span>
                     </div>
                 ))}
+                <!-- Inspiration link -->
+                <a href="/inspiration" class="cs-fabric-card cs-inspiration-card">
+                    <img loading="lazy" decoding="async" src={collection.inspirationImg} alt={collection.inspirationLabel} />
+                    <span class="cs-fabric-label cs-inspiration-label">{collection.inspirationLabel}</span>
+                </a>
             </div>
         </div>
     </section>
 ))}
+
+<!-- Comparison Table -->
+<section id="fabric-comparison">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">Compare</span>
+            <h2 class="cs-title">Which Collection Is Right For You?</h2>
+        </div>
+        <div class="cs-table-wrapper">
+            <table class="cs-compare-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Zebra Shades</th>
+                        <th>Triple/Lohas</th>
+                        <th>Smart Curtains</th>
+                        <th>Roman Shades</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Light Control</td>
+                        <td>★★★★★</td>
+                        <td>★★★★☆</td>
+                        <td>★★★★★</td>
+                        <td>★★★☆☆</td>
+                    </tr>
+                    <tr>
+                        <td>Privacy</td>
+                        <td>★★★★★</td>
+                        <td>★★★★☆</td>
+                        <td>★★★★★</td>
+                        <td>★★★★☆</td>
+                    </tr>
+                    <tr>
+                        <td>Blackout</td>
+                        <td>✓ Available</td>
+                        <td>✗</td>
+                        <td>✓ Available</td>
+                        <td>✓ With liner</td>
+                    </tr>
+                    <tr>
+                        <td>Motorized</td>
+                        <td>✓ Optional</td>
+                        <td>✓ Optional</td>
+                        <td>✓ Built-in</td>
+                        <td>✓ Optional</td>
+                    </tr>
+                    <tr>
+                        <td>Eco-Friendly</td>
+                        <td>—</td>
+                        <td>✓ Natural fibers</td>
+                        <td>✓ Antibacterial</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>Best For</td>
+                        <td>Any room</td>
+                        <td>Living rooms</td>
+                        <td>Modern homes</td>
+                        <td>Traditional style</td>
+                    </tr>
+                    <tr>
+                        <td>Starting Price</td>
+                        <td>$150/window</td>
+                        <td>$200/window</td>
+                        <td>$300/window</td>
+                        <td>$180/window</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 
 <!-- Sample Request CTA -->
 <section id="sample-cta">
@@ -133,7 +270,73 @@ const collections = [
     </div>
 </section>
 
+<!-- Floating Request Samples Button -->
+<a href="/book" id="floating-samples-btn" class="cs-floating-btn">
+    <span>📋</span> Request Samples
+</a>
+
+<!-- Lightbox Modal -->
+<div id="lightbox-modal" class="cs-lightbox">
+    <div class="cs-lightbox-overlay"></div>
+    <div class="cs-lightbox-content">
+        <button class="cs-lightbox-close">✕</button>
+        <img src="" alt="" class="cs-lightbox-img" />
+        <p class="cs-lightbox-caption"></p>
+    </div>
+</div>
+
 </BaseLayout>
+
+<script is:inline>
+(function() {
+    // Sticky nav highlight on scroll
+    const navLinks = document.querySelectorAll('#fabric-nav .cs-nav-link');
+    const sections = document.querySelectorAll('.cs-fabric-section');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const top = section.offsetTop - 200;
+            if (window.scrollY >= top) current = section.id;
+        });
+        navLinks.forEach(link => {
+            link.classList.remove('cs-active');
+            if (link.getAttribute('href') === '#' + current) link.classList.add('cs-active');
+        });
+
+        // Show/hide floating button
+        const btn = document.getElementById('floating-samples-btn');
+        if (btn) btn.classList.toggle('cs-visible', window.scrollY > 400);
+    });
+
+    // Lightbox
+    const modal = document.getElementById('lightbox-modal');
+    const modalImg = modal.querySelector('.cs-lightbox-img');
+    const modalCaption = modal.querySelector('.cs-lightbox-caption');
+    const overlay = modal.querySelector('.cs-lightbox-overlay');
+    const closeBtn = modal.querySelector('.cs-lightbox-close');
+
+    document.querySelectorAll('[data-lightbox]').forEach(card => {
+        card.addEventListener('click', () => {
+            const img = card.querySelector('img');
+            const label = card.querySelector('.cs-fabric-label');
+            modalImg.src = img.src;
+            modalImg.alt = img.alt;
+            modalCaption.textContent = label ? label.textContent : '';
+            modal.classList.add('cs-open');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    function closeLightbox() {
+        modal.classList.remove('cs-open');
+        document.body.style.overflow = '';
+    }
+    overlay.addEventListener('click', closeLightbox);
+    closeBtn.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+})();
+</script>
 
 <style lang="less">
 /*-- Banner --*/
@@ -147,59 +350,32 @@ const collections = [
         z-index: 1;
 
         .cs-container {
-            text-align: center;
-            width: 100%;
-            max-width: (1280/16rem);
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            gap: (12/16rem);
+            text-align: center; width: 100%; max-width: (1280/16rem);
+            margin: auto; display: flex; flex-direction: column;
+            justify-content: center; align-items: flex-start; gap: (12/16rem);
         }
-
         .cs-int-title {
             font-size: clamp(2.4375rem, 6.4vw, 3.8125rem);
-            font-weight: 900;
-            line-height: 1.2em;
-            text-align: inherit;
-            margin: 0;
+            font-weight: 900; line-height: 1.2em; margin: 0;
             color: var(--bodyTextColorWhite);
-            position: relative;
         }
-
         .cs-breadcrumbs { display: flex; justify-content: center; align-items: center; }
-
         .cs-link {
-            font-size: (16/16rem);
-            line-height: 1.2em;
-            text-decoration: none;
-            color: var(--bodyTextColorWhite);
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
+            font-size: (16/16rem); line-height: 1.2em; text-decoration: none;
+            color: var(--bodyTextColorWhite); position: relative;
+            display: flex; justify-content: center; align-items: center;
             &:last-of-type::after { display: none; }
             &:after {
-                content: "";
-                width: (7/16rem);
-                height: (12/16rem);
-                margin: 0 (16/16rem);
+                content: ""; width: (7/16rem); height: (12/16rem); margin: 0 (16/16rem);
                 background: url("https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/white-chev.svg");
-                background-size: contain;
-                background-position: center;
-                background-repeat: no-repeat;
-                position: relative;
-                display: block;
+                background-size: contain; background-position: center; background-repeat: no-repeat;
+                position: relative; display: block;
             }
             &.cs-active { color: var(--secondary); }
         }
-
         .cs-background {
             width: 100%; height: 100%; display: block;
             position: absolute; top: 0; left: 0; z-index: -1;
-
             &:before {
                 content: ""; position: absolute; display: block;
                 height: 100%; width: 100%;
@@ -211,20 +387,71 @@ const collections = [
     }
 }
 
+/*-- Sticky Nav --*/
+@media only screen and (min-width: 0rem) {
+    #fabric-nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+
+        .cs-nav-container {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            max-width: (1280/16rem);
+            margin: auto;
+        }
+
+        .cs-nav-link {
+            font-size: (13/16rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: (14/16rem) (16/16rem);
+            text-decoration: none;
+            color: var(--bodyTextColor);
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            position: relative;
+
+            &:hover, &.cs-active {
+                color: var(--secondary);
+                border-bottom-color: var(--secondary);
+            }
+        }
+
+        .cs-popular-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 4px;
+            vertical-align: super;
+        }
+    }
+}
+
+@media only screen and (min-width: 48rem) {
+    #fabric-nav .cs-nav-link {
+        font-size: (14/16rem);
+        padding: (16/16rem) (24/16rem);
+    }
+}
+
 /*-- Intro --*/
 @media only screen and (min-width: 0rem) {
     #fabrics-intro {
         padding: var(--sectionPadding);
         text-align: center;
-
-        .cs-container {
-            width: 100%;
-            max-width: (800/16rem);
-            margin: auto;
-        }
-
+        .cs-container { width: 100%; max-width: (800/16rem); margin: auto; }
         .cs-title { margin: 0 0 (16/16rem) 0; }
-        .cs-text { margin-bottom: (24/16rem); }
+        .cs-text { margin-bottom: 0; }
     }
 }
 
@@ -232,76 +459,117 @@ const collections = [
 @media only screen and (min-width: 0rem) {
     .cs-fabric-section {
         padding: var(--sectionPadding);
-
         &.cs-alt { background: #f7f7f7; }
 
         .cs-container {
-            width: 100%;
-            max-width: (1280/16rem);
-            margin: auto;
+            width: 100%; max-width: (1280/16rem); margin: auto;
+            display: flex; flex-direction: column; gap: clamp(2rem, 4vw, 3rem);
+        }
+        .cs-content { width: 100%; }
+
+        .cs-title-row {
             display: flex;
-            flex-direction: column;
-            gap: clamp(2rem, 4vw, 3rem);
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: (12/16rem);
+            margin-bottom: (4/16rem);
         }
 
-        .cs-content {
-            width: 100%;
+        .cs-popular-badge {
+            font-size: (12/16rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: (6/16rem) (12/16rem);
+            background: var(--secondary);
+            color: #000;
+            border-radius: (4/16rem);
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .cs-title { margin: 0 0 (12/16rem) 0; }
         .cs-text { margin-bottom: (16/16rem); }
 
         .cs-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: (8/16rem);
+            display: flex; flex-wrap: wrap; gap: (8/16rem); margin-bottom: (16/16rem);
+        }
+        .cs-feature-tag {
+            font-size: (12/16rem); font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.05em; padding: (6/16rem) (14/16rem);
+            background: white; border: 1.5px solid var(--secondary);
+            color: var(--secondary); border-radius: (20/16rem);
+        }
+
+        /* Color Swatches */
+        .cs-colors {
+            margin-bottom: (16/16rem);
+        }
+        .cs-colors-label {
+            font-size: (12/16rem); font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.05em; color: #888; display: block;
+            margin-bottom: (8/16rem);
+        }
+        .cs-color-dots {
+            display: flex; flex-wrap: wrap; gap: (6/16rem);
+        }
+        .cs-color-dot {
+            width: (22/16rem); height: (22/16rem); border-radius: 50%;
+            border: 1.5px solid #ddd; display: inline-block;
+            transition: transform 0.2s;
+            &:hover { transform: scale(1.3); }
+        }
+
+        /* Pricing Hint */
+        .cs-price-hint {
+            display: flex; align-items: baseline; gap: (8/16rem);
             margin-bottom: (20/16rem);
         }
-
-        .cs-feature-tag {
-            font-size: (12/16rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: (6/16rem) (14/16rem);
-            background: white;
-            border: 1.5px solid var(--secondary);
-            color: var(--secondary);
-            border-radius: (20/16rem);
+        .cs-price {
+            font-size: clamp(1.125rem, 2vw, 1.5rem);
+            font-weight: 900; color: var(--secondary);
+        }
+        .cs-price-note {
+            font-size: (13/16rem); color: #888;
         }
 
+        /* Image Grid */
         .cs-image-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: (16/16rem);
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: (12/16rem);
         }
-
         .cs-fabric-card {
-            position: relative;
-            overflow: hidden;
-            border-radius: (4/16rem);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: relative; overflow: hidden; border-radius: (4/16rem);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer;
 
             img {
-                width: 100%;
-                height: auto;
-                display: block;
-                transition: transform 0.3s;
+                width: 100%; height: 100%; object-fit: cover;
+                display: block; transition: transform 0.3s;
             }
-
-            &:hover img { transform: scale(1.03); }
+            &:hover img { transform: scale(1.05); }
         }
-
         .cs-fabric-label {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: (10/16rem) (16/16rem);
+            position: absolute; bottom: 0; left: 0; right: 0;
+            padding: (10/16rem) (14/16rem);
             background: linear-gradient(transparent, rgba(0,0,0,0.7));
-            color: white;
-            font-size: (14/16rem);
-            font-weight: 600;
+            color: white; font-size: (13/16rem); font-weight: 600;
+        }
+        .cs-zoom-icon {
+            position: absolute; top: (8/16rem); right: (8/16rem);
+            font-size: (16/16rem); opacity: 0; transition: opacity 0.3s;
+            background: rgba(0,0,0,0.5); color: white;
+            width: (28/16rem); height: (28/16rem); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .cs-fabric-card:hover .cs-zoom-icon { opacity: 1; }
+
+        /* Inspiration Card */
+        .cs-inspiration-card {
+            text-decoration: none;
+            .cs-inspiration-label {
+                font-weight: 700;
+                color: var(--secondary);
+                background: linear-gradient(transparent 30%, rgba(0,0,0,0.8));
+            }
         }
     }
 }
@@ -310,36 +578,64 @@ const collections = [
 @media only screen and (min-width: 48rem) {
     .cs-fabric-section {
         .cs-container {
-            flex-direction: row;
-            align-items: center;
+            flex-direction: row; align-items: center;
         }
-
         .cs-content { flex: 1; }
-
         .cs-image-grid {
-            flex: 1.2;
-            grid-template-columns: repeat(2, 1fr);
-
-            .cs-fabric-card:first-child {
-                grid-column: span 2;
-            }
+            flex: 1.2; grid-template-columns: repeat(2, 1fr);
         }
-
-        &.cs-alt .cs-container {
-            flex-direction: row-reverse;
-        }
+        &.cs-alt .cs-container { flex-direction: row-reverse; }
     }
 }
 
 /* Desktop */
 @media only screen and (min-width: 64rem) {
-    .cs-fabric-section {
-        .cs-image-grid {
-            grid-template-columns: repeat(3, 1fr);
+    .cs-fabric-section .cs-image-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
-            .cs-fabric-card:first-child {
-                grid-column: span 1;
+/*-- Comparison Table --*/
+@media only screen and (min-width: 0rem) {
+    #fabric-comparison {
+        padding: var(--sectionPadding);
+        background: #f7f7f7;
+
+        .cs-container {
+            width: 100%; max-width: (1280/16rem); margin: auto;
+        }
+        .cs-content {
+            text-align: center; margin-bottom: clamp(1.5rem, 3vw, 2rem);
+        }
+        .cs-title { margin: 0 0 (8/16rem) 0; }
+
+        .cs-table-wrapper {
+            overflow-x: auto; -webkit-overflow-scrolling: touch;
+        }
+
+        .cs-compare-table {
+            width: 100%; min-width: (600/16rem);
+            border-collapse: collapse; background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-radius: (4/16rem); overflow: hidden;
+
+            th, td {
+                padding: (12/16rem) (16/16rem);
+                text-align: center; font-size: (14/16rem);
+                border-bottom: 1px solid #eee;
             }
+            th {
+                background: #1a1a1a; color: white;
+                font-weight: 700; text-transform: uppercase;
+                letter-spacing: 0.03em; font-size: (12/16rem);
+            }
+            th:first-child, td:first-child {
+                text-align: left; font-weight: 600;
+            }
+            tr:last-child td { border-bottom: none; }
+            tr:hover td { background: #fafaf5; }
+
+            td:nth-child(2) { color: var(--secondary); font-weight: 600; }
         }
     }
 }
@@ -347,60 +643,97 @@ const collections = [
 /*-- Sample CTA --*/
 @media only screen and (min-width: 0rem) {
     #sample-cta {
-        padding: var(--sectionPadding);
-        background: #1a1a1a;
-        text-align: center;
-
-        .cs-container {
-            width: 100%;
-            max-width: (700/16rem);
-            margin: auto;
-        }
-
-        .cs-title {
-            color: var(--bodyTextColorWhite);
-            margin: 0 0 (12/16rem) 0;
-        }
-
-        .cs-text {
-            color: #ccc;
-            margin-bottom: (24/16rem);
-        }
-
+        padding: var(--sectionPadding); background: #1a1a1a; text-align: center;
+        .cs-container { width: 100%; max-width: (700/16rem); margin: auto; }
+        .cs-title { color: var(--bodyTextColorWhite); margin: 0 0 (12/16rem) 0; }
+        .cs-text { color: #ccc; margin-bottom: (24/16rem); }
         .cs-cta-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: (12/16rem);
-            align-items: center;
+            display: flex; flex-direction: column; gap: (12/16rem); align-items: center;
         }
-
         .cs-button-outline {
-            font-size: (16/16rem);
-            font-weight: 700;
+            font-size: (16/16rem); font-weight: 700;
             line-height: clamp(2.875rem, 5.5vw, 3.5rem);
-            text-decoration: none;
-            text-align: center;
-            min-width: (200/16rem);
-            padding: 0 (24/16rem);
-            border: 2px solid var(--secondary);
-            border-radius: (4/16rem);
-            color: var(--secondary);
-            transition: all 0.3s;
-
-            &:hover {
-                background: var(--secondary);
-                color: #000;
-            }
+            text-decoration: none; text-align: center;
+            min-width: (200/16rem); padding: 0 (24/16rem);
+            border: 2px solid var(--secondary); border-radius: (4/16rem);
+            color: var(--secondary); transition: all 0.3s;
+            &:hover { background: var(--secondary); color: #000; }
         }
     }
 }
-
 @media only screen and (min-width: 48rem) {
-    #sample-cta {
-        .cs-cta-buttons {
-            flex-direction: row;
-            justify-content: center;
-        }
+    #sample-cta .cs-cta-buttons { flex-direction: row; justify-content: center; }
+}
+
+/*-- Floating Button --*/
+.cs-floating-btn {
+    position: fixed;
+    bottom: (80/16rem);
+    right: (20/16rem);
+    background: var(--secondary);
+    color: #000;
+    font-size: (14/16rem);
+    font-weight: 700;
+    padding: (12/16rem) (20/16rem);
+    border-radius: (30/16rem);
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    z-index: 999;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+
+    &.cs-visible {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    &:hover {
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        transform: translateY(-2px);
+    }
+
+    span { margin-right: (4/16rem); }
+}
+
+/*-- Lightbox --*/
+.cs-lightbox {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 10000;
+
+    &.cs-open { display: flex; justify-content: center; align-items: center; }
+
+    .cs-lightbox-overlay {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.85); cursor: pointer;
+    }
+
+    .cs-lightbox-content {
+        position: relative; max-width: 90vw; max-height: 90vh;
+        display: flex; flex-direction: column; align-items: center;
+    }
+
+    .cs-lightbox-close {
+        position: absolute; top: (-40/16rem); right: 0;
+        background: none; border: none; color: white;
+        font-size: (28/16rem); cursor: pointer;
+        width: (36/16rem); height: (36/16rem);
+        display: flex; justify-content: center; align-items: center;
+        &:hover { color: var(--secondary); }
+    }
+
+    .cs-lightbox-img {
+        max-width: 100%; max-height: 80vh; object-fit: contain;
+        border-radius: (4/16rem);
+    }
+
+    .cs-lightbox-caption {
+        color: white; font-size: (16/16rem); font-weight: 600;
+        margin-top: (12/16rem); text-align: center;
     }
 }
 </style>
