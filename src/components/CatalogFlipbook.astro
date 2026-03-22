@@ -33,6 +33,13 @@ const catalogDataJSON = JSON.stringify(catalogs);
         <!-- Flipbook Viewer -->
         <div class="fb-viewer">
             <div class="fb-book" id="fb-book">
+                <!-- Click zones: left half = prev, right half = next -->
+                <div class="fb-click-zone fb-zone-prev" id="fb-zone-prev" title="Previous page">
+                    <span class="fb-zone-arrow">‹</span>
+                </div>
+                <div class="fb-click-zone fb-zone-next" id="fb-zone-next" title="Next page">
+                    <span class="fb-zone-arrow">›</span>
+                </div>
                 <img class="fb-page" id="fb-page-img" src="" alt="Catalog page" />
             </div>
 
@@ -143,6 +150,10 @@ const catalogDataJSON = JSON.stringify(catalogs);
     // Nav buttons
     prevBtn.addEventListener('click', () => showPage(currentPage - 1));
     nextBtn.addEventListener('click', () => showPage(currentPage + 1));
+
+    // Click zones on the image
+    document.getElementById('fb-zone-prev').addEventListener('click', () => showPage(currentPage - 1));
+    document.getElementById('fb-zone-next').addEventListener('click', () => showPage(currentPage + 1));
 
     // Thumbnail clicks
     thumbsContainer.addEventListener('click', (e) => {
@@ -257,9 +268,54 @@ const catalogDataJSON = JSON.stringify(catalogs);
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: grab;
+        }
 
-            &:active { cursor: grabbing; }
+        .fb-click-zone {
+            position: absolute;
+            top: 0;
+            width: 40%;
+            height: 100%;
+            z-index: 2;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background 0.2s;
+
+            &:hover {
+                background: rgba(0, 0, 0, 0.04);
+
+                .fb-zone-arrow {
+                    opacity: 1;
+                }
+            }
+        }
+
+        .fb-zone-prev {
+            left: 0;
+            justify-content: flex-start;
+            padding-left: (12/16rem);
+        }
+
+        .fb-zone-next {
+            right: 0;
+            justify-content: flex-end;
+            padding-right: (12/16rem);
+        }
+
+        .fb-zone-arrow {
+            font-size: (36/16rem);
+            font-weight: 700;
+            color: #1a1a1a;
+            background: rgba(255, 255, 255, 0.85);
+            width: (44/16rem);
+            height: (44/16rem);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
 
         .fb-page {

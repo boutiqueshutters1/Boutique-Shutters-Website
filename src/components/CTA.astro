@@ -171,10 +171,10 @@
         .cs-cta-paths {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: stretch;
             gap: (12/16rem);
             width: 100%;
-            max-width: (500/16rem);
+            max-width: (600/16rem);
             margin: 0 auto;
         }
 
@@ -184,46 +184,69 @@
             color: rgba(255, 255, 255, 0.5);
             text-transform: uppercase;
             letter-spacing: 0.1em;
+            text-align: center;
         }
 
         .cs-cta-path-btn {
-            display: flex;
+            display: flex !important;
             flex-direction: column;
-            align-items: center;
-            gap: (4/16rem);
+            gap: (6/16rem);
             width: 100%;
-            padding: (14/16rem) (24/16rem);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            text-decoration: none;
-            text-align: center;
+            padding: (20/16rem) (24/16rem);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(8px);
+            text-decoration: none !important;
+            text-align: left;
             transition: all 0.3s;
+            color: white;
 
             &:hover {
                 border-color: var(--secondary);
-                background: rgba(255, 255, 255, 0.05);
+                background: rgba(255, 255, 255, 0.12);
                 transform: translateY(-2px);
             }
 
             &.cs-cta-path-diy {
                 border-color: var(--secondary);
-                background: rgba(255, 191, 0, 0.1);
+                background: rgba(255, 191, 0, 0.08);
             }
         }
 
         .cs-cta-path-label {
-            font-size: (16/16rem);
-            font-weight: 700;
-            color: white;
+            font-size: (18/16rem);
+            font-weight: 900;
+            color: white !important;
+            font-family: 'Playfair Display', serif;
         }
 
         .cs-cta-path-sub {
             font-size: (13/16rem);
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.6) !important;
         }
     }
 }
 
 /* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #cta-403 {
+        .cs-cta-paths {
+            flex-direction: row;
+            align-items: stretch;
+            max-width: (700/16rem);
+        }
+
+        .cs-cta-or {
+            display: flex;
+            align-items: center;
+        }
+
+        .cs-cta-path-btn {
+            flex: 1;
+        }
+    }
+}
+
 @media only screen and (min-width: 48rem) {
     #cta-403 {
         .cs-background {
