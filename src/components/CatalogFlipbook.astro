@@ -347,35 +347,41 @@ const catalogDataJSON = JSON.stringify(catalogs);
 
         .fb-hidden { display: none !important; }
 
-        /* Section chip filters */
+        /* Section underline tabs */
         .fb-sections {
             display: flex;
             justify-content: center;
-            gap: (6/16rem);
-            margin-bottom: (16/16rem);
-            flex-wrap: wrap;
+            gap: 0;
+            margin-bottom: (20/16rem);
+            border-bottom: 2px solid #e0e0e0;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            &::-webkit-scrollbar { display: none; }
         }
 
         .fb-section-btn {
             font-family: inherit;
             font-size: (12/16rem);
             font-weight: 600;
-            padding: (6/16rem) (14/16rem);
+            padding: (10/16rem) (16/16rem);
             border: none;
-            background: #eee;
-            color: #666;
+            border-bottom: 3px solid transparent;
+            background: none;
+            color: #999;
             cursor: pointer;
             transition: all 0.2s;
-            border-radius: (50/16rem);
+            white-space: nowrap;
+            margin-bottom: -2px;
 
             &:hover {
-                background: #ddd;
                 color: #333;
+                border-bottom-color: #ccc;
             }
 
             &.fb-section-active {
-                background: var(--secondary);
-                color: #000;
+                color: var(--secondary);
+                border-bottom-color: var(--secondary);
                 font-weight: 700;
             }
         }
