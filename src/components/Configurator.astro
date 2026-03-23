@@ -645,7 +645,7 @@ const productDataJSON = JSON.stringify(products);
         if (toggle) {
             const key = toggle.dataset.toggle;
             const body = document.getElementById('cfg-acc-' + key);
-            if (body) body.classList.toggle('cfg-acc-open');
+            if (body) body.classList.toggle('cfg-acc-closed');
             return;
         }
 
@@ -734,19 +734,12 @@ const productDataJSON = JSON.stringify(products);
         }
     }
 
-    // Make catalogs accessible to updateLivePreview
-    var catalogs = null;
-    try {
-        // Try to get catalogs from the page (configure.astro passes them)
-        const flipbook = document.getElementById('catalog-flipbook');
-        if (flipbook) {
-            catalogs = [
-                { id: "blinds", pages: 65, folder: "blinds-catalog" },
-                { id: "smart-curtain", pages: 10, folder: "smart-curtain" },
-                { id: "roman", pages: 6, folder: "roman-swatches" }
-            ];
-        }
-    } catch(e) {}
+    // Catalogs data for preview image lookup (hardcoded, matches configure.astro)
+    var catalogs = [
+        { id: "blinds", pages: 65, folder: "blinds-catalog" },
+        { id: "smart-curtain", pages: 10, folder: "smart-curtain" },
+        { id: "roman", pages: 6, folder: "roman-swatches" }
+    ];
 
     document.getElementById('cfg-options-next').addEventListener('click', () => goToStep(4));
 
@@ -1612,14 +1605,14 @@ const productDataJSON = JSON.stringify(products);
         }
 
         .cfg-accordion-body {
-            max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s, padding 0.3s;
-            padding: 0 (16/16rem);
+            padding: (12/16rem) (16/16rem) (16/16rem);
+            max-height: (800/16rem);
 
-            &.cfg-acc-open {
-                max-height: (600/16rem);
-                padding: (12/16rem) (16/16rem) (16/16rem);
+            &.cfg-acc-closed {
+                max-height: 0;
+                padding: 0 (16/16rem);
             }
         }
 
