@@ -161,6 +161,279 @@
         ]
       },
       "sizeConstraints": { "minW": 24, "maxW": 192, "minH": 24, "maxH": 144 }
+    },
+    {
+      "id": "lohas-shades",
+      "name": "Lohas Shades",
+      "image": "/assets/catalogs/blinds-catalog/page-03.jpg",
+      "description": "Natural woven fabric shades with an organic, luxurious feel",
+      "checkoutEnabled": true,
+      "pricingModel": "perWindow",
+      "subtypes": null,
+      "basePrice": 180,
+      "requiresFabricCode": true,
+      "catalogSection": { "catalogId": "blinds", "sectionLabel": "Lohas Shades" },
+      "options": {
+        "mount": [
+          { "id": "inside", "name": "Inside Mount", "priceDelta": 0 },
+          { "id": "outside", "name": "Outside Mount", "priceDelta": 0 }
+        ],
+        "valanceStyle": [
+          { "id": "premium-square", "name": "Premium Square", "priceDelta": 20 },
+          { "id": "large-square", "name": "Large Square", "priceDelta": 10 },
+          { "id": "small-square", "name": "Small Square", "priceDelta": 0 }
+        ],
+        "movement": [
+          { "id": "chain", "name": "Chain", "priceDelta": 0 },
+          { "id": "cordless", "name": "Cordless (+$25)", "priceDelta": 25 },
+          { "id": "motorized", "name": "Motorized (+$100)", "priceDelta": 100 }
+        ],
+        "chainColor": [
+          { "id": "steel", "name": "Steel", "priceDelta": 0 },
+          { "id": "white", "name": "White", "priceDelta": 0 },
+          { "id": "black", "name": "Black", "priceDelta": 0 }
+        ],
+        "valanceColor": [
+          { "id": "white", "name": "White", "hex": "#FFFFFF" },
+          { "id": "ivory", "name": "Ivory", "hex": "#FFFFF0" },
+          { "id": "gray", "name": "Gray", "hex": "#808080" },
+          { "id": "brown", "name": "Brown", "hex": "#8B4513" },
+          { "id": "black", "name": "Black", "hex": "#1a1a1a" }
+        ],
+        "bottomRailColor": [
+          { "id": "white", "name": "White", "hex": "#FFFFFF" },
+          { "id": "ivory", "name": "Ivory", "hex": "#FFFFF0" },
+          { "id": "gray", "name": "Gray", "hex": "#808080" },
+          { "id": "brown", "name": "Brown", "hex": "#8B4513" },
+          { "id": "black", "name": "Black", "hex": "#1a1a1a" }
+        ]
+      },
+      "sizeConstraints": { "minW": 12, "maxW": 96, "minH": 12, "maxH": 96 }
+    },
+    {
+      "id": "triple-shades",
+      "name": "Triple Shades",
+      "image": "/assets/catalogs/blinds-catalog/page-09.jpg",
+      "description": "Triple-layer shades with blackout capability and light control",
+      "checkoutEnabled": true,
+      "pricingModel": "perWindow",
+      "subtypes": null,
+      "basePrice": 200,
+      "requiresFabricCode": true,
+      "catalogSection": { "catalogId": "blinds", "sectionLabel": "Triple Shades" },
+      "options": {
+        "mount": [
+          { "id": "inside", "name": "Inside Mount", "priceDelta": 0 },
+          { "id": "outside", "name": "Outside Mount", "priceDelta": 0 }
+        ],
+        "valanceStyle": [
+          { "id": "premium-square", "name": "Premium Square", "priceDelta": 20 },
+          { "id": "large-square", "name": "Large Square", "priceDelta": 10 },
+          { "id": "large-round", "name": "Large Round", "priceDelta": 10 },
+          { "id": "small-round", "name": "Small Round", "priceDelta": 0 },
+          { "id": "small-square", "name": "Small Square", "priceDelta": 0 }
+        ],
+        "movement": [
+          { "id": "chain", "name": "Chain", "priceDelta": 0 },
+          { "id": "cordless", "name": "Cordless (+$25)", "priceDelta": 25 },
+          { "id": "wand", "name": "Wand — Child Safe (+$15)", "priceDelta": 15 },
+          { "id": "motorized", "name": "Motorized (+$100)", "priceDelta": 100 }
+        ],
+        "chainColor": [
+          { "id": "steel", "name": "Steel", "priceDelta": 0 },
+          { "id": "white", "name": "White", "priceDelta": 0 },
+          { "id": "black", "name": "Black", "priceDelta": 0 },
+          { "id": "transparent", "name": "Transparent", "priceDelta": 0 }
+        ],
+        "bottomBar": [
+          { "id": "narrow", "name": "Narrow Bar", "priceDelta": 0 },
+          { "id": "basic", "name": "Basic Bar", "priceDelta": 0 },
+          { "id": "square", "name": "Square Bar (+$5)", "priceDelta": 5 }
+        ],
+        "valanceColor": [
+          { "id": "white", "name": "White", "hex": "#FFFFFF" },
+          { "id": "ivory", "name": "Ivory", "hex": "#FFFFF0" },
+          { "id": "gray", "name": "Gray", "hex": "#808080" },
+          { "id": "brown", "name": "Brown", "hex": "#8B4513" },
+          { "id": "black", "name": "Black", "hex": "#1a1a1a" }
+        ],
+        "bottomRailColor": [
+          { "id": "white", "name": "White", "hex": "#FFFFFF" },
+          { "id": "ivory", "name": "Ivory", "hex": "#FFFFF0" },
+          { "id": "gray", "name": "Gray", "hex": "#808080" },
+          { "id": "brown", "name": "Brown", "hex": "#8B4513" },
+          { "id": "black", "name": "Black", "hex": "#1a1a1a" }
+        ]
+      },
+      "sizeConstraints": { "minW": 12, "maxW": 96, "minH": 12, "maxH": 96 }
+    },
+    {
+      "id": "roll-blinds",
+      "name": "Roll Blinds",
+      "image": "/assets/catalogs/blinds-catalog/page-45.jpg",
+      "description": "Roller blinds & sun screens — clean, minimal, modern",
+      "checkoutEnabled": true,
+      "pricingModel": "perWindow",
+      "subtypes": null,
+      "basePrice": 120,
+      "requiresFabricCode": true,
+      "catalogSection": { "catalogId": "blinds", "sectionLabel": "Roll Blinds" },
+      "options": {
+        "mount": [
+          { "id": "inside", "name": "Inside Mount", "priceDelta": 0 },
+          { "id": "outside", "name": "Outside Mount", "priceDelta": 0 }
+        ],
+        "valanceStyle": [
+          { "id": "premium-square", "name": "Premium Square", "priceDelta": 20 },
+          { "id": "large-square", "name": "Large Square", "priceDelta": 10 },
+          { "id": "large-round", "name": "Large Round", "priceDelta": 10 },
+          { "id": "small-round", "name": "Small Round", "priceDelta": 0 },
+          { "id": "small-square", "name": "Small Square", "priceDelta": 0 },
+          { "id": "basic-rail", "name": "Basic Rail", "priceDelta": 0 }
+        ],
+        "movement": [
+          { "id": "chain", "name": "Chain", "priceDelta": 0 },
+          { "id": "cordless", "name": "Cordless (+$25)", "priceDelta": 25 },
+          { "id": "motorized", "name": "Motorized (+$100)", "priceDelta": 100 }
+        ],
+        "chainColor": [
+          { "id": "steel", "name": "Steel", "priceDelta": 0 },
+          { "id": "white", "name": "White", "priceDelta": 0 },
+          { "id": "black", "name": "Black", "priceDelta": 0 }
+        ],
+        "valanceColor": [
+          { "id": "white", "name": "White", "hex": "#FFFFFF" },
+          { "id": "ivory", "name": "Ivory", "hex": "#FFFFF0" },
+          { "id": "gray", "name": "Gray", "hex": "#808080" },
+          { "id": "brown", "name": "Brown", "hex": "#8B4513" },
+          { "id": "black", "name": "Black", "hex": "#1a1a1a" }
+        ]
+      },
+      "sizeConstraints": { "minW": 12, "maxW": 96, "minH": 12, "maxH": 96 }
+    },
+    {
+      "id": "honeycomb-shades",
+      "name": "Honeycomb Shades",
+      "image": "/assets/catalogs/blinds-catalog/page-58.jpg",
+      "description": "Energy-efficient cellular shades with superior insulation",
+      "checkoutEnabled": true,
+      "pricingModel": "perWindow",
+      "subtypes": null,
+      "basePrice": 160,
+      "requiresFabricCode": true,
+      "catalogSection": { "catalogId": "blinds", "sectionLabel": "Honeycomb" },
+      "options": {
+        "mount": [
+          { "id": "inside", "name": "Inside Mount", "priceDelta": 0 },
+          { "id": "outside", "name": "Outside Mount", "priceDelta": 0 }
+        ],
+        "fabric": [
+          { "id": "light-filtering", "name": "Light Filtering", "priceDelta": 0 },
+          { "id": "blackout", "name": "Blackout (+$30)", "priceDelta": 30 }
+        ],
+        "movement": [
+          { "id": "cordless", "name": "Cordless", "priceDelta": 0 },
+          { "id": "motorized", "name": "Motorized (+$100)", "priceDelta": 100 }
+        ],
+        "color": [
+          { "id": "white", "name": "White", "hex": "#FFFFFF" },
+          { "id": "off-white", "name": "Off-White", "hex": "#FAF0E6" },
+          { "id": "cream", "name": "Cream", "hex": "#FFFDD0" },
+          { "id": "light-gray", "name": "Light Gray", "hex": "#D3D3D3" },
+          { "id": "gray", "name": "Gray", "hex": "#808080" },
+          { "id": "charcoal", "name": "Charcoal", "hex": "#36454F" }
+        ]
+      },
+      "sizeConstraints": { "minW": 12, "maxW": 96, "minH": 12, "maxH": 96 }
+    },
+    {
+      "id": "wood-blinds",
+      "name": "Wood Blinds",
+      "image": "/assets/catalogs/blinds-catalog/page-62.jpg",
+      "description": "Premium real wood venetian blinds with natural warmth",
+      "checkoutEnabled": true,
+      "pricingModel": "perWindow",
+      "subtypes": null,
+      "basePrice": 140,
+      "requiresFabricCode": true,
+      "catalogSection": { "catalogId": "blinds", "sectionLabel": "Wood Blinds" },
+      "options": {
+        "mount": [
+          { "id": "inside", "name": "Inside Mount", "priceDelta": 0 },
+          { "id": "outside", "name": "Outside Mount", "priceDelta": 0 }
+        ],
+        "slatSize": [
+          { "id": "25mm", "name": "25mm", "priceDelta": 0 },
+          { "id": "35mm", "name": "35mm", "priceDelta": 10 },
+          { "id": "50mm", "name": "50mm", "priceDelta": 20 }
+        ],
+        "movement": [
+          { "id": "cord", "name": "Cord", "priceDelta": 0 },
+          { "id": "cordless", "name": "Cordless (+$25)", "priceDelta": 25 }
+        ],
+        "color": [
+          { "id": "natural", "name": "Natural", "hex": "#D2B48C" },
+          { "id": "oak", "name": "Oak", "hex": "#C69C6D" },
+          { "id": "walnut", "name": "Walnut", "hex": "#773F1A" },
+          { "id": "mahogany", "name": "Mahogany", "hex": "#6E3B2D" },
+          { "id": "cherry", "name": "Cherry", "hex": "#8B3A3A" },
+          { "id": "white", "name": "White", "hex": "#FFFFFF" }
+        ]
+      },
+      "sizeConstraints": { "minW": 12, "maxW": 72, "minH": 12, "maxH": 72 }
+    },
+    {
+      "id": "smart-curtain",
+      "name": "Smart Curtain",
+      "image": "/assets/catalogs/smart-curtain/page-01.jpg",
+      "description": "Motorized smart curtains with app & voice control",
+      "checkoutEnabled": false,
+      "pricingModel": "contact",
+      "subtypes": null,
+      "basePrice": 0,
+      "requiresFabricCode": true,
+      "catalogSection": { "catalogId": "smart-curtain", "sectionLabel": null },
+      "options": {
+        "mount": [
+          { "id": "ceiling", "name": "Ceiling Mount", "priceDelta": 0 },
+          { "id": "wall", "name": "Wall Mount", "priceDelta": 0 }
+        ],
+        "motorProtocol": [
+          { "id": "wifi", "name": "Wi-Fi", "priceDelta": 0 },
+          { "id": "zigbee", "name": "Zigbee", "priceDelta": 0 },
+          { "id": "matter", "name": "Matter/Thread", "priceDelta": 0 }
+        ]
+      },
+      "sizeConstraints": { "minW": 24, "maxW": 192, "minH": 24, "maxH": 120 }
+    },
+    {
+      "id": "roman-shades",
+      "name": "Roman Shades",
+      "image": "/assets/catalogs/roman-swatches/page-1.jpg",
+      "description": "Classic fabric shades that fold elegantly when raised",
+      "checkoutEnabled": false,
+      "pricingModel": "contact",
+      "subtypes": null,
+      "basePrice": 0,
+      "requiresFabricCode": true,
+      "catalogSection": { "catalogId": "roman", "sectionLabel": null },
+      "options": {
+        "mount": [
+          { "id": "inside", "name": "Inside Mount", "priceDelta": 0 },
+          { "id": "outside", "name": "Outside Mount", "priceDelta": 0 }
+        ],
+        "foldStyle": [
+          { "id": "flat", "name": "Flat Fold", "priceDelta": 0 },
+          { "id": "hobbled", "name": "Hobbled/Teardrop", "priceDelta": 0 },
+          { "id": "balloon", "name": "Balloon", "priceDelta": 0 }
+        ],
+        "lining": [
+          { "id": "unlined", "name": "Unlined", "priceDelta": 0 },
+          { "id": "privacy", "name": "Privacy Lined", "priceDelta": 0 },
+          { "id": "blackout", "name": "Blackout Lined", "priceDelta": 0 }
+        ]
+      },
+      "sizeConstraints": { "minW": 12, "maxW": 96, "minH": 12, "maxH": 96 }
     }
   ]
 }
