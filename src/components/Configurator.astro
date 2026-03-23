@@ -790,11 +790,10 @@ const productDataJSON = JSON.stringify(products);
 
         let html = '';
 
-        // Invoice header
+        // Invoice header (dark background so logo shows properly)
         html += '<div class="cfg-inv-header">';
         html += '<div class="cfg-inv-logo">';
-        html += '<img src="/assets/images/main-logo-compressed.png" alt="Boutique Shutters" height="28" />';
-        html += '<span class="cfg-inv-tagline">Custom Window Treatments</span>';
+        html += '<img src="/assets/images/main-logo-compressed.png" alt="Boutique Shutters" />';
         html += '</div>';
         html += '<div class="cfg-inv-meta">';
         html += '<span class="cfg-inv-label">Estimate</span>';
@@ -1002,7 +1001,7 @@ const productDataJSON = JSON.stringify(products);
 })();
 </script>
 
-<style lang="less">
+<style lang="less" is:global>
 /*-- -------------------------- -->
 <---       Configurator         -->
 <--- -------------------------- -*/
@@ -1784,27 +1783,18 @@ const productDataJSON = JSON.stringify(products);
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            align-items: flex-start;
-            gap: (8/16rem);
-            padding-bottom: (16/16rem);
-            margin-bottom: (16/16rem);
-            border-bottom: 2px solid #1a1a1a;
+            align-items: center;
+            gap: (12/16rem);
+            padding: (16/16rem) (20/16rem);
+            margin-bottom: (20/16rem);
+            background: #1a1a1a;
         }
 
         .cfg-inv-logo {
             display: flex;
-            flex-direction: column;
-            gap: (4/16rem);
-            min-width: 0;
+            align-items: center;
 
-            img { height: (24/16rem); width: auto; max-width: 100%; }
-        }
-
-        .cfg-inv-tagline {
-            font-size: (11/16rem);
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
+            img { height: (32/16rem); width: auto; max-width: (180/16rem); }
         }
 
         .cfg-inv-meta {
@@ -1815,24 +1805,24 @@ const productDataJSON = JSON.stringify(products);
         }
 
         .cfg-inv-label {
-            font-size: (22/16rem);
+            font-size: (20/16rem);
             font-weight: 900;
             font-family: 'Playfair Display', serif;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: #1a1a1a;
+            color: var(--secondary);
         }
 
         .cfg-inv-num {
-            font-size: (12/16rem);
+            font-size: (11/16rem);
             font-weight: 600;
             color: #888;
             font-family: monospace;
         }
 
         .cfg-inv-date {
-            font-size: (12/16rem);
-            color: #aaa;
+            font-size: (11/16rem);
+            color: #666;
         }
 
         .cfg-inv-table {
