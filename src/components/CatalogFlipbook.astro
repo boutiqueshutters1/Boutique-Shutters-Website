@@ -290,6 +290,38 @@ const catalogDataJSON = JSON.stringify(catalogs);
         });
     }
 
+    // --- Listen for catalogJump from Configurator ---
+    window.addEventListener('catalogJump', function(e) {
+        const { catalogId, sectionLabel } = e.detail;
+
+        // Switch to the right catalog tab
+        const catalog = catalogs.find(c => c.id === catalogId);
+        if (catalog) {
+            loadCatalog(catalog);
+
+            // Auto-click the right section filter
+            setTimeout(() => {
+                const sectionBtns = sectionsContainer.querySelectorAll('.fb-section-btn');
+                sectionBtns.forEach(btn => {
+                    if (btn.textContent.trim() === sectionLabel) {
+                        btn.click();
+                    }
+                });
+            }, 100);
+        }
+
+        // Scroll to the catalog with a gold highlight
+        const flipbook = document.getElementById('catalog-flipbook');
+        if (flipbook) {
+            flipbook.scrollIntoView({ behavior: 'smooth' });
+            flipbook.style.outline = '3px solid #ffbf00';
+            flipbook.style.outlineOffset = '8px';
+            setTimeout(() => {
+                flipbook.style.outline = 'none';
+            }, 3000);
+        }
+    });
+
     // --- Init ---
     loadCatalog(catalogs[0]);
 })();

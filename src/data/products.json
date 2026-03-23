@@ -45,30 +45,50 @@
       "pricingModel": "perWindow",
       "subtypes": null,
       "basePrice": 150,
+      "requiresFabricCode": true,
+      "catalogSection": { "catalogId": "blinds", "sectionLabel": "Combi Shades" },
       "options": {
         "mount": [
           { "id": "inside", "name": "Inside Mount", "priceDelta": 0 },
           { "id": "outside", "name": "Outside Mount", "priceDelta": 0 }
         ],
-        "fabric": [
-          { "id": "light-filtering", "name": "Light Filtering", "priceDelta": 0 },
-          { "id": "blackout", "name": "Blackout (+$30)", "priceDelta": 30 }
+        "valanceStyle": [
+          { "id": "premium-square", "name": "Premium Square", "priceDelta": 20 },
+          { "id": "large-square", "name": "Large Square", "priceDelta": 10 },
+          { "id": "large-round", "name": "Large Round", "priceDelta": 10 },
+          { "id": "small-round", "name": "Small Round", "priceDelta": 0 },
+          { "id": "small-square", "name": "Small Square", "priceDelta": 0 }
         ],
-        "color": [
+        "movement": [
+          { "id": "chain", "name": "Chain", "priceDelta": 0 },
+          { "id": "cordless", "name": "Cordless (+$25)", "priceDelta": 25 },
+          { "id": "wand", "name": "Wand — Child Safe (+$15)", "priceDelta": 15 },
+          { "id": "motorized", "name": "Motorized (+$100)", "priceDelta": 100 }
+        ],
+        "chainColor": [
+          { "id": "steel", "name": "Steel", "priceDelta": 0 },
+          { "id": "white", "name": "White", "priceDelta": 0 },
+          { "id": "black", "name": "Black", "priceDelta": 0 },
+          { "id": "transparent", "name": "Transparent", "priceDelta": 0 }
+        ],
+        "bottomBar": [
+          { "id": "narrow", "name": "Narrow Bar", "priceDelta": 0 },
+          { "id": "basic", "name": "Basic Bar", "priceDelta": 0 },
+          { "id": "square", "name": "Square Bar (+$5)", "priceDelta": 5 }
+        ],
+        "valanceColor": [
           { "id": "white", "name": "White", "hex": "#FFFFFF" },
-          { "id": "off-white", "name": "Off-White", "hex": "#FAF0E6" },
           { "id": "ivory", "name": "Ivory", "hex": "#FFFFF0" },
-          { "id": "cream", "name": "Cream", "hex": "#FFFDD0" },
-          { "id": "light-gray", "name": "Light Gray", "hex": "#D3D3D3" },
           { "id": "gray", "name": "Gray", "hex": "#808080" },
-          { "id": "charcoal", "name": "Charcoal", "hex": "#36454F" },
-          { "id": "taupe", "name": "Taupe", "hex": "#B38B6D" },
           { "id": "brown", "name": "Brown", "hex": "#8B4513" },
           { "id": "black", "name": "Black", "hex": "#1a1a1a" }
         ],
-        "motorized": [
-          { "id": "manual", "name": "Manual", "priceDelta": 0 },
-          { "id": "motorized", "name": "Motorized (+$100)", "priceDelta": 100 }
+        "bottomRailColor": [
+          { "id": "white", "name": "White", "hex": "#FFFFFF" },
+          { "id": "ivory", "name": "Ivory", "hex": "#FFFFF0" },
+          { "id": "gray", "name": "Gray", "hex": "#808080" },
+          { "id": "brown", "name": "Brown", "hex": "#8B4513" },
+          { "id": "black", "name": "Black", "hex": "#1a1a1a" }
         ]
       },
       "sizeConstraints": { "minW": 12, "maxW": 96, "minH": 12, "maxH": 96 }

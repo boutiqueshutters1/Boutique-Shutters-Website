@@ -56,7 +56,33 @@ const productDataJSON = JSON.stringify(products);
             </div>
         </div>
 
-        <!-- Step 2: Size -->
+        <!-- Step 2: Choose Fabric (only for products requiring fabric code) -->
+        <div class="cfg-panel cfg-hidden" id="cfg-step-fabric">
+            <h2 class="cfg-title">Choose Your Fabric</h2>
+            <p class="cfg-subtitle">Browse the catalog below and tap a page to enter the fabric code you'd like</p>
+
+            <div class="cfg-fabric-status" id="cfg-fabric-status">
+                <div class="cfg-fabric-empty" id="cfg-fabric-empty">
+                    <span class="cfg-fabric-icon">👇</span>
+                    <p>Scroll down to browse the fabric catalog. Tap any page to select a fabric code.</p>
+                </div>
+                <div class="cfg-fabric-selected cfg-hidden" id="cfg-fabric-selected">
+                    <span class="cfg-fabric-check">✓</span>
+                    <div class="cfg-fabric-info">
+                        <span class="cfg-fabric-code-display" id="cfg-fabric-code-display">—</span>
+                        <span class="cfg-fabric-ref" id="cfg-fabric-ref-display">—</span>
+                    </div>
+                    <button class="cfg-fabric-change" id="cfg-fabric-change">Change</button>
+                </div>
+            </div>
+
+            <div class="cfg-nav-buttons">
+                <button class="cfg-btn-back" data-goto="1">← Back</button>
+                <button class="cfg-btn-next cfg-btn-disabled" id="cfg-fabric-next">Next: Size & Quantity →</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Size (was Step 2) -->
         <div class="cfg-panel cfg-hidden" id="cfg-step-2">
             <h2 class="cfg-title">Enter Window Measurements</h2>
             <p class="cfg-subtitle">Measure your window opening to the nearest 1/8 inch</p>
@@ -175,11 +201,26 @@ const productDataJSON = JSON.stringify(products);
         heightWhole: null,
         heightFrac: 0,
         quantity: 1,
-        options: {}
+        options: {},
+        fabricCode: null,
+        fabricReference: null
     };
 
+    // Step mapping: product-aware step sequences
+    // Products with requiresFabricCode get: 1(product) → fabric → 2(size) → 3(options) → 4(review) → 5(cart)
+    // Products without: 1(product) → 2(size) → 3(options) → 4(review) → 5(cart)
+    const stepPanelIds = ['cfg-step-1', 'cfg-step-fabric', 'cfg-step-2', 'cfg-step-3', 'cfg-step-4', 'cfg-step-5'];
+
+    function getStepSequence() {
+        if (state.product && state.product.requiresFabricCode) {
+            return [1, 'fabric', 2, 3, 4, 5]; // 6 steps
+        }
+        return [1, 2, 3, 4, 5]; // 5 steps (no fabric)
+    }
+
     // DOM refs
-    const panels = document.querySelectorAll('.cfg-panel');
+    const allPanels = {};
+    stepPanelIds.forEach(id => { allPanels[id] = document.getElementById(id); });
     const indicators = document.querySelectorAll('.cfg-step-indicator');
     const priceBar = document.getElementById('cfg-price-bar');
     const barProduct = document.getElementById('cfg-bar-product');
@@ -188,26 +229,58 @@ const productDataJSON = JSON.stringify(products);
     // --- Navigation ---
     function goToStep(n) {
         state.step = n;
-        panels.forEach((p, i) => {
-            p.classList.toggle('cfg-hidden', i !== n - 1);
-        });
+
+        // Hide all panels, show the right one
+        const panelId = n === 'fabric' ? 'cfg-step-fabric' : 'cfg-step-' + n;
+        Object.values(allPanels).forEach(p => { if (p) p.classList.add('cfg-hidden'); });
+        if (allPanels[panelId]) allPanels[panelId].classList.remove('cfg-hidden');
+
+        // Update progress indicators
+        const seq = getStepSequence();
+        const currentIdx = seq.indexOf(n);
         indicators.forEach(ind => {
             const s = parseInt(ind.dataset.step);
-            ind.classList.toggle('cfg-active', s === n);
-            ind.classList.toggle('cfg-done', s < n);
+            // Map indicator 1-5 to sequence position
+            const indIdx = s - 1;
+            ind.classList.toggle('cfg-active', indIdx === currentIdx);
+            ind.classList.toggle('cfg-done', indIdx < currentIdx);
         });
-        priceBar.classList.toggle('cfg-hidden', n <= 1);
+
+        priceBar.classList.toggle('cfg-hidden', n === 1);
         updatePriceBar();
         window.scrollTo({ top: document.getElementById('configurator').offsetTop - 100, behavior: 'smooth' });
 
+        if (n === 'fabric') {
+            // Auto-jump catalog to the right section
+            if (state.product.catalogSection) {
+                window.dispatchEvent(new CustomEvent('catalogJump', {
+                    detail: state.product.catalogSection
+                }));
+            }
+        }
         if (n === 3) renderOptions();
         if (n === 4) renderReview();
         if (n === 5) renderCart();
     }
 
-    // Back buttons
+    // Back buttons — handle named steps
     document.querySelectorAll('.cfg-btn-back').forEach(btn => {
-        btn.addEventListener('click', () => goToStep(parseInt(btn.dataset.goto)));
+        btn.addEventListener('click', () => {
+            const target = btn.dataset.goto;
+            if (target === 'fabric') {
+                goToStep('fabric');
+            } else {
+                const num = parseInt(target);
+                // If going back to step 2 (size) and product has fabric, go to fabric instead
+                if (num === 2 && state.product && state.product.requiresFabricCode) {
+                    // Check if we're coming from step 3 (options) — go to size (2)
+                    // or from step 2 (size) — go to fabric
+                    goToStep(num);
+                } else {
+                    goToStep(num);
+                }
+            }
+        });
     });
 
     // --- Step 1: Product Selection ---
@@ -248,7 +321,19 @@ const productDataJSON = JSON.stringify(products);
             document.getElementById('cfg-height-whole').min = sc.minH;
             document.getElementById('cfg-height-whole').max = sc.maxH;
 
-            goToStep(2);
+            // Reset fabric state
+            state.fabricCode = null;
+            state.fabricReference = null;
+            document.getElementById('cfg-fabric-empty').classList.remove('cfg-hidden');
+            document.getElementById('cfg-fabric-selected').classList.add('cfg-hidden');
+            document.getElementById('cfg-fabric-next').classList.add('cfg-btn-disabled');
+
+            // Route to fabric step or size step
+            if (state.product.requiresFabricCode) {
+                goToStep('fabric');
+            } else {
+                goToStep(2);
+            }
         });
     });
 
@@ -315,6 +400,45 @@ const productDataJSON = JSON.stringify(products);
     });
 
     // Size Next
+    // --- Fabric Step ---
+    const fabricNextBtn = document.getElementById('cfg-fabric-next');
+    const fabricChangeBtn = document.getElementById('cfg-fabric-change');
+
+    // Listen for fabric selection from CatalogFlipbook
+    window.addEventListener('fabricSelected', function(e) {
+        if (!e.detail.code) return;
+        state.fabricCode = e.detail.code;
+        state.fabricReference = e.detail.reference;
+
+        // Update fabric status display
+        document.getElementById('cfg-fabric-empty').classList.add('cfg-hidden');
+        document.getElementById('cfg-fabric-selected').classList.remove('cfg-hidden');
+        document.getElementById('cfg-fabric-code-display').textContent = e.detail.code;
+        document.getElementById('cfg-fabric-ref-display').textContent = e.detail.catalog + ', Page ' + e.detail.page;
+
+        // Enable next button
+        fabricNextBtn.classList.remove('cfg-btn-disabled');
+
+        // Scroll back up to configurator
+        window.scrollTo({ top: document.getElementById('configurator').offsetTop - 100, behavior: 'smooth' });
+    });
+
+    fabricNextBtn.addEventListener('click', () => {
+        if (!state.fabricCode) {
+            alert('Please select a fabric code from the catalog below before continuing.');
+            return;
+        }
+        goToStep(2); // Go to size step
+    });
+
+    if (fabricChangeBtn) {
+        fabricChangeBtn.addEventListener('click', () => {
+            // Scroll down to catalog
+            const catalog = document.getElementById('catalog-flipbook');
+            if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+
     document.getElementById('cfg-size-next').addEventListener('click', () => {
         const w = (state.widthWhole || 0) + state.widthFrac;
         const h = (state.heightWhole || 0) + state.heightFrac;
@@ -335,16 +459,56 @@ const productDataJSON = JSON.stringify(products);
         const labels = {
             mount: 'Mount Type', slatSize: 'Slat Size', color: 'Color',
             cordless: 'Lift System', fabric: 'Fabric Type', motorized: 'Operation',
-            motorProtocol: 'Motor Protocol', operation: 'Operation'
+            motorProtocol: 'Motor Protocol', operation: 'Operation',
+            valanceStyle: 'Valance Style', movement: 'Movement / Lift Type',
+            chainColor: 'Chain Color', bottomBar: 'Bottom Bar Style',
+            valanceColor: 'Valance Color', bottomRailColor: 'Bottom Rail Color'
+        };
+
+        // Section headers for organized layout
+        const sections = {
+            mount: '📐 Installation',
+            valanceStyle: '🏗️ Hardware',
+            movement: '⚙️ Operation',
+            valanceColor: '🎨 Colors',
+            color: '🎨 Colors',
+            slatSize: '📏 Specifications'
+        };
+
+        // Conditional fields: only show chainColor when movement === 'chain'
+        const conditionalFields = {
+            chainColor: { dependsOn: 'movement', showWhen: 'chain' }
         };
 
         let html = '';
+        let lastSection = '';
+
+        // Show fabric code if selected (for fabric-required products)
+        if (state.product.requiresFabricCode && state.fabricCode) {
+            html += '<div class="cfg-option-group cfg-fabric-display">';
+            html += '<label class="cfg-label">Selected Fabric</label>';
+            html += '<div class="cfg-fabric-badge"><span class="cfg-fabric-badge-code">' + state.fabricCode + '</span><span class="cfg-fabric-badge-ref">' + (state.fabricReference || '') + '</span></div>';
+            html += '</div>';
+        }
+
         Object.keys(opts).forEach(key => {
+            // Check conditional visibility
+            if (conditionalFields[key]) {
+                const dep = conditionalFields[key];
+                if (state.options[dep.dependsOn] !== dep.showWhen) return;
+            }
+
             const group = opts[key];
             const label = labels[key] || key;
-            const isColor = key === 'color';
+            const isColor = key === 'color' || key === 'valanceColor' || key === 'bottomRailColor';
 
-            html += '<div class="cfg-option-group">';
+            // Add section header if needed
+            if (sections[key] && sections[key] !== lastSection) {
+                lastSection = sections[key];
+                html += '<div class="cfg-section-header">' + sections[key] + '</div>';
+            }
+
+            html += '<div class="cfg-option-group" data-option-group="' + key + '">';
             html += '<label class="cfg-label">' + label + '</label>';
 
             if (isColor) {
@@ -382,6 +546,9 @@ const productDataJSON = JSON.stringify(products);
         });
         btn.classList.add(btn.classList.contains('cfg-swatch') ? 'cfg-swatch-active' : 'cfg-pill-active');
         updatePriceBar();
+
+        // Re-render if a conditional dependency changed (e.g., movement → chainColor)
+        if (key === 'movement') renderOptions();
     });
 
     document.getElementById('cfg-options-next').addEventListener('click', () => goToStep(4));
@@ -639,22 +806,6 @@ const productDataJSON = JSON.stringify(products);
     function saveState() {
         try { sessionStorage.setItem('cfgState', JSON.stringify(state)); } catch(e) {}
     }
-
-    // Listen for fabric selection from CatalogFlipbook
-    window.addEventListener('fabricSelected', function(e) {
-        state.fabricReference = e.detail.reference;
-        // Show confirmation banner
-        let banner = document.getElementById('cfg-fabric-banner');
-        if (!banner) {
-            banner = document.createElement('div');
-            banner.id = 'cfg-fabric-banner';
-            banner.style.cssText = 'position:fixed;top:80px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:white;padding:12px 24px;z-index:10001;display:flex;align-items:center;gap:12px;box-shadow:0 4px 20px rgba(0,0,0,0.3);font-size:14px;';
-            document.body.appendChild(banner);
-        }
-        banner.innerHTML = '<span style="color:#2ecc71;font-weight:700;">✓</span> Fabric selected: <strong style="color:#ffbf00;">' + e.detail.reference + '</strong> <a href="#configurator" style="color:#ffbf00;margin-left:12px;font-weight:700;text-decoration:none;">Go to Configurator ↑</a>';
-        banner.style.display = 'flex';
-        setTimeout(() => { banner.style.display = 'none'; }, 5000);
-    });
 
     // Initialize
     goToStep(1);
@@ -1015,6 +1166,118 @@ const productDataJSON = JSON.stringify(products);
         .cfg-swatch:hover .cfg-swatch-label,
         .cfg-swatch.cfg-swatch-active .cfg-swatch-label {
             opacity: 1;
+        }
+
+        /* Fabric step */
+        .cfg-fabric-status {
+            margin-bottom: (24/16rem);
+        }
+
+        .cfg-fabric-empty {
+            text-align: center;
+            padding: (32/16rem) (16/16rem);
+            background: #f7f7f7;
+            border: 2px dashed #ccc;
+
+            .cfg-fabric-icon {
+                font-size: (40/16rem);
+                display: block;
+                margin-bottom: (8/16rem);
+            }
+
+            p {
+                font-size: (15/16rem);
+                color: #888;
+                margin: 0;
+            }
+        }
+
+        .cfg-fabric-selected {
+            display: flex;
+            align-items: center;
+            gap: (16/16rem);
+            padding: (16/16rem) (20/16rem);
+            background: #f0fdf4;
+            border: 2px solid #2ecc71;
+        }
+
+        .cfg-fabric-check {
+            font-size: (24/16rem);
+            color: #2ecc71;
+            font-weight: 700;
+        }
+
+        .cfg-fabric-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: (2/16rem);
+        }
+
+        .cfg-fabric-code-display {
+            font-size: (18/16rem);
+            font-weight: 900;
+            color: #1a1a1a;
+        }
+
+        .cfg-fabric-ref {
+            font-size: (13/16rem);
+            color: #888;
+        }
+
+        .cfg-fabric-change {
+            font-family: inherit;
+            font-size: (13/16rem);
+            font-weight: 600;
+            padding: (6/16rem) (14/16rem);
+            border: 1px solid #ccc;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+
+            &:hover { border-color: var(--secondary); color: var(--secondary); }
+        }
+
+        .cfg-btn-disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Section headers in options */
+        .cfg-section-header {
+            font-size: (13/16rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #999;
+            padding: (16/16rem) 0 (4/16rem);
+            border-top: 1px solid #e0e0e0;
+            margin-top: (8/16rem);
+
+            &:first-child {
+                border-top: none;
+                margin-top: 0;
+            }
+        }
+
+        /* Fabric badge in options step */
+        .cfg-fabric-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: (8/16rem);
+            padding: (6/16rem) (12/16rem);
+            background: #1a1a1a;
+        }
+
+        .cfg-fabric-badge-code {
+            font-size: (14/16rem);
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .cfg-fabric-badge-ref {
+            font-size: (12/16rem);
+            color: #888;
         }
 
         /* Option groups */
