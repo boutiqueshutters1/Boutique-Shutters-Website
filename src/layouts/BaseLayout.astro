@@ -101,6 +101,66 @@ const { description, title } = Astro.props;
             <!-- Snipcart E-Commerce -->
             <link rel="preconnect" href="https://cdn.snipcart.com">
             <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.7.1/default/snipcart.css" />
+            <!-- Snipcart Custom Theme -->
+            <style>
+                /* Brand the Snipcart panel */
+                .snipcart-modal__container {
+                    font-family: 'Inter', sans-serif !important;
+                }
+                .snipcart-cart-header {
+                    background: #1a1a1a !important;
+                }
+                .snipcart-cart-header__title {
+                    color: #ffbf00 !important;
+                    font-family: 'Playfair Display', serif !important;
+                }
+                .snipcart-cart-header__close-button {
+                    color: white !important;
+                }
+                .snipcart-item-line__title {
+                    font-weight: 700 !important;
+                }
+                .snipcart-cart-button--highlight,
+                .snipcart-button-primary {
+                    background: #ffbf00 !important;
+                    color: #000 !important;
+                    font-weight: 700 !important;
+                    border: none !important;
+                    border-radius: 0 !important;
+                    text-transform: uppercase !important;
+                    letter-spacing: 0.03em !important;
+                }
+                .snipcart-cart-button--highlight:hover,
+                .snipcart-button-primary:hover {
+                    background: #856f00 !important;
+                }
+                .snipcart-checkout-step__title {
+                    font-family: 'Playfair Display', serif !important;
+                }
+                .snipcart-cart-summary-fees__amount {
+                    font-weight: 900 !important;
+                }
+                .snipcart__font--secondary {
+                    font-family: 'Inter', sans-serif !important;
+                }
+                .snipcart-discount-box__submit {
+                    background: #1a1a1a !important;
+                    color: white !important;
+                }
+                .snipcart__actions--link {
+                    color: #ffbf00 !important;
+                }
+                .snipcart-cart-summary-expanded-item__quantity {
+                    background: #1a1a1a !important;
+                    color: white !important;
+                }
+                /* Subtotal styling */
+                .snipcart-cart-summary-fees__total {
+                    font-size: 1.25rem !important;
+                    font-weight: 900 !important;
+                    color: #ffbf00 !important;
+                }
+            </style>
 
             <title>Boutique Shutters</title>
 
@@ -119,7 +179,7 @@ const { description, title } = Astro.props;
             <LeadFormModal />
             <CartEnhancements />
             <!-- Snipcart Container -->
-            <div hidden id="snipcart" data-api-key="YTlhNzJlZmEtNjdmNC00MDk3LTg3ZjQtMmNhYTlkNjNjNmRmNjM5MDk3ODAxMTQwMzE1MjI3" data-config-modal-style="side"></div>
+            <div hidden id="snipcart" data-api-key="YTlhNzJlZmEtNjdmNC00MDk3LTg3ZjQtMmNhYTlkNjNjNmRmNjM5MDk3ODAxMTQwMzE1MjI3" data-config-modal-style="side" data-config-add-product-behavior="none"></div>
             <script is:inline src="https://cdn.snipcart.com/themes/v3.7.1/default/snipcart.js"></script>
         </body>
 </html>
