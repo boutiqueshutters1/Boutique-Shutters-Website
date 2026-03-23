@@ -185,9 +185,11 @@ const catalogDataJSON = JSON.stringify(catalogs);
         }, 100);
     }, { passive: true });
 
-    // --- Nav buttons ---
-    prevBtn.addEventListener('click', () => scrollToPage(currentPage - 1, true));
-    nextBtn.addEventListener('click', () => scrollToPage(currentPage + 1, true));
+    // --- Nav buttons (prevent page scroll) ---
+    prevBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); scrollToPage(currentPage - 1, true); });
+    nextBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); scrollToPage(currentPage + 1, true); });
+    prevBtn.addEventListener('mousedown', (e) => e.preventDefault());
+    nextBtn.addEventListener('mousedown', (e) => e.preventDefault());
 
     // --- Tab clicks ---
     document.querySelectorAll('.fb-tab').forEach(tab => {
@@ -417,8 +419,9 @@ const catalogDataJSON = JSON.stringify(catalogs);
         .fb-arrow {
             position: absolute;
             top: 50%;
-            transform: translateY(-100%);
+            transform: translateY(-50%);
             z-index: 5;
+            outline: none;
             width: (48/16rem);
             height: (48/16rem);
             border: none;
