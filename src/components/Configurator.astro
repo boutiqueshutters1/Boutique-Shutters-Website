@@ -150,8 +150,62 @@ const productDataJSON = JSON.stringify(products);
         <!-- Step 3: Options -->
         <div class="cfg-panel cfg-hidden" id="cfg-step-3">
             <h2 class="cfg-title">Customize Your Options</h2>
-            <p class="cfg-subtitle">Select your preferences for each option</p>
-            <div id="cfg-options-container"></div>
+            <p class="cfg-subtitle">Select your preferences — preview updates live</p>
+            <div class="cfg-options-layout">
+                <!-- Live Preview -->
+                <div class="cfg-preview-panel" id="cfg-live-preview">
+                    <div class="cfg-preview-window">
+                        <!-- SVG shade preview -->
+                        <svg class="cfg-shade-svg" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Window frame -->
+                            <rect x="20" y="10" width="260" height="380" rx="2" fill="none" stroke="#ccc" stroke-width="2"/>
+                            <!-- Sky/light behind -->
+                            <rect x="22" y="12" width="256" height="376" rx="1" fill="#e8f4fd"/>
+
+                            <!-- Valance/headrail -->
+                            <rect id="svg-valance" x="20" y="10" width="260" height="28" rx="4" fill="#ffffff" stroke="#ddd" stroke-width="1"/>
+                            <text id="svg-valance-label" x="150" y="28" text-anchor="middle" font-size="9" fill="#999">Valance</text>
+
+                            <!-- Shade fabric bands (zebra pattern) -->
+                            <g id="svg-shade-bands">
+                                <rect x="22" y="40" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
+                                <rect x="22" y="60" width="256" height="12" fill="transparent"/>
+                                <rect x="22" y="72" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
+                                <rect x="22" y="92" width="256" height="12" fill="transparent"/>
+                                <rect x="22" y="104" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
+                                <rect x="22" y="124" width="256" height="12" fill="transparent"/>
+                                <rect x="22" y="136" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
+                                <rect x="22" y="156" width="256" height="12" fill="transparent"/>
+                                <rect x="22" y="168" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
+                                <rect x="22" y="188" width="256" height="12" fill="transparent"/>
+                                <rect x="22" y="200" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
+                                <rect x="22" y="220" width="256" height="12" fill="transparent"/>
+                                <rect x="22" y="232" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
+                                <rect x="22" y="252" width="256" height="12" fill="transparent"/>
+                                <rect x="22" y="264" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
+                                <rect x="22" y="284" width="256" height="12" fill="transparent"/>
+                                <rect x="22" y="296" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
+                                <rect x="22" y="316" width="256" height="12" fill="transparent"/>
+                                <rect x="22" y="328" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
+                                <rect x="22" y="348" width="256" height="12" fill="transparent"/>
+                            </g>
+
+                            <!-- Bottom rail -->
+                            <rect id="svg-bottom-rail" x="20" y="360" width="260" height="12" rx="2" fill="#ffffff" stroke="#ddd" stroke-width="1"/>
+
+                            <!-- Chain/cord (conditional) -->
+                            <g id="svg-chain" opacity="1">
+                                <line x1="270" y1="38" x2="270" y2="200" stroke="#999" stroke-width="1.5" stroke-dasharray="4,3"/>
+                                <circle cx="270" cy="200" r="4" fill="#999"/>
+                            </g>
+                        </svg>
+                        <div class="cfg-preview-specs" id="cfg-preview-specs"></div>
+                    </div>
+                </div>
+
+                <!-- Options -->
+                <div class="cfg-options-form" id="cfg-options-container"></div>
+            </div>
             <div class="cfg-nav-buttons">
                 <button class="cfg-btn-back" data-goto="2">← Back</button>
                 <button class="cfg-btn-next" id="cfg-options-next">Next: Review →</button>
@@ -258,7 +312,7 @@ const productDataJSON = JSON.stringify(products);
                 }));
             }
         }
-        if (n === 3) renderOptions();
+        if (n === 3) { renderOptions(); updateLivePreview(); }
         if (n === 4) renderReview();
         if (n === 5) renderCart();
     }
@@ -549,7 +603,103 @@ const productDataJSON = JSON.stringify(products);
 
         // Re-render if a conditional dependency changed (e.g., movement → chainColor)
         if (key === 'movement') renderOptions();
+        updateLivePreview();
     });
+
+    // --- Live Preview ---
+    function updateLivePreview() {
+        if (!state.product) return;
+        const opts = state.options;
+        const p = state.product;
+
+        // Get color hex values
+        function getColorHex(optKey, defaultHex) {
+            if (!p.options[optKey]) return defaultHex;
+            const sel = p.options[optKey].find(o => o.id === opts[optKey]);
+            return sel && sel.hex ? sel.hex : defaultHex;
+        }
+
+        const valanceColor = getColorHex('valanceColor', '#ffffff');
+        const railColor = getColorHex('bottomRailColor', '#ffffff');
+
+        // Shade band color from fabric color or generic
+        let shadeColor = '#e8e8e8';
+        if (p.options.color) {
+            const colorOpt = p.options.color.find(o => o.id === opts.color);
+            if (colorOpt && colorOpt.hex) shadeColor = colorOpt.hex;
+        }
+
+        // Update SVG elements
+        const svgValance = document.getElementById('svg-valance');
+        const svgRail = document.getElementById('svg-bottom-rail');
+        const svgBands = document.querySelectorAll('#svg-shade-bands rect[fill]');
+        const svgChain = document.getElementById('svg-chain');
+        const svgValanceLabel = document.getElementById('svg-valance-label');
+        const specsDiv = document.getElementById('cfg-preview-specs');
+
+        if (svgValance) {
+            svgValance.setAttribute('fill', valanceColor);
+            // Valance shape
+            const valStyle = opts.valanceStyle || '';
+            if (valStyle.includes('round')) {
+                svgValance.setAttribute('rx', '14');
+                svgValance.setAttribute('height', '28');
+            } else if (valStyle.includes('premium')) {
+                svgValance.setAttribute('rx', '2');
+                svgValance.setAttribute('height', '32');
+            } else {
+                svgValance.setAttribute('rx', '2');
+                svgValance.setAttribute('height', '24');
+            }
+        }
+
+        if (svgRail) {
+            svgRail.setAttribute('fill', railColor);
+            // Bottom bar style
+            const barStyle = opts.bottomBar || '';
+            if (barStyle === 'narrow') {
+                svgRail.setAttribute('height', '8');
+                svgRail.setAttribute('y', '364');
+            } else if (barStyle === 'square') {
+                svgRail.setAttribute('height', '16');
+                svgRail.setAttribute('y', '356');
+            } else {
+                svgRail.setAttribute('height', '12');
+                svgRail.setAttribute('y', '360');
+            }
+        }
+
+        // Update shade bands color
+        svgBands.forEach(band => {
+            if (band.getAttribute('fill') !== 'transparent') {
+                band.setAttribute('fill', shadeColor);
+            }
+        });
+
+        // Show/hide chain based on movement
+        if (svgChain) {
+            const movement = opts.movement || 'chain';
+            svgChain.setAttribute('opacity', movement === 'chain' ? '1' : '0');
+        }
+
+        // Update valance label
+        if (svgValanceLabel) {
+            const valLabels = { 'premium-square': 'Premium Square', 'large-square': 'Large Square', 'large-round': 'Large Round', 'small-round': 'Small Round', 'small-square': 'Small Square' };
+            svgValanceLabel.textContent = valLabels[opts.valanceStyle] || 'Valance';
+        }
+
+        // Update specs text below preview
+        if (specsDiv) {
+            let specs = [];
+            if (state.fabricCode) specs.push('Fabric: ' + state.fabricCode);
+            if (opts.movement) {
+                const mvLabels = { chain: 'Chain', cordless: 'Cordless', wand: 'Wand', motorized: 'Motorized' };
+                specs.push(mvLabels[opts.movement] || opts.movement);
+            }
+            if (opts.mount) specs.push(opts.mount === 'inside' ? 'Inside Mount' : 'Outside Mount');
+            specsDiv.textContent = specs.join('  •  ');
+        }
+    }
 
     document.getElementById('cfg-options-next').addEventListener('click', () => goToStep(4));
 
@@ -1168,6 +1318,42 @@ const productDataJSON = JSON.stringify(products);
             opacity: 1;
         }
 
+        /* Options layout with live preview */
+        .cfg-options-layout {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        .cfg-preview-panel {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .cfg-preview-window {
+            width: 100%;
+            max-width: (250/16rem);
+            text-align: center;
+        }
+
+        .cfg-shade-svg {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+        }
+
+        .cfg-preview-specs {
+            font-size: (12/16rem);
+            color: #888;
+            margin-top: (8/16rem);
+            font-weight: 600;
+        }
+
+        .cfg-options-form {
+            flex: 1;
+        }
+
         /* Fabric step */
         .cfg-fabric-status {
             margin-bottom: (24/16rem);
@@ -1635,6 +1821,22 @@ const productDataJSON = JSON.stringify(products);
 
         .cfg-size-form {
             flex-direction: row;
+        }
+
+        .cfg-options-layout {
+            flex-direction: row;
+            align-items: flex-start;
+        }
+
+        .cfg-preview-panel {
+            position: sticky;
+            top: (120/16rem);
+            width: (280/16rem);
+            flex-shrink: 0;
+        }
+
+        .cfg-preview-window {
+            max-width: none;
         }
 
         .cfg-inv-table {
