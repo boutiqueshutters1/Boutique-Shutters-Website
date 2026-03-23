@@ -4,7 +4,18 @@ import Configurator from "@components/Configurator.astro";
 import CatalogFlipbook from "@components/CatalogFlipbook.astro";
 
 const catalogs = [
-    { id: "blinds", name: "Blinds Catalog", pages: 65, folder: "blinds-catalog" },
+    {
+        id: "blinds", name: "Blinds Catalog", pages: 65, folder: "blinds-catalog",
+        sections: [
+            { label: "All Pages", start: 1, end: 65 },
+            { label: "Lohas Shades", start: 3, end: 8 },
+            { label: "Triple Shades", start: 9, end: 19 },
+            { label: "Combi Shades", start: 20, end: 44 },
+            { label: "Roll Blinds", start: 45, end: 57 },
+            { label: "Honeycomb", start: 58, end: 61 },
+            { label: "Wood Blinds", start: 62, end: 65 },
+        ]
+    },
     { id: "smart-curtain", name: "Smart Curtain", pages: 10, folder: "smart-curtain" },
     { id: "roman", name: "Roman Shade Swatches", pages: 6, folder: "roman-swatches" },
 ];

@@ -1,9 +1,16 @@
 ---
+interface CatalogSection {
+    label: string;
+    start: number;
+    end: number;
+}
+
 interface Catalog {
     id: string;
     name: string;
     pages: number;
     folder: string;
+    sections?: CatalogSection[];
 }
 
 interface Props {
@@ -29,6 +36,9 @@ const catalogDataJSON = JSON.stringify(catalogs);
                 <button class={`fb-tab ${i === 0 ? 'fb-tab-active' : ''}`} data-catalog-id={cat.id}>{cat.name}</button>
             ))}
         </div>
+
+        <!-- Section filter (for catalogs with sections) -->
+        <div class="fb-sections fb-hidden" id="fb-sections"></div>
 
         <!-- Flipbook Viewer -->
         <div class="fb-viewer">
@@ -78,6 +88,8 @@ const catalogDataJSON = JSON.stringify(catalogs);
     const pageInfo = document.getElementById('fb-page-info');
     const prevBtn = document.getElementById('fb-prev');
     const nextBtn = document.getElementById('fb-next');
+    const sectionsContainer = document.getElementById('fb-sections');
+    let activeSection = null; // null = all pages
     const codePopup = document.getElementById('fb-code-popup');
     const fabricCodeInput = document.getElementById('fb-fabric-code');
     const selectBtn = document.getElementById('fb-select-fabric');
@@ -94,22 +106,44 @@ const catalogDataJSON = JSON.stringify(catalogs);
     function loadCatalog(catalog) {
         currentCatalog = catalog;
         currentPage = 1;
+        activeSection = null;
 
         document.querySelectorAll('.fb-tab').forEach(tab => {
             tab.classList.toggle('fb-tab-active', tab.dataset.catalogId === catalog.id);
         });
 
+        // Render section filters
+        if (catalog.sections && catalog.sections.length > 0) {
+            let html = '';
+            catalog.sections.forEach((sec, i) => {
+                html += '<button class="fb-section-btn ' + (i === 0 ? 'fb-section-active' : '') + '" data-start="' + sec.start + '" data-end="' + sec.end + '">' + sec.label + '</button>';
+            });
+            sectionsContainer.innerHTML = html;
+            sectionsContainer.classList.remove('fb-hidden');
+        } else {
+            sectionsContainer.innerHTML = '';
+            sectionsContainer.classList.add('fb-hidden');
+        }
+
         showPage(1);
+    }
+
+    // --- Get min/max pages based on active section ---
+    function getPageRange() {
+        if (activeSection) return { min: activeSection.start, max: activeSection.end };
+        return { min: 1, max: currentCatalog.pages };
     }
 
     // --- Show a specific page ---
     function showPage(num) {
-        if (num < 1 || num > currentCatalog.pages) return;
+        const range = getPageRange();
+        if (num < range.min || num > range.max) return;
+        const prevPage = currentPage;
         currentPage = num;
 
         // Slide transition
         mainImg.style.opacity = '0';
-        mainImg.style.transform = 'translateX(' + (num > currentPage ? '20px' : '-20px') + ')';
+        mainImg.style.transform = 'translateX(' + (num > prevPage ? '20px' : '-20px') + ')';
 
         setTimeout(() => {
             mainImg.src = getPageUrl(currentCatalog, num);
@@ -118,9 +152,15 @@ const catalogDataJSON = JSON.stringify(catalogs);
             mainImg.style.transform = 'translateX(0)';
         }, 120);
 
-        pageInfo.textContent = 'Page ' + num + ' of ' + currentCatalog.pages;
-        prevBtn.disabled = num <= 1;
-        nextBtn.disabled = num >= currentCatalog.pages;
+        if (activeSection) {
+            const pageInSection = num - activeSection.start + 1;
+            const totalInSection = activeSection.end - activeSection.start + 1;
+            pageInfo.textContent = activeSection.label + ' — ' + pageInSection + ' of ' + totalInSection;
+        } else {
+            pageInfo.textContent = 'Page ' + num + ' of ' + currentCatalog.pages;
+        }
+        prevBtn.disabled = num <= range.min;
+        nextBtn.disabled = num >= range.max;
     }
 
     // --- Nav buttons ---
@@ -135,6 +175,24 @@ const catalogDataJSON = JSON.stringify(catalogs);
             const catalog = catalogs.find(c => c.id === tab.dataset.catalogId);
             if (catalog) loadCatalog(catalog);
         });
+    });
+
+    // --- Section filter clicks ---
+    sectionsContainer.addEventListener('click', (e) => {
+        const btn = e.target.closest('.fb-section-btn');
+        if (!btn) return;
+        sectionsContainer.querySelectorAll('.fb-section-btn').forEach(b => b.classList.remove('fb-section-active'));
+        btn.classList.add('fb-section-active');
+
+        const start = parseInt(btn.dataset.start);
+        const end = parseInt(btn.dataset.end);
+
+        if (start === 1 && end === currentCatalog.pages) {
+            activeSection = null; // "All Pages"
+        } else {
+            activeSection = { label: btn.textContent, start: start, end: end };
+        }
+        showPage(start);
     });
 
     // --- Keyboard ---
@@ -288,6 +346,39 @@ const catalogDataJSON = JSON.stringify(catalogs);
         }
 
         .fb-hidden { display: none !important; }
+
+        /* Section filters */
+        .fb-sections {
+            display: flex;
+            justify-content: center;
+            gap: (6/16rem);
+            margin-bottom: (16/16rem);
+            flex-wrap: wrap;
+        }
+
+        .fb-section-btn {
+            font-family: inherit;
+            font-size: (12/16rem);
+            font-weight: 600;
+            padding: (6/16rem) (12/16rem);
+            border: 1px solid #ccc;
+            background: white;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: (20/16rem);
+
+            &:hover {
+                border-color: var(--secondary);
+                color: var(--secondary);
+            }
+
+            &.fb-section-active {
+                background: var(--secondary);
+                border-color: var(--secondary);
+                color: #000;
+            }
+        }
 
         /* Viewer */
         .fb-viewer {
