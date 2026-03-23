@@ -958,14 +958,18 @@ const productDataJSON = JSON.stringify(products);
             >
                 Add to Cart — $${cartGrand.toFixed(2)}
             </button>
-            <button class="cfg-btn-continue" onclick="document.querySelectorAll('.cfg-product-card')[0].click()">← Configure Another</button>
+            <div class="cfg-cart-actions">
+                <button class="cfg-btn-continue" onclick="document.querySelectorAll('.cfg-product-card')[0].click()">← Configure Another Window</button>
+                <button class="snipcart-checkout cfg-btn-checkout">View Cart & Checkout →</button>
+            </div>
             <div class="cfg-cart-trust">
                 <span class="cfg-trust-badge">🚚 Free Shipping</span>
                 <span class="cfg-trust-badge">✓ Satisfaction Guaranteed</span>
                 <span class="cfg-trust-badge">🔒 Secure Checkout</span>
+                <span class="cfg-trust-badge">💳 Financing Available</span>
             </div>
             <div class="cfg-cart-financing">
-                As low as <strong>$${Math.round(total / 12)}/mo</strong> with
+                As low as <strong>$${Math.round(cartGrand / 12)}/mo</strong> with
                 <img src="/assets/images/partners/wisetack-logo-dark.svg" alt="Wisetack" height="14" style="vertical-align:middle;margin:0 4px;" />
                 or
                 <img src="/assets/images/partners/klarna-logo-dark.svg" alt="Klarna" height="14" style="vertical-align:middle;margin:0 4px;" />
@@ -2033,6 +2037,30 @@ const productDataJSON = JSON.stringify(products);
             &:hover { background: var(--csButtonHoverColor); }
         }
 
+        .cfg-cart-actions {
+            display: flex;
+            gap: (10/16rem);
+            justify-content: center;
+            margin-top: (16/16rem);
+            flex-wrap: wrap;
+        }
+
+        .cfg-btn-checkout {
+            font-family: inherit;
+            font-size: (14/16rem);
+            font-weight: 700;
+            padding: (12/16rem) (24/16rem);
+            border: 2px solid #1a1a1a;
+            background: #1a1a1a;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+
+            &:hover {
+                background: #333;
+            }
+        }
+
         .cfg-cart-breakdown {
             max-width: (320/16rem);
             margin: 0 auto (20/16rem);
@@ -2086,17 +2114,15 @@ const productDataJSON = JSON.stringify(products);
         }
 
         .cfg-btn-continue {
-            display: block;
-            margin: (16/16rem) auto 0;
             font-family: inherit;
             font-size: (14/16rem);
             font-weight: 600;
-            padding: (10/16rem) (20/16rem);
+            padding: (12/16rem) (24/16rem);
             border: 2px solid #e0e0e0;
             background: white;
             cursor: pointer;
 
-            &:hover { border-color: #999; }
+            &:hover { border-color: var(--secondary); color: var(--secondary); }
         }
 
         /* Sticky Price Bar */

@@ -221,25 +221,20 @@
         syncMiniCartFromSnipcart();
     }
 
-    // Checkout button click — try Snipcart, show cart summary if it fails
+    // Checkout button click — trigger Snipcart checkout
     const checkoutBtns = document.querySelectorAll('.mini-cart-checkout');
     checkoutBtns.forEach(btn => {
         btn.addEventListener('click', function(e) {
-            if (typeof Snipcart !== 'undefined') {
-                try {
-                    Snipcart.api.cart.open();
-                } catch(err) {
-                    // Snipcart panel may not work on localhost — show alert with cart contents
-                    let msg = 'Cart Summary:\n\n';
-                    localCartItems.forEach(item => {
-                        msg += '• ' + item.name + ' — $' + (parseFloat(item.price) * parseInt(item.qty)).toFixed(2) + '\n';
-                    });
-                    const total = localCartItems.reduce((sum, i) => sum + parseFloat(i.price) * parseInt(i.qty), 0);
-                    msg += '\nTotal: $' + total.toFixed(2);
-                    msg += '\n\nNote: Checkout requires a deployed site. Deploy to production to enable payment processing.';
-                    alert(msg);
-                }
-            }
+            e.preventDefault();
+            // Hide mini cart
+            if (miniCart) miniCart.classList.add('mini-cart-hidden');
+            // Trigger Snipcart by clicking a hidden snipcart-checkout element
+            const snipcartTrigger = document.createElement('button');
+            snipcartTrigger.className = 'snipcart-checkout';
+            snipcartTrigger.style.display = 'none';
+            document.body.appendChild(snipcartTrigger);
+            snipcartTrigger.click();
+            setTimeout(() => snipcartTrigger.remove(), 100);
         });
     });
 
