@@ -155,51 +155,16 @@ const productDataJSON = JSON.stringify(products);
                 <!-- Live Preview -->
                 <div class="cfg-preview-panel" id="cfg-live-preview">
                     <div class="cfg-preview-window">
-                        <!-- SVG shade preview -->
-                        <svg class="cfg-shade-svg" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Window frame -->
-                            <rect x="20" y="10" width="260" height="380" rx="2" fill="none" stroke="#ccc" stroke-width="2"/>
-                            <!-- Sky/light behind -->
-                            <rect x="22" y="12" width="256" height="376" rx="1" fill="#e8f4fd"/>
-
-                            <!-- Valance/headrail -->
-                            <rect id="svg-valance" x="20" y="10" width="260" height="28" rx="4" fill="#ffffff" stroke="#ddd" stroke-width="1"/>
-                            <text id="svg-valance-label" x="150" y="28" text-anchor="middle" font-size="9" fill="#999">Valance</text>
-
-                            <!-- Shade fabric bands (zebra pattern) -->
-                            <g id="svg-shade-bands">
-                                <rect x="22" y="40" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
-                                <rect x="22" y="60" width="256" height="12" fill="transparent"/>
-                                <rect x="22" y="72" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
-                                <rect x="22" y="92" width="256" height="12" fill="transparent"/>
-                                <rect x="22" y="104" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
-                                <rect x="22" y="124" width="256" height="12" fill="transparent"/>
-                                <rect x="22" y="136" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
-                                <rect x="22" y="156" width="256" height="12" fill="transparent"/>
-                                <rect x="22" y="168" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
-                                <rect x="22" y="188" width="256" height="12" fill="transparent"/>
-                                <rect x="22" y="200" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
-                                <rect x="22" y="220" width="256" height="12" fill="transparent"/>
-                                <rect x="22" y="232" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
-                                <rect x="22" y="252" width="256" height="12" fill="transparent"/>
-                                <rect x="22" y="264" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
-                                <rect x="22" y="284" width="256" height="12" fill="transparent"/>
-                                <rect x="22" y="296" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
-                                <rect x="22" y="316" width="256" height="12" fill="transparent"/>
-                                <rect x="22" y="328" width="256" height="20" fill="#f0f0f0" opacity="0.9"/>
-                                <rect x="22" y="348" width="256" height="12" fill="transparent"/>
-                            </g>
-
-                            <!-- Bottom rail -->
-                            <rect id="svg-bottom-rail" x="20" y="360" width="260" height="12" rx="2" fill="#ffffff" stroke="#ddd" stroke-width="1"/>
-
-                            <!-- Chain/cord (conditional) -->
-                            <g id="svg-chain" opacity="1">
-                                <line x1="270" y1="38" x2="270" y2="200" stroke="#999" stroke-width="1.5" stroke-dasharray="4,3"/>
-                                <circle cx="270" cy="200" r="4" fill="#999"/>
-                            </g>
-                        </svg>
-                        <div class="cfg-preview-specs" id="cfg-preview-specs"></div>
+                        <!-- Catalog page image as preview -->
+                        <div class="cfg-preview-img-wrap">
+                            <img class="cfg-preview-catalog-img" id="cfg-preview-img" src="" alt="Selected fabric preview" />
+                            <div class="cfg-preview-no-fabric" id="cfg-preview-no-fabric">
+                                <span>📋</span>
+                                <p>Select a fabric to see the catalog preview</p>
+                            </div>
+                        </div>
+                        <!-- Selected options summary below image -->
+                        <div class="cfg-preview-options" id="cfg-preview-options"></div>
                     </div>
                 </div>
 
@@ -611,95 +576,87 @@ const productDataJSON = JSON.stringify(products);
         if (!state.product) return;
         const opts = state.options;
         const p = state.product;
+        const previewImg = document.getElementById('cfg-preview-img');
+        const noFabric = document.getElementById('cfg-preview-no-fabric');
+        const optsSummary = document.getElementById('cfg-preview-options');
 
-        // Get color hex values
-        function getColorHex(optKey, defaultHex) {
-            if (!p.options[optKey]) return defaultHex;
-            const sel = p.options[optKey].find(o => o.id === opts[optKey]);
-            return sel && sel.hex ? sel.hex : defaultHex;
-        }
+        // Show catalog page image if fabric was selected from a catalog
+        if (state.fabricReference && state.fabricCode && p.catalogSection) {
+            // Extract page number from fabricReference: "CODE (Catalog, p.XX)"
+            const pageMatch = state.fabricReference.match(/p\.(\d+)/);
+            if (pageMatch) {
+                const pageNum = parseInt(pageMatch[1]);
+                const catalog = catalogs ? catalogs.find(c => c.id === p.catalogSection.catalogId) : null;
 
-        const valanceColor = getColorHex('valanceColor', '#ffffff');
-        const railColor = getColorHex('bottomRailColor', '#ffffff');
-
-        // Shade band color from fabric color or generic
-        let shadeColor = '#e8e8e8';
-        if (p.options.color) {
-            const colorOpt = p.options.color.find(o => o.id === opts.color);
-            if (colorOpt && colorOpt.hex) shadeColor = colorOpt.hex;
-        }
-
-        // Update SVG elements
-        const svgValance = document.getElementById('svg-valance');
-        const svgRail = document.getElementById('svg-bottom-rail');
-        const svgBands = document.querySelectorAll('#svg-shade-bands rect[fill]');
-        const svgChain = document.getElementById('svg-chain');
-        const svgValanceLabel = document.getElementById('svg-valance-label');
-        const specsDiv = document.getElementById('cfg-preview-specs');
-
-        if (svgValance) {
-            svgValance.setAttribute('fill', valanceColor);
-            // Valance shape
-            const valStyle = opts.valanceStyle || '';
-            if (valStyle.includes('round')) {
-                svgValance.setAttribute('rx', '14');
-                svgValance.setAttribute('height', '28');
-            } else if (valStyle.includes('premium')) {
-                svgValance.setAttribute('rx', '2');
-                svgValance.setAttribute('height', '32');
-            } else {
-                svgValance.setAttribute('rx', '2');
-                svgValance.setAttribute('height', '24');
+                if (catalog) {
+                    const padded = catalog.pages >= 10 ? String(pageNum).padStart(2, '0') : String(pageNum);
+                    const imgUrl = '/assets/catalogs/' + catalog.folder + '/page-' + padded + '.jpg';
+                    previewImg.src = imgUrl;
+                    previewImg.alt = 'Fabric ' + state.fabricCode + ' from catalog';
+                    previewImg.style.display = 'block';
+                    if (noFabric) noFabric.style.display = 'none';
+                }
             }
+        } else if (p.image) {
+            previewImg.src = p.image;
+            previewImg.alt = p.name;
+            previewImg.style.display = 'block';
+            if (noFabric) noFabric.style.display = 'none';
         }
 
-        if (svgRail) {
-            svgRail.setAttribute('fill', railColor);
-            // Bottom bar style
-            const barStyle = opts.bottomBar || '';
-            if (barStyle === 'narrow') {
-                svgRail.setAttribute('height', '8');
-                svgRail.setAttribute('y', '364');
-            } else if (barStyle === 'square') {
-                svgRail.setAttribute('height', '16');
-                svgRail.setAttribute('y', '356');
-            } else {
-                svgRail.setAttribute('height', '12');
-                svgRail.setAttribute('y', '360');
+        // Build options summary chips below image
+        if (optsSummary) {
+            const allLabels = {
+                mount: 'Mount', valanceStyle: 'Valance', movement: 'Movement',
+                chainColor: 'Chain', bottomBar: 'Bar', valanceColor: 'Valance Color',
+                bottomRailColor: 'Rail Color', slatSize: 'Slat', cordless: 'Lift',
+                fabric: 'Fabric', motorized: 'Motor', motorProtocol: 'Protocol',
+                color: 'Color', foldStyle: 'Fold', lining: 'Lining', operation: 'Operation'
+            };
+
+            let html = '';
+
+            // Fabric code chip
+            if (state.fabricCode) {
+                html += '<span class="cfg-opt-chip cfg-opt-chip-gold">🏷️ ' + state.fabricCode + '</span>';
             }
-        }
 
-        // Update shade bands color
-        svgBands.forEach(band => {
-            if (band.getAttribute('fill') !== 'transparent') {
-                band.setAttribute('fill', shadeColor);
-            }
-        });
+            // Option chips
+            Object.keys(opts).forEach(key => {
+                if (!p.options[key]) return;
+                const sel = p.options[key].find(o => o.id === opts[key]);
+                if (!sel) return;
 
-        // Show/hide chain based on movement
-        if (svgChain) {
-            const movement = opts.movement || 'chain';
-            svgChain.setAttribute('opacity', movement === 'chain' ? '1' : '0');
-        }
+                // Skip chainColor if not chain movement
+                if (key === 'chainColor' && opts.movement !== 'chain') return;
 
-        // Update valance label
-        if (svgValanceLabel) {
-            const valLabels = { 'premium-square': 'Premium Square', 'large-square': 'Large Square', 'large-round': 'Large Round', 'small-round': 'Small Round', 'small-square': 'Small Square' };
-            svgValanceLabel.textContent = valLabels[opts.valanceStyle] || 'Valance';
-        }
+                const label = allLabels[key] || key;
 
-        // Update specs text below preview
-        if (specsDiv) {
-            let specs = [];
-            if (state.fabricCode) specs.push('Fabric: ' + state.fabricCode);
-            if (opts.movement) {
-                const mvLabels = { chain: 'Chain', cordless: 'Cordless', wand: 'Wand', motorized: 'Motorized' };
-                specs.push(mvLabels[opts.movement] || opts.movement);
-            }
-            if (opts.mount) specs.push(opts.mount === 'inside' ? 'Inside Mount' : 'Outside Mount');
-            specsDiv.textContent = specs.join('  •  ');
+                // Color chips show a dot
+                if (sel.hex) {
+                    html += '<span class="cfg-opt-chip"><span class="cfg-opt-dot" style="background:' + sel.hex + ';"></span>' + label + ': ' + sel.name + '</span>';
+                } else {
+                    html += '<span class="cfg-opt-chip">' + label + ': ' + sel.name + '</span>';
+                }
+            });
+
+            optsSummary.innerHTML = html;
         }
     }
+
+    // Make catalogs accessible to updateLivePreview
+    var catalogs = null;
+    try {
+        // Try to get catalogs from the page (configure.astro passes them)
+        const flipbook = document.getElementById('catalog-flipbook');
+        if (flipbook) {
+            catalogs = [
+                { id: "blinds", pages: 65, folder: "blinds-catalog" },
+                { id: "smart-curtain", pages: 10, folder: "smart-curtain" },
+                { id: "roman", pages: 6, folder: "roman-swatches" }
+            ];
+        }
+    } catch(e) {}
 
     document.getElementById('cfg-options-next').addEventListener('click', () => goToStep(4));
 
@@ -1333,21 +1290,68 @@ const productDataJSON = JSON.stringify(products);
 
         .cfg-preview-window {
             width: 100%;
-            max-width: (250/16rem);
-            text-align: center;
         }
 
-        .cfg-shade-svg {
+        .cfg-preview-img-wrap {
+            position: relative;
+            background: #f7f7f7;
+            border: 1px solid #e0e0e0;
+            overflow: hidden;
+            min-height: (150/16rem);
+        }
+
+        .cfg-preview-catalog-img {
             width: 100%;
             height: auto;
-            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+            display: none;
+            max-height: (400/16rem);
+            object-fit: contain;
+            background: white;
         }
 
-        .cfg-preview-specs {
-            font-size: (12/16rem);
-            color: #888;
+        .cfg-preview-no-fabric {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: (32/16rem) (16/16rem);
+            color: #999;
+
+            span { font-size: (32/16rem); margin-bottom: (8/16rem); }
+            p { font-size: (13/16rem); margin: 0; text-align: center; }
+        }
+
+        .cfg-preview-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: (4/16rem);
             margin-top: (8/16rem);
+        }
+
+        .cfg-opt-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: (4/16rem);
+            font-size: (11/16rem);
             font-weight: 600;
+            padding: (3/16rem) (8/16rem);
+            background: #f0f0f0;
+            color: #555;
+            border-radius: (3/16rem);
+
+            &.cfg-opt-chip-gold {
+                background: var(--secondary);
+                color: #000;
+                font-weight: 700;
+            }
+        }
+
+        .cfg-opt-dot {
+            width: (10/16rem);
+            height: (10/16rem);
+            border-radius: 50%;
+            border: 1px solid #ccc;
+            flex-shrink: 0;
         }
 
         .cfg-options-form {
