@@ -404,6 +404,52 @@ const { description, title } = Astro.props;
             <!-- Snipcart Container -->
             <div hidden id="snipcart" data-api-key="YTlhNzJlZmEtNjdmNC00MDk3LTg3ZjQtMmNhYTlkNjNjNmRmNjM5MDk3ODAxMTQwMzE1MjI3" data-config-modal-style="side" data-config-add-product-behavior="none"></div>
             <script is:inline src="https://cdn.snipcart.com/themes/v3.7.1/default/snipcart.js"></script>
+            <script is:inline>
+            // Inject Snipcart theme overrides AFTER Snipcart loads its own CSS
+            function injectSnipcartTheme() {
+                const id = 'snipcart-boutique-theme';
+                if (document.getElementById(id)) return;
+                const style = document.createElement('style');
+                style.id = id;
+                style.textContent = `
+                    .snipcart-modal__container { font-family: 'Inter', sans-serif !important; }
+                    .snipcart-layout { background: #fafafa !important; }
+                    .snipcart-cart-header { background: #1a1a1a !important; }
+                    .snipcart-cart-header__title { color: #ffbf00 !important; font-family: 'Playfair Display', serif !important; font-size: 1.5rem !important; }
+                    .snipcart-cart-header__close-button { color: white !important; }
+                    .snipcart-checkout-step__title { font-family: 'Playfair Display', serif !important; font-size: 1.5rem !important; }
+                    .snipcart-checkout-step__icon { background: #ffbf00 !important; color: #000 !important; }
+                    .snipcart-button-primary, .snipcart-submit, .snipcart-base-button.is-icon-right, .snipcart-cart-button--highlight, .snipcart-base-button--highlight { background-color: #ffbf00 !important; color: #000 !important; font-weight: 700 !important; border: none !important; border-radius: 0 !important; text-transform: uppercase !important; letter-spacing: 0.05em !important; font-size: 15px !important; padding: 14px 24px !important; }
+                    .snipcart-button-primary:hover, .snipcart-submit:hover, .snipcart-cart-button--highlight:hover { background-color: #856f00 !important; }
+                    .snipcart__actions--link { color: #ffbf00 !important; }
+                    .snipcart-cart-button--secondary { border-color: #ffbf00 !important; color: #ffbf00 !important; }
+                    .snipcart-form__field input:focus, .snipcart-form__field select:focus, .snipcart-input:focus { border-color: #ffbf00 !important; box-shadow: 0 0 0 1px #ffbf00 !important; }
+                    .snipcart-form__label { font-weight: 600 !important; text-transform: uppercase !important; letter-spacing: 0.03em !important; font-size: 13px !important; }
+                    .snipcart-input { border-radius: 0 !important; }
+                    .snipcart-form__select { border-radius: 0 !important; }
+                    .snipcart-cart-summary-fees__total { font-size: 1.25rem !important; font-weight: 900 !important; color: #ffbf00 !important; }
+                    .snipcart-cart-summary-expanded-item__quantity { background: #1a1a1a !important; color: white !important; border-radius: 0 !important; }
+                    .snipcart-discount-box__submit { background: #1a1a1a !important; color: #ffbf00 !important; border-radius: 0 !important; }
+                    .snipcart-item-line__title { font-weight: 700 !important; }
+                    .snipcart-item-line__remove:hover { color: #e74c3c !important; }
+                    .snipcart-item-quantity__quantity { border-radius: 0 !important; }
+                    .snipcart-item-quantity__quantity:focus { border-color: #ffbf00 !important; }
+                    .snipcart-payment::before { content: '✓ 100% Satisfaction Guaranteed — Free Shipping — Secure Payment'; display: block; text-align: center; padding: 12px; margin-bottom: 16px; background: #f0fdf4; color: #2ecc71; font-size: 13px; font-weight: 600; border: 1px solid #d1fae5; }
+                    .snipcart-cart-summary::after { content: '📦 Estimated delivery: 2–4 weeks'; display: block; text-align: center; padding: 10px; margin-top: 12px; font-size: 12px; color: #888; border-top: 1px solid #e8e8e8; }
+                    .snipcart-cart-summary__edit-link { color: #ffbf00 !important; }
+                    .snipcart__box--badge { background: #1a1a1a !important; }
+                    .snipcart__loading-overlay { background: rgba(26,26,26,0.8) !important; }
+                `;
+                document.body.appendChild(style);
+            }
+            // Inject when Snipcart is ready
+            document.addEventListener('snipcart.ready', injectSnipcartTheme);
+            // Also inject on any DOM change (Snipcart renders dynamically)
+            var snipcartObserver = new MutationObserver(function() { injectSnipcartTheme(); });
+            snipcartObserver.observe(document.body, { childList: true, subtree: true });
+            // Fallback
+            setTimeout(injectSnipcartTheme, 3000);
+            </script>
         </body>
 </html>
 
