@@ -49,7 +49,7 @@ const optimizedImage = await getOptimizedImage(landingImage)
                     <span>with Wisetack or Klarna financing</span>
                 </div>
 
-                <button class="snipcart-checkout cart-checkout-btn">Proceed to Checkout →</button>
+                <button class="cart-checkout-btn" id="cart-checkout-btn">Proceed to Checkout →</button>
 
                 <div class="cart-trust-badges">
                     <span>🚚 Free Shipping</span>
@@ -210,6 +210,32 @@ const optimizedImage = await getOptimizedImage(landingImage)
         Snipcart.events.on('item.removed', renderCart);
         Snipcart.events.on('item.updated', renderCart);
     });
+
+    // Checkout button — go directly to Snipcart checkout (skip cart view)
+    const checkoutBtn = document.getElementById('cart-checkout-btn');
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', function() {
+            if (typeof Snipcart !== 'undefined') {
+                try {
+                    // Open Snipcart and immediately navigate to checkout
+                    Snipcart.api.theme.cart.open();
+                    setTimeout(function() {
+                        // Click the Snipcart checkout button inside the panel
+                        const snipcartCheckout = document.querySelector('.snipcart-cart-button--highlight');
+                        if (snipcartCheckout) snipcartCheckout.click();
+                    }, 500);
+                } catch(e) {
+                    // Fallback: just open the cart
+                    const trigger = document.createElement('button');
+                    trigger.className = 'snipcart-checkout';
+                    trigger.style.display = 'none';
+                    document.body.appendChild(trigger);
+                    trigger.click();
+                    setTimeout(() => trigger.remove(), 100);
+                }
+            }
+        });
+    }
 })();
 </script>
 
