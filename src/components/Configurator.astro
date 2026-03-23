@@ -469,105 +469,195 @@ const productDataJSON = JSON.stringify(products);
         goToStep(3);
     });
 
-    // --- Step 3: Options ---
+    // --- Step 3: Options (Accordion with visual cards, tooltips, price impact, recommended) ---
+
+    // Option metadata: tooltips, recommended, icons
+    const optMeta = {
+        mount: {
+            icon: '📐', order: 1,
+            tips: { inside: 'Fits inside the window frame for a clean, flush look', outside: 'Mounts above the frame — great for covering gaps or making windows appear larger' },
+            recommended: 'inside'
+        },
+        valanceStyle: {
+            icon: '🏗️', order: 2,
+            tips: { 'premium-square': 'Largest, most premium look with clean lines', 'large-square': 'Modern square profile, popular choice', 'large-round': 'Softer curved profile, elegant look', 'small-round': 'Compact and minimal', 'small-square': 'Smallest footprint, budget-friendly', 'basic-rail': 'No valance cover, exposed mechanism' },
+            recommended: 'large-square'
+        },
+        movement: {
+            icon: '⚙️', order: 3,
+            tips: { chain: 'Classic chain loop — reliable and affordable', cordless: 'No chains or cords — clean look, child & pet safe', wand: 'Twist wand control — child safe, no dangling cords', motorized: 'Remote + app + voice control — the ultimate convenience' },
+            recommended: 'cordless'
+        },
+        chainColor: {
+            icon: '🔗', order: 4,
+            tips: { steel: 'Durable metal finish', white: 'Blends with white frames', black: 'Bold contrast accent', transparent: 'Nearly invisible' },
+            conditional: { dependsOn: 'movement', showWhen: 'chain' }
+        },
+        bottomBar: {
+            icon: '📏', order: 5,
+            tips: { narrow: 'Slim and minimal profile', basic: 'Standard width, most common', square: 'Wider, more substantial look' },
+            recommended: 'basic'
+        },
+        fabric: {
+            icon: '🧵', order: 2,
+            tips: { 'light-filtering': 'Lets soft light through while reducing glare', blackout: 'Blocks 99% of light — ideal for bedrooms', solar: 'UV protection while maintaining your view' }
+        },
+        color: { icon: '🎨', order: 6 },
+        valanceColor: {
+            icon: '🎨', order: 7,
+            tips: { white: 'Clean, classic — matches most trim', ivory: 'Warm off-white, less stark', gray: 'Modern neutral', brown: 'Warm wood-tone complement', black: 'Bold, dramatic accent' }
+        },
+        bottomRailColor: {
+            icon: '🎨', order: 8,
+            tips: { white: 'Matches white valance', ivory: 'Warm tone', gray: 'Contemporary', brown: 'Natural warmth', black: 'Statement contrast' },
+            recommended: 'white'
+        },
+        slatSize: { icon: '📏', order: 2, tips: { '2in': 'Classic look, more privacy', '2.5in': 'Modern look, more light', '25mm': 'Slim traditional', '35mm': 'Mid-size versatile', '50mm': 'Wide statement slats' } },
+        cordless: { icon: '🔒', order: 3, tips: { standard: 'Traditional cord lift', cordless: 'Child-safe, clean look' }, recommended: 'cordless' },
+        motorized: { icon: '⚡', order: 3, tips: { manual: 'Standard manual operation', motorized: 'App, voice & remote control' } },
+        motorProtocol: { icon: '📡', order: 4, tips: { wifi: 'Works with most home Wi-Fi', zigbee: 'Low power, needs hub', matter: 'Latest standard, works with everything' } },
+        operation: { icon: '⚙️', order: 3 },
+        foldStyle: { icon: '📐', order: 2, tips: { flat: 'Clean flat panels when raised', hobbled: 'Soft cascading folds', balloon: 'Full gathered puffs' } },
+        lining: { icon: '🌙', order: 3, tips: { unlined: 'Light and airy, some light passes through', privacy: 'Blocks view but lets diffused light in', blackout: 'Total darkness — best for bedrooms' } }
+    };
+
+    const optLabels = {
+        mount: 'Mount Type', slatSize: 'Slat Size', color: 'Shade Color',
+        cordless: 'Lift System', fabric: 'Fabric Type', motorized: 'Operation',
+        motorProtocol: 'Motor Protocol', operation: 'Operation',
+        valanceStyle: 'Valance Style', movement: 'Movement / Lift',
+        chainColor: 'Chain Color', bottomBar: 'Bottom Bar',
+        valanceColor: 'Valance Color', bottomRailColor: 'Bottom Rail Color',
+        foldStyle: 'Fold Style', lining: 'Lining'
+    };
+
     function renderOptions() {
         const container = document.getElementById('cfg-options-container');
         const opts = state.product.options;
         if (!opts) { container.innerHTML = '<p>No additional options for this product.</p>'; return; }
 
-        const labels = {
-            mount: 'Mount Type', slatSize: 'Slat Size', color: 'Color',
-            cordless: 'Lift System', fabric: 'Fabric Type', motorized: 'Operation',
-            motorProtocol: 'Motor Protocol', operation: 'Operation',
-            valanceStyle: 'Valance Style', movement: 'Movement / Lift Type',
-            chainColor: 'Chain Color', bottomBar: 'Bottom Bar Style',
-            valanceColor: 'Valance Color', bottomRailColor: 'Bottom Rail Color'
-        };
+        // Sort option keys by order
+        const sortedKeys = Object.keys(opts).sort((a, b) => {
+            return ((optMeta[a] || {}).order || 99) - ((optMeta[b] || {}).order || 99);
+        });
 
-        // Section headers for organized layout
-        const sections = {
-            mount: '📐 Installation',
-            valanceStyle: '🏗️ Hardware',
-            movement: '⚙️ Operation',
-            valanceColor: '🎨 Colors',
-            color: '🎨 Colors',
-            slatSize: '📏 Specifications'
-        };
-
-        // Conditional fields: only show chainColor when movement === 'chain'
-        const conditionalFields = {
-            chainColor: { dependsOn: 'movement', showWhen: 'chain' }
-        };
+        // Count total and completed options
+        const visibleKeys = sortedKeys.filter(key => {
+            const meta = optMeta[key] || {};
+            if (meta.conditional) return state.options[meta.conditional.dependsOn] === meta.conditional.showWhen;
+            return true;
+        });
+        const completedCount = visibleKeys.filter(k => state.options[k]).length;
 
         let html = '';
-        let lastSection = '';
 
-        // Show fabric code if selected (for fabric-required products)
+        // Progress bar
+        html += '<div class="cfg-opts-progress">';
+        html += '<span class="cfg-opts-progress-text">' + completedCount + ' of ' + visibleKeys.length + ' options selected</span>';
+        html += '<div class="cfg-opts-progress-bar"><div class="cfg-opts-progress-fill" style="width:' + Math.round(completedCount / visibleKeys.length * 100) + '%"></div></div>';
+        html += '</div>';
+
+        // Running total
+        const price = calculatePrice();
+        const total = price * state.quantity;
+        if (state.product.checkoutEnabled && total > 0) {
+            html += '<div class="cfg-opts-total">Running Total: <strong>$' + total.toFixed(2) + '</strong></div>';
+        }
+
+        // Fabric code display
         if (state.product.requiresFabricCode && state.fabricCode) {
-            html += '<div class="cfg-option-group cfg-fabric-display">';
-            html += '<label class="cfg-label">Selected Fabric</label>';
-            html += '<div class="cfg-fabric-badge"><span class="cfg-fabric-badge-code">' + state.fabricCode + '</span><span class="cfg-fabric-badge-ref">' + (state.fabricReference || '') + '</span></div>';
+            html += '<div class="cfg-accordion cfg-accordion-done">';
+            html += '<div class="cfg-accordion-header"><span>🏷️ Selected Fabric</span><span class="cfg-accordion-value">' + state.fabricCode + '</span></div>';
             html += '</div>';
         }
 
-        Object.keys(opts).forEach(key => {
-            // Check conditional visibility
-            if (conditionalFields[key]) {
-                const dep = conditionalFields[key];
-                if (state.options[dep.dependsOn] !== dep.showWhen) return;
+        // Accordion sections
+        sortedKeys.forEach((key, idx) => {
+            const meta = optMeta[key] || {};
+
+            // Conditional visibility
+            if (meta.conditional) {
+                if (state.options[meta.conditional.dependsOn] !== meta.conditional.showWhen) return;
             }
 
             const group = opts[key];
-            const label = labels[key] || key;
+            const label = optLabels[key] || key;
+            const icon = meta.icon || '⚙️';
             const isColor = key === 'color' || key === 'valanceColor' || key === 'bottomRailColor';
+            const selectedOpt = group.find(o => o.id === state.options[key]);
+            const selectedName = selectedOpt ? selectedOpt.name : 'Select...';
+            const isDone = !!state.options[key];
 
-            // Add section header if needed
-            if (sections[key] && sections[key] !== lastSection) {
-                lastSection = sections[key];
-                html += '<div class="cfg-section-header">' + sections[key] + '</div>';
-            }
+            html += '<div class="cfg-accordion ' + (isDone ? 'cfg-accordion-done' : '') + '" data-accordion="' + key + '">';
 
-            html += '<div class="cfg-option-group" data-option-group="' + key + '">';
-            html += '<label class="cfg-label">' + label + '</label>';
+            // Header (clickable to expand/collapse)
+            html += '<button class="cfg-accordion-header" data-toggle="' + key + '">';
+            html += '<span>' + icon + ' ' + label + '</span>';
+            html += '<span class="cfg-accordion-value">' + (isDone ? selectedName : '<em>Select</em>') + ' <span class="cfg-accordion-arrow">▾</span></span>';
+            html += '</button>';
+
+            // Body
+            html += '<div class="cfg-accordion-body" id="cfg-acc-' + key + '">';
 
             if (isColor) {
-                html += '<div class="cfg-color-swatches">';
+                html += '<div class="cfg-color-grid">';
                 group.forEach(opt => {
-                    const active = state.options[key] === opt.id ? 'cfg-swatch-active' : '';
-                    html += '<button class="cfg-swatch ' + active + '" data-option-key="' + key + '" data-option-id="' + opt.id + '" style="background-color: ' + opt.hex + ';" title="' + opt.name + '"><span class="cfg-swatch-label">' + opt.name + '</span></button>';
+                    const active = state.options[key] === opt.id ? 'cfg-color-card-active' : '';
+                    const tip = (meta.tips && meta.tips[opt.id]) || '';
+                    const isRec = meta.recommended === opt.id;
+                    html += '<button class="cfg-color-card ' + active + '" data-option-key="' + key + '" data-option-id="' + opt.id + '" title="' + tip + '">';
+                    html += '<span class="cfg-color-tile" style="background:' + opt.hex + ';"></span>';
+                    html += '<span class="cfg-color-name">' + opt.name + '</span>';
+                    if (opt.priceDelta > 0) html += '<span class="cfg-price-tag">+$' + opt.priceDelta + '</span>';
+                    if (isRec) html += '<span class="cfg-rec-badge">Popular</span>';
+                    html += '</button>';
                 });
                 html += '</div>';
             } else {
-                html += '<div class="cfg-pill-group">';
+                html += '<div class="cfg-option-cards">';
                 group.forEach(opt => {
-                    const active = state.options[key] === opt.id ? 'cfg-pill-active' : '';
-                    html += '<button class="cfg-pill ' + active + '" data-option-key="' + key + '" data-option-id="' + opt.id + '">' + opt.name + '</button>';
+                    const active = state.options[key] === opt.id ? 'cfg-opt-card-active' : '';
+                    const tip = (meta.tips && meta.tips[opt.id]) || '';
+                    const isRec = meta.recommended === opt.id;
+                    html += '<button class="cfg-opt-card ' + active + '" data-option-key="' + key + '" data-option-id="' + opt.id + '">';
+                    html += '<div class="cfg-opt-card-top">';
+                    html += '<span class="cfg-opt-card-name">' + opt.name + '</span>';
+                    if (opt.priceDelta > 0) html += '<span class="cfg-price-tag">+$' + opt.priceDelta + '</span>';
+                    else if (opt.priceDelta === 0) html += '<span class="cfg-price-tag cfg-price-free">Included</span>';
+                    html += '</div>';
+                    if (tip) html += '<span class="cfg-opt-card-tip">' + tip + '</span>';
+                    if (isRec) html += '<span class="cfg-rec-badge">Most Popular</span>';
+                    html += '</button>';
                 });
                 html += '</div>';
             }
-            html += '</div>';
+
+            html += '</div>'; // body
+            html += '</div>'; // accordion
         });
 
         container.innerHTML = html;
     }
 
+    // Accordion toggle
     document.getElementById('cfg-options-container').addEventListener('click', (e) => {
+        const toggle = e.target.closest('[data-toggle]');
+        if (toggle) {
+            const key = toggle.dataset.toggle;
+            const body = document.getElementById('cfg-acc-' + key);
+            if (body) body.classList.toggle('cfg-acc-open');
+            return;
+        }
+
         const btn = e.target.closest('[data-option-key]');
         if (!btn) return;
         const key = btn.dataset.optionKey;
         const id = btn.dataset.optionId;
         state.options[key] = id;
 
-        // Update active states
-        const parent = btn.closest('.cfg-option-group');
-        parent.querySelectorAll('.cfg-pill, .cfg-swatch').forEach(p => {
-            p.classList.remove('cfg-pill-active', 'cfg-swatch-active');
-        });
-        btn.classList.add(btn.classList.contains('cfg-swatch') ? 'cfg-swatch-active' : 'cfg-pill-active');
+        // Re-render everything (accordion states, progress, conditional fields)
+        renderOptions();
         updatePriceBar();
-
-        // Re-render if a conditional dependency changed (e.g., movement → chainColor)
-        if (key === 'movement') renderOptions();
         updateLivePreview();
     });
 
@@ -1433,44 +1523,221 @@ const productDataJSON = JSON.stringify(products);
             cursor: not-allowed;
         }
 
-        /* Section headers in options */
-        .cfg-section-header {
-            font-size: (13/16rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #999;
-            padding: (16/16rem) 0 (4/16rem);
-            border-top: 1px solid #e0e0e0;
-            margin-top: (8/16rem);
+        /* Options progress */
+        .cfg-opts-progress {
+            margin-bottom: (16/16rem);
+        }
 
-            &:first-child {
-                border-top: none;
-                margin-top: 0;
+        .cfg-opts-progress-text {
+            font-size: (12/16rem);
+            font-weight: 600;
+            color: #888;
+            display: block;
+            margin-bottom: (4/16rem);
+        }
+
+        .cfg-opts-progress-bar {
+            height: (4/16rem);
+            background: #e0e0e0;
+            border-radius: (2/16rem);
+            overflow: hidden;
+        }
+
+        .cfg-opts-progress-fill {
+            height: 100%;
+            background: var(--secondary);
+            border-radius: (2/16rem);
+            transition: width 0.3s;
+        }
+
+        .cfg-opts-total {
+            font-size: (14/16rem);
+            color: #666;
+            margin-bottom: (16/16rem);
+            padding: (8/16rem) (12/16rem);
+            background: #f7f7f7;
+            border-left: 3px solid var(--secondary);
+
+            strong { color: var(--secondary); font-size: (18/16rem); }
+        }
+
+        /* Accordion */
+        .cfg-accordion {
+            border: 1px solid #e0e0e0;
+            margin-bottom: (8/16rem);
+            transition: border-color 0.2s;
+
+            &.cfg-accordion-done {
+                border-color: #2ecc71;
+                border-left: 3px solid #2ecc71;
             }
         }
 
-        /* Fabric badge in options step */
-        .cfg-fabric-badge {
-            display: inline-flex;
+        .cfg-accordion-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: (8/16rem);
-            padding: (6/16rem) (12/16rem);
-            background: #1a1a1a;
+            padding: (12/16rem) (16/16rem);
+            background: white;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: (14/16rem);
+            font-weight: 600;
+            color: #333;
+            transition: background 0.2s;
+
+            &:hover { background: #fafafa; }
+
+            em { color: #ccc; font-style: normal; }
         }
 
-        .cfg-fabric-badge-code {
+        .cfg-accordion-value {
+            font-size: (13/16rem);
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: (4/16rem);
+        }
+
+        .cfg-accordion-done .cfg-accordion-value {
+            color: #2ecc71;
+            font-weight: 700;
+        }
+
+        .cfg-accordion-arrow {
+            font-size: (10/16rem);
+            transition: transform 0.2s;
+        }
+
+        .cfg-accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s, padding 0.3s;
+            padding: 0 (16/16rem);
+
+            &.cfg-acc-open {
+                max-height: (600/16rem);
+                padding: (12/16rem) (16/16rem) (16/16rem);
+            }
+        }
+
+        /* Option cards */
+        .cfg-option-cards {
+            display: flex;
+            flex-direction: column;
+            gap: (6/16rem);
+        }
+
+        .cfg-opt-card {
+            display: flex;
+            flex-direction: column;
+            gap: (2/16rem);
+            padding: (10/16rem) (14/16rem);
+            border: 2px solid #e8e8e8;
+            background: white;
+            cursor: pointer;
+            font-family: inherit;
+            text-align: left;
+            transition: all 0.2s;
+            position: relative;
+
+            &:hover { border-color: var(--secondary); background: #fffdf5; }
+
+            &.cfg-opt-card-active {
+                border-color: var(--secondary);
+                background: #fffbeb;
+                box-shadow: 0 0 0 1px var(--secondary);
+            }
+        }
+
+        .cfg-opt-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cfg-opt-card-name {
             font-size: (14/16rem);
             font-weight: 700;
-            color: var(--secondary);
+            color: #333;
         }
 
-        .cfg-fabric-badge-ref {
+        .cfg-opt-card-tip {
             font-size: (12/16rem);
             color: #888;
+            line-height: 1.3;
         }
 
-        /* Option groups */
+        .cfg-price-tag {
+            font-size: (11/16rem);
+            font-weight: 700;
+            color: var(--secondary);
+            background: #1a1a1a;
+            padding: (2/16rem) (8/16rem);
+            border-radius: (2/16rem);
+
+            &.cfg-price-free {
+                color: #2ecc71;
+                background: #f0fdf4;
+            }
+        }
+
+        .cfg-rec-badge {
+            display: inline-block;
+            font-size: (10/16rem);
+            font-weight: 700;
+            color: white;
+            background: #2ecc71;
+            padding: (2/16rem) (6/16rem);
+            border-radius: (2/16rem);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-top: (2/16rem);
+        }
+
+        /* Color grid */
+        .cfg-color-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: (6/16rem);
+        }
+
+        .cfg-color-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: (4/16rem);
+            padding: (8/16rem);
+            border: 2px solid #e8e8e8;
+            background: white;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+
+            &:hover { border-color: var(--secondary); }
+
+            &.cfg-color-card-active {
+                border-color: var(--secondary);
+                box-shadow: 0 0 0 1px var(--secondary);
+            }
+        }
+
+        .cfg-color-tile {
+            width: (36/16rem);
+            height: (36/16rem);
+            border-radius: 50%;
+            border: 2px solid #ddd;
+        }
+
+        .cfg-color-name {
+            font-size: (11/16rem);
+            font-weight: 600;
+            color: #555;
+        }
+
+        /* Keep old option-group for backwards compat */
         .cfg-option-group {
             margin-bottom: (24/16rem);
         }
@@ -1845,6 +2112,20 @@ const productDataJSON = JSON.stringify(products);
 
         .cfg-inv-table {
             font-size: (14/16rem);
+        }
+
+        .cfg-option-cards {
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .cfg-opt-card {
+            flex: 1;
+            min-width: (180/16rem);
+        }
+
+        .cfg-color-grid {
+            grid-template-columns: repeat(5, 1fr);
         }
 
         .cfg-subtype-selector {
