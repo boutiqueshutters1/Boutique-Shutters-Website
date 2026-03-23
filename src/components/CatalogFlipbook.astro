@@ -207,14 +207,54 @@ const catalogDataJSON = JSON.stringify(catalogs);
         if (thumb) scrollToPage(parseInt(thumb.dataset.page), true);
     });
 
+    // --- Mouse drag to scroll ---
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragScrollLeft = 0;
+    let dragMoved = false;
+
+    carousel.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        dragMoved = false;
+        dragStartX = e.pageX - carousel.offsetLeft;
+        dragScrollLeft = carousel.scrollLeft;
+        carousel.style.cursor = 'grabbing';
+        carousel.style.scrollSnapType = 'none'; // disable snap while dragging
+        e.preventDefault();
+    });
+
+    carousel.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - carousel.offsetLeft;
+        const walk = (x - dragStartX) * 1.5; // multiply for faster scroll
+        if (Math.abs(walk) > 5) dragMoved = true;
+        carousel.scrollLeft = dragScrollLeft - walk;
+    });
+
+    carousel.addEventListener('mouseup', () => {
+        isDragging = false;
+        carousel.style.cursor = 'grab';
+        carousel.style.scrollSnapType = 'x mandatory'; // re-enable snap
+    });
+
+    carousel.addEventListener('mouseleave', () => {
+        if (isDragging) {
+            isDragging = false;
+            carousel.style.cursor = 'grab';
+            carousel.style.scrollSnapType = 'x mandatory';
+        }
+    });
+
     // --- Keyboard ---
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') scrollToPage(currentPage - 1, true);
         if (e.key === 'ArrowRight') scrollToPage(currentPage + 1, true);
     });
 
-    // --- Click on page to select fabric ---
+    // --- Click on page to select fabric (only if not dragging) ---
     carousel.addEventListener('click', (e) => {
+        if (dragMoved) { dragMoved = false; return; } // ignore clicks after drag
         const slide = e.target.closest('.fb-slide');
         if (!slide) return;
         const page = parseInt(slide.dataset.page);
@@ -369,6 +409,8 @@ const catalogDataJSON = JSON.stringify(catalogs);
             gap: 0;
             background: #e8e8e8;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            cursor: grab;
+            user-select: none;
 
             /* Hide scrollbar */
             scrollbar-width: none;
