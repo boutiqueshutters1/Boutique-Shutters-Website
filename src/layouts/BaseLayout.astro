@@ -101,63 +101,251 @@ const { description, title } = Astro.props;
             <!-- Snipcart E-Commerce -->
             <link rel="preconnect" href="https://cdn.snipcart.com">
             <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.7.1/default/snipcart.css" />
-            <!-- Snipcart Custom Theme -->
+            <!-- Snipcart Custom Theme — Boutique Shutters Branded Checkout -->
             <style>
-                /* Brand the Snipcart panel */
+                /* === 1. FULL-PAGE CHECKOUT LAYOUT === */
                 .snipcart-modal__container {
                     font-family: 'Inter', sans-serif !important;
                 }
+                .snipcart-layout {
+                    background: #fafafa !important;
+                }
+                .snipcart-layout__content {
+                    max-width: 1200px !important;
+                    margin: 0 auto !important;
+                }
+                /* Make checkout full-width, not side panel */
+                .snipcart-checkout {
+                    max-width: 100% !important;
+                }
+
+                /* === 2. BRANDED HEADER === */
                 .snipcart-cart-header {
                     background: #1a1a1a !important;
+                    padding: 16px 24px !important;
                 }
                 .snipcart-cart-header__title {
                     color: #ffbf00 !important;
                     font-family: 'Playfair Display', serif !important;
+                    font-size: 1.5rem !important;
+                    font-weight: 700 !important;
                 }
                 .snipcart-cart-header__close-button {
                     color: white !important;
                 }
-                .snipcart-item-line__title {
+                /* Add secure checkout indicator */
+                .snipcart-cart-header::after {
+                    content: '🔒 Secure Checkout';
+                    color: #2ecc71;
+                    font-size: 12px;
+                    font-weight: 600;
+                    font-family: 'Inter', sans-serif;
+                    margin-left: 12px;
+                }
+
+                /* === 3. CHECKOUT STEP TITLES === */
+                .snipcart-checkout-step__title {
+                    font-family: 'Playfair Display', serif !important;
+                    font-size: 1.5rem !important;
+                    color: #1a1a1a !important;
+                }
+                .snipcart-checkout-step__icon {
+                    background: #ffbf00 !important;
+                    color: #000 !important;
                     font-weight: 700 !important;
                 }
+                .snipcart-checkout-step__icon--active {
+                    background: #ffbf00 !important;
+                }
+
+                /* === 4. FORM FIELDS — GOLD FOCUS === */
+                .snipcart-form__field .snipcart-input {
+                    border: 2px solid #e0e0e0 !important;
+                    border-radius: 0 !important;
+                    font-family: 'Inter', sans-serif !important;
+                    font-size: 14px !important;
+                    padding: 12px !important;
+                    transition: border-color 0.2s !important;
+                }
+                .snipcart-form__field .snipcart-input:focus {
+                    border-color: #ffbf00 !important;
+                    box-shadow: 0 0 0 1px #ffbf00 !important;
+                    outline: none !important;
+                }
+                .snipcart-form__label {
+                    font-weight: 600 !important;
+                    color: #333 !important;
+                    font-size: 13px !important;
+                    text-transform: uppercase !important;
+                    letter-spacing: 0.03em !important;
+                }
+                .snipcart-form__select {
+                    border: 2px solid #e0e0e0 !important;
+                    border-radius: 0 !important;
+                }
+                .snipcart-form__select:focus {
+                    border-color: #ffbf00 !important;
+                }
+
+                /* === 5. PRIMARY BUTTONS — GOLD === */
                 .snipcart-cart-button--highlight,
-                .snipcart-button-primary {
+                .snipcart-button-primary,
+                .snipcart-base-button--highlight {
                     background: #ffbf00 !important;
                     color: #000 !important;
                     font-weight: 700 !important;
                     border: none !important;
                     border-radius: 0 !important;
                     text-transform: uppercase !important;
-                    letter-spacing: 0.03em !important;
+                    letter-spacing: 0.05em !important;
+                    font-size: 15px !important;
+                    padding: 14px 24px !important;
+                    transition: background 0.3s !important;
                 }
                 .snipcart-cart-button--highlight:hover,
-                .snipcart-button-primary:hover {
+                .snipcart-button-primary:hover,
+                .snipcart-base-button--highlight:hover {
                     background: #856f00 !important;
                 }
-                .snipcart-checkout-step__title {
-                    font-family: 'Playfair Display', serif !important;
+
+                /* === 6. SECONDARY BUTTONS & LINKS === */
+                .snipcart__actions--link,
+                .snipcart-cart-button--secondary {
+                    color: #ffbf00 !important;
+                    font-weight: 600 !important;
+                }
+                .snipcart-cart-button--secondary {
+                    border-color: #ffbf00 !important;
+                }
+
+                /* === 7. ITEM LINES === */
+                .snipcart-item-line {
+                    border-bottom: 1px solid #e8e8e8 !important;
+                    padding: 16px 0 !important;
+                }
+                .snipcart-item-line__title {
+                    font-weight: 700 !important;
+                    font-size: 15px !important;
+                    color: #1a1a1a !important;
+                }
+                .snipcart-item-line__header {
+                    margin-bottom: 4px !important;
+                }
+                .snipcart-item-quantity__quantity {
+                    border: 2px solid #e0e0e0 !important;
+                    border-radius: 0 !important;
+                    font-weight: 700 !important;
+                }
+                .snipcart-item-quantity__quantity:focus {
+                    border-color: #ffbf00 !important;
+                }
+
+                /* === 8. ORDER SUMMARY === */
+                .snipcart-cart-summary {
+                    background: white !important;
+                    border: 1px solid #e0e0e0 !important;
                 }
                 .snipcart-cart-summary-fees__amount {
+                    font-weight: 700 !important;
+                }
+                .snipcart-cart-summary-fees__total {
+                    font-size: 1.25rem !important;
                     font-weight: 900 !important;
-                }
-                .snipcart__font--secondary {
-                    font-family: 'Inter', sans-serif !important;
-                }
-                .snipcart-discount-box__submit {
-                    background: #1a1a1a !important;
-                    color: white !important;
-                }
-                .snipcart__actions--link {
                     color: #ffbf00 !important;
                 }
                 .snipcart-cart-summary-expanded-item__quantity {
                     background: #1a1a1a !important;
                     color: white !important;
+                    border-radius: 0 !important;
                 }
-                /* Subtotal styling */
-                .snipcart-cart-summary-fees__total {
-                    font-size: 1.25rem !important;
-                    font-weight: 900 !important;
+
+                /* === 9. PROMO CODE FIELD === */
+                .snipcart-discount-box {
+                    border: 2px solid #e0e0e0 !important;
+                    border-radius: 0 !important;
+                }
+                .snipcart-discount-box__form {
+                    display: flex !important;
+                }
+                .snipcart-discount-box__submit {
+                    background: #1a1a1a !important;
+                    color: #ffbf00 !important;
+                    border-radius: 0 !important;
+                    font-weight: 700 !important;
+                    text-transform: uppercase !important;
+                }
+                .snipcart-discount-box__input {
+                    border-radius: 0 !important;
+                }
+                .snipcart-discount-box__input:focus {
+                    border-color: #ffbf00 !important;
+                }
+
+                /* === 10. PAYMENT & SECURITY === */
+                .snipcart-payment-card-form {
+                    border: 2px solid #e0e0e0 !important;
+                    border-radius: 0 !important;
+                }
+                /* Add guarantee banner above payment */
+                .snipcart-payment::before {
+                    content: '✓ 100% Satisfaction Guaranteed — Free Shipping — Secure Encrypted Payment';
+                    display: block;
+                    text-align: center;
+                    padding: 12px;
+                    margin-bottom: 16px;
+                    background: #f0fdf4;
+                    color: #2ecc71;
+                    font-size: 13px;
+                    font-weight: 600;
+                    border: 1px solid #d1fae5;
+                }
+
+                /* === 11. DELIVERY ESTIMATE === */
+                .snipcart-cart-summary::after {
+                    content: '📦 Estimated delivery: 2–4 weeks after order confirmation';
+                    display: block;
+                    text-align: center;
+                    padding: 10px;
+                    margin-top: 12px;
+                    font-size: 12px;
+                    color: #888;
+                    border-top: 1px solid #e8e8e8;
+                }
+
+                /* === 12. FONTS === */
+                .snipcart__font--secondary,
+                .snipcart__font--std {
+                    font-family: 'Inter', sans-serif !important;
+                }
+
+                /* === 13. REMOVE ITEM BUTTON === */
+                .snipcart-item-line__remove {
+                    color: #ccc !important;
+                    transition: color 0.2s !important;
+                }
+                .snipcart-item-line__remove:hover {
+                    color: #e74c3c !important;
+                }
+
+                /* === 14. FOOTER === */
+                .snipcart__box--badge {
+                    background: #1a1a1a !important;
+                }
+
+                /* === 15. ERROR STATES === */
+                .snipcart-form__validation-error {
+                    color: #e74c3c !important;
+                    font-size: 12px !important;
+                }
+                .snipcart-input--invalid {
+                    border-color: #e74c3c !important;
+                }
+
+                /* === 16. LOADING STATES === */
+                .snipcart__loading-overlay {
+                    background: rgba(26, 26, 26, 0.8) !important;
+                }
+                .snipcart__loading-overlay__content {
                     color: #ffbf00 !important;
                 }
             </style>
