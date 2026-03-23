@@ -138,7 +138,9 @@ const catalogDataJSON = JSON.stringify(catalogs);
 
         const slide = carousel.querySelector('.fb-slide[data-page="' + num + '"]');
         if (slide) {
-            slide.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'nearest', inline: 'start' });
+            // Use scrollLeft instead of scrollIntoView to avoid page jump
+            const targetLeft = slide.offsetLeft - carousel.offsetLeft;
+            carousel.scrollTo({ left: targetLeft, behavior: smooth ? 'smooth' : 'auto' });
         }
 
         pageInfo.textContent = num + ' / ' + currentCatalog.pages;
