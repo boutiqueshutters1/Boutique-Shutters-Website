@@ -945,6 +945,17 @@ const productDataJSON = JSON.stringify(products);
                 Add to Cart — $${total.toFixed(2)}
             </button>
             <button class="cfg-btn-continue" onclick="document.querySelectorAll('.cfg-product-card')[0].click()">← Configure Another</button>
+            <div class="cfg-cart-trust">
+                <span class="cfg-trust-badge">🚚 Free Shipping</span>
+                <span class="cfg-trust-badge">✓ Satisfaction Guaranteed</span>
+                <span class="cfg-trust-badge">🔒 Secure Checkout</span>
+            </div>
+            <div class="cfg-cart-financing">
+                As low as <strong>$${Math.round(total / 12)}/mo</strong> with
+                <img src="/assets/images/partners/wisetack-logo-dark.svg" alt="Wisetack" height="14" style="vertical-align:middle;margin:0 4px;" />
+                or
+                <img src="/assets/images/partners/klarna-logo-dark.svg" alt="Klarna" height="14" style="vertical-align:middle;margin:0 4px;" />
+            </div>
         `;
     }
 
@@ -2006,6 +2017,32 @@ const productDataJSON = JSON.stringify(products);
             display: inline-block;
 
             &:hover { background: var(--csButtonHoverColor); }
+        }
+
+        .cfg-cart-trust {
+            display: flex;
+            justify-content: center;
+            gap: (8/16rem);
+            margin-top: (20/16rem);
+            flex-wrap: wrap;
+        }
+
+        .cfg-trust-badge {
+            font-size: (12/16rem);
+            font-weight: 600;
+            color: #2ecc71;
+            background: #f0fdf4;
+            padding: (4/16rem) (10/16rem);
+            border-radius: (3/16rem);
+        }
+
+        .cfg-cart-financing {
+            text-align: center;
+            font-size: (13/16rem);
+            color: #888;
+            margin-top: (12/16rem);
+
+            strong { color: var(--secondary); }
         }
 
         .cfg-btn-continue {

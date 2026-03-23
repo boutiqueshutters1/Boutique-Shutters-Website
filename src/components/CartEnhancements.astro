@@ -1,0 +1,435 @@
+---
+// Cart Enhancements: toast notifications, badge animation, mini cart, trust badges
+---
+
+<!-- Toast Notification -->
+<div class="cart-toast cart-toast-hidden" id="cart-toast">
+    <span class="cart-toast-icon">✓</span>
+    <div class="cart-toast-content">
+        <strong class="cart-toast-title">Added to Cart</strong>
+        <span class="cart-toast-item" id="cart-toast-item">1 item</span>
+    </div>
+    <a href="#" class="cart-toast-view snipcart-checkout">View Cart →</a>
+    <button class="cart-toast-close" id="cart-toast-close">✕</button>
+</div>
+
+<!-- Mini Cart Dropdown (attached to header cart icon via JS) -->
+<div class="mini-cart mini-cart-hidden" id="mini-cart">
+    <div class="mini-cart-header">
+        <strong>Your Cart</strong>
+        <span class="snipcart-items-count">0</span> items
+    </div>
+    <div class="mini-cart-items" id="mini-cart-items">
+        <p class="mini-cart-empty">Your cart is empty</p>
+    </div>
+    <div class="mini-cart-footer">
+        <div class="mini-cart-total">
+            <span>Subtotal</span>
+            <strong class="snipcart-total-price">$0.00</strong>
+        </div>
+        <div class="mini-cart-badges">
+            <span class="mini-badge">🚚 Free Shipping</span>
+            <span class="mini-badge">✓ Satisfaction Guaranteed</span>
+            <span class="mini-badge">🔒 Secure Checkout</span>
+        </div>
+        <div class="mini-cart-financing" id="mini-cart-financing">
+            <span>As low as <strong class="mini-cart-monthly">$0</strong>/mo with financing</span>
+        </div>
+        <button class="mini-cart-checkout snipcart-checkout">Proceed to Checkout</button>
+        <a href="/configure" class="mini-cart-continue">← Continue Shopping</a>
+    </div>
+</div>
+
+<script is:inline>
+(function() {
+    // === TOAST NOTIFICATION ===
+    const toast = document.getElementById('cart-toast');
+    const toastItem = document.getElementById('cart-toast-item');
+    const toastClose = document.getElementById('cart-toast-close');
+    let toastTimeout;
+
+    function showToast(itemName, price) {
+        if (!toast) return;
+        toastItem.textContent = itemName + ' — $' + price;
+        toast.classList.remove('cart-toast-hidden');
+        toast.classList.add('cart-toast-show');
+
+        // Auto-hide after 5 seconds
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(hideToast, 5000);
+    }
+
+    function hideToast() {
+        if (!toast) return;
+        toast.classList.remove('cart-toast-show');
+        toast.classList.add('cart-toast-hidden');
+    }
+
+    if (toastClose) toastClose.addEventListener('click', hideToast);
+
+    // Listen for Snipcart item added
+    document.addEventListener('snipcart.ready', function() {
+        Snipcart.events.on('item.added', function(item) {
+            showToast(item.name, item.price.toFixed(2));
+            pulseCartBadge();
+            updateMiniCart();
+        });
+
+        Snipcart.events.on('item.removed', function() {
+            updateMiniCart();
+        });
+
+        Snipcart.events.on('item.updated', function() {
+            updateMiniCart();
+        });
+    });
+
+    // Also listen for our custom add-to-cart clicks (before Snipcart processes)
+    document.addEventListener('click', function(e) {
+        const btn = e.target.closest('.snipcart-add-item');
+        if (btn) {
+            const name = btn.dataset.itemName || 'Item';
+            const price = btn.dataset.itemPrice || '0';
+            // Show toast immediately (Snipcart event may take a moment)
+            setTimeout(() => {
+                showToast(name, price);
+                pulseCartBadge();
+                addToMiniCartLocal(name, price, btn.dataset.itemQuantity || '1');
+            }, 300);
+        }
+    });
+
+    // === CART BADGE PULSE ANIMATION ===
+    function pulseCartBadge() {
+        const badges = document.querySelectorAll('.cs-cart-count');
+        badges.forEach(badge => {
+            badge.classList.add('cart-badge-pulse');
+            setTimeout(() => badge.classList.remove('cart-badge-pulse'), 600);
+        });
+    }
+
+    // === MINI CART ===
+    const miniCart = document.getElementById('mini-cart');
+    const miniCartItems = document.getElementById('mini-cart-items');
+    const miniCartFinancing = document.getElementById('mini-cart-financing');
+    let localCartItems = [];
+
+    // Show/hide mini cart on cart button hover
+    const cartBtns = document.querySelectorAll('.cs-cart-btn');
+    cartBtns.forEach(btn => {
+        btn.addEventListener('mouseenter', () => {
+            if (miniCart) {
+                const rect = btn.getBoundingClientRect();
+                miniCart.style.top = (rect.bottom + 8) + 'px';
+                miniCart.style.right = (window.innerWidth - rect.right) + 'px';
+                miniCart.classList.remove('mini-cart-hidden');
+            }
+        });
+
+        btn.addEventListener('mouseleave', (e) => {
+            setTimeout(() => {
+                if (miniCart && !miniCart.matches(':hover')) {
+                    miniCart.classList.add('mini-cart-hidden');
+                }
+            }, 200);
+        });
+    });
+
+    if (miniCart) {
+        miniCart.addEventListener('mouseleave', () => {
+            miniCart.classList.add('mini-cart-hidden');
+        });
+    }
+
+    function addToMiniCartLocal(name, price, qty) {
+        localCartItems.push({ name, price, qty });
+        if (localCartItems.length > 5) localCartItems.shift();
+        renderMiniCartLocal();
+    }
+
+    function renderMiniCartLocal() {
+        if (!miniCartItems) return;
+        if (localCartItems.length === 0) {
+            miniCartItems.innerHTML = '<p class="mini-cart-empty">Your cart is empty</p>';
+            return;
+        }
+
+        let html = '';
+        let total = 0;
+        localCartItems.forEach(item => {
+            const itemTotal = parseFloat(item.price) * parseInt(item.qty);
+            total += itemTotal;
+            html += '<div class="mini-cart-item">';
+            html += '<span class="mini-cart-item-name">' + item.name + '</span>';
+            html += '<span class="mini-cart-item-price">$' + itemTotal.toFixed(2) + '</span>';
+            html += '</div>';
+        });
+        miniCartItems.innerHTML = html;
+
+        // Update financing
+        if (miniCartFinancing && total > 0) {
+            const monthly = Math.round(total / 12);
+            miniCartFinancing.innerHTML = '<span>As low as <strong class="mini-cart-monthly">$' + monthly + '</strong>/mo with financing</span>';
+        }
+    }
+
+    function updateMiniCart() {
+        // Try to get items from Snipcart
+        if (typeof Snipcart !== 'undefined' && Snipcart.store) {
+            try {
+                const state = Snipcart.store.getState();
+                const items = state.cart.items.items || [];
+                localCartItems = items.map(i => ({ name: i.name, price: i.price.toString(), qty: i.quantity.toString() }));
+                renderMiniCartLocal();
+            } catch(e) {}
+        }
+    }
+})();
+</script>
+
+<style is:global>
+/* Toast Notification */
+.cart-toast {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 10002;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    background: #1a1a1a;
+    color: white;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    transition: transform 0.3s, opacity 0.3s;
+    max-width: 400px;
+}
+
+.cart-toast-hidden {
+    transform: translateX(120%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cart-toast-show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.cart-toast-icon {
+    width: 32px;
+    height: 32px;
+    background: #2ecc71;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.cart-toast-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+}
+
+.cart-toast-title {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.cart-toast-item {
+    font-size: 12px;
+    color: #aaa;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cart-toast-view {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffbf00;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover { text-decoration: underline; }
+}
+
+.cart-toast-close {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px;
+    font-family: inherit;
+
+    &:hover { color: white; }
+}
+
+/* Cart Badge Pulse */
+@keyframes cartPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); background: #2ecc71; }
+    100% { transform: scale(1); }
+}
+
+.cart-badge-pulse {
+    animation: cartPulse 0.6s ease;
+}
+
+/* Mini Cart Dropdown */
+.mini-cart {
+    position: fixed;
+    z-index: 10001;
+    width: 320px;
+    background: white;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    border: 1px solid #e0e0e0;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.mini-cart-hidden {
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+}
+
+.mini-cart-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+    color: #333;
+}
+
+.mini-cart-items {
+    padding: 8px 16px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.mini-cart-empty {
+    font-size: 13px;
+    color: #999;
+    text-align: center;
+    padding: 16px 0;
+    margin: 0;
+}
+
+.mini-cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 13px;
+
+    &:last-child { border-bottom: none; }
+}
+
+.mini-cart-item-name {
+    color: #333;
+    font-weight: 600;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 8px;
+}
+
+.mini-cart-item-price {
+    font-weight: 700;
+    color: #ffbf00;
+    flex-shrink: 0;
+}
+
+.mini-cart-footer {
+    padding: 12px 16px;
+    border-top: 1px solid #e0e0e0;
+    background: #fafafa;
+}
+
+.mini-cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 8px;
+
+    strong { font-size: 18px; color: #ffbf00; }
+}
+
+.mini-cart-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.mini-badge {
+    font-size: 10px;
+    font-weight: 600;
+    color: #2ecc71;
+    background: #f0fdf4;
+    padding: 2px 6px;
+    border-radius: 2px;
+}
+
+.mini-cart-financing {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 10px;
+    text-align: center;
+
+    strong { color: #ffbf00; }
+}
+
+.mini-cart-checkout {
+    width: 100%;
+    padding: 10px;
+    background: #ffbf00;
+    color: #000;
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: block;
+    text-align: center;
+
+    &:hover { background: #856f00; }
+}
+
+.mini-cart-continue {
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    color: #888;
+    text-decoration: none;
+    margin-top: 8px;
+
+    &:hover { color: #333; }
+}
+
+/* Mobile toast */
+@media only screen and (max-width: 480px) {
+    .cart-toast {
+        left: 10px;
+        right: 10px;
+        max-width: none;
+    }
+
+    .mini-cart {
+        left: 10px;
+        right: 10px;
+        width: auto;
+    }
+}
+</style>
