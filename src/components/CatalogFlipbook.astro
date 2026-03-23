@@ -351,24 +351,27 @@ const catalogDataJSON = JSON.stringify(catalogs);
         .fb-sections {
             display: flex;
             justify-content: center;
-            gap: (6/16rem);
-            margin-bottom: (16/16rem);
+            gap: (8/16rem);
+            margin-bottom: (20/16rem);
             flex-wrap: wrap;
         }
 
         .fb-section-btn {
             font-family: inherit;
-            font-size: (12/16rem);
-            font-weight: 600;
-            padding: (6/16rem) (12/16rem);
-            border: 1px solid #ccc;
+            font-size: (13/16rem);
+            font-weight: 700;
+            padding: (10/16rem) (18/16rem);
+            border: 2px solid #1a1a1a;
             background: white;
-            color: #666;
+            color: #1a1a1a;
             cursor: pointer;
-            transition: all 0.2s;
-            border-radius: (20/16rem);
+            transition: all 0.3s;
+            border-radius: (4/16rem);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
 
             &:hover {
+                background: #f0f0f0;
                 border-color: var(--secondary);
                 color: var(--secondary);
             }
@@ -377,6 +380,7 @@ const catalogDataJSON = JSON.stringify(catalogs);
                 background: var(--secondary);
                 border-color: var(--secondary);
                 color: #000;
+                box-shadow: 0 2px 8px rgba(255, 191, 0, 0.3);
             }
         }
 
