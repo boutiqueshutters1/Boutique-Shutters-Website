@@ -30,12 +30,17 @@ import ComparisonChart from "@components/ComparisonChart.astro";
                     <span class="cs-path-desc">Free in-home consultation, expert measurement & installation by our certified team</span>
                     <span class="cs-path-cta">Book Free Estimate →</span>
                 </a>
-                <a href="/configure" class="cs-path-card cs-path-diy">
+                <div class="cs-path-card cs-path-diy cs-path-coming-soon">
                     <span class="cs-path-icon">🛒</span>
                     <span class="cs-path-title">DIY — Order Online</span>
-                    <span class="cs-path-desc">Configure your custom window treatments, order online & install yourself</span>
-                    <span class="cs-path-cta">Configure & Buy →</span>
-                </a>
+                    <span class="cs-path-desc">Configure custom window treatments, order online & install yourself</span>
+                    <span class="cs-path-soon">Coming Soon — Sign up for early access</span>
+                    <form class="cs-path-signup" action="https://formspree.io/f/xdawyrbr" method="POST">
+                        <input type="hidden" name="_subject" value="DIY Early Access Signup" />
+                        <input type="email" name="email" placeholder="Your email" required class="cs-path-email" />
+                        <button type="submit" class="cs-path-signup-btn">Notify Me</button>
+                    </form>
+                </div>
             </div>
             <a href="https://maps.app.goo.gl/314AZ4Dpz98b73GS8" target="_blank" rel="noopener noreferrer" class="cs-hero-badge">
                 <img src="https://csimg.nyc3.digitaloceanspaces.com/Reviews/stars-yellow.svg" alt="5 stars" width="96" height="16">
@@ -241,7 +246,6 @@ import ComparisonChart from "@components/ComparisonChart.astro";
                   <div class="cs-button-group">
                     <a class="cs-link-learn" href="/zebra-shades">Learn More</a>
                     <a class="cs-button-solid" href="/book">Get Estimate</a>
-                    <a class="cs-link-configure" href="/configure">DIY — Order Online →</a>
                   </div>
           </li>
           <li class="cs-item">
@@ -260,7 +264,6 @@ import ComparisonChart from "@components/ComparisonChart.astro";
                   <div class="cs-button-group">
                     <a class="cs-link-learn" href="/shutters">Learn More</a>
                     <a class="cs-button-solid" href="/book">Get Estimate</a>
-                    <a class="cs-link-configure" href="/configure">DIY — Order Online →</a>
                   </div>
           </li>
           <li class="cs-item">
@@ -279,7 +282,6 @@ import ComparisonChart from "@components/ComparisonChart.astro";
                   <div class="cs-button-group">
                     <a class="cs-link-learn" href="/motorized-shades">Learn More</a>
                     <a class="cs-button-solid" href="/book">Get Estimate</a>
-                    <a class="cs-link-configure" href="/configure">DIY — Order Online →</a>
                   </div>
           </li>
           <li class="cs-item">
@@ -298,7 +300,6 @@ import ComparisonChart from "@components/ComparisonChart.astro";
                   <div class="cs-button-group">
                     <a class="cs-link-learn" href="/exterior-shades">Learn More</a>
                     <a class="cs-button-solid" href="/book">Get Estimate</a>
-                    <a class="cs-link-configure" href="/configure">DIY — Order Online →</a>
                   </div>
           </li>
       </ul>
@@ -830,13 +831,57 @@ import ComparisonChart from "@components/ComparisonChart.astro";
             }
 
             &.cs-path-diy {
-                border-color: var(--secondary);
-                background: rgba(255, 191, 0, 0.08);
+                border-color: rgba(255, 255, 255, 0.15);
+                background: rgba(255, 255, 255, 0.04);
+                cursor: default;
 
-                .cs-path-cta {
-                    color: var(--secondary);
+                &:hover {
+                    transform: none;
+                    border-color: rgba(255, 255, 255, 0.2);
                 }
             }
+        }
+
+        .cs-path-soon {
+            font-size: (13/16rem);
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: (4/16rem);
+        }
+
+        .cs-path-signup {
+            display: flex;
+            gap: (6/16rem);
+            margin-top: (8/16rem);
+        }
+
+        .cs-path-email {
+            flex: 1;
+            font-family: inherit;
+            font-size: (13/16rem);
+            padding: (6/16rem) (10/16rem);
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            min-width: 0;
+
+            &::placeholder { color: rgba(255,255,255,0.5); }
+            &:focus { outline: none; border-color: var(--secondary); }
+        }
+
+        .cs-path-signup-btn {
+            font-family: inherit;
+            font-size: (12/16rem);
+            font-weight: 700;
+            padding: (6/16rem) (12/16rem);
+            border: none;
+            background: var(--secondary);
+            color: #000;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.2s;
+
+            &:hover { background: var(--csButtonHoverColor); }
         }
 
         .cs-path-icon {
