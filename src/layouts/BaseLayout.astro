@@ -190,8 +190,13 @@ const { description, title } = Astro.props;
                 /* === 5. PRIMARY BUTTONS — GOLD === */
                 .snipcart-cart-button--highlight,
                 .snipcart-button-primary,
-                .snipcart-base-button--highlight {
+                .snipcart-base-button--highlight,
+                .snipcart-submit,
+                .snipcart-base-button.is-icon-right,
+                button.snipcart-button-primary,
+                button.snipcart-submit {
                     background: #ffbf00 !important;
+                    background-color: #ffbf00 !important;
                     color: #000 !important;
                     font-weight: 700 !important;
                     border: none !important;
@@ -204,8 +209,11 @@ const { description, title } = Astro.props;
                 }
                 .snipcart-cart-button--highlight:hover,
                 .snipcart-button-primary:hover,
-                .snipcart-base-button--highlight:hover {
+                .snipcart-base-button--highlight:hover,
+                .snipcart-submit:hover,
+                button.snipcart-submit:hover {
                     background: #856f00 !important;
+                    background-color: #856f00 !important;
                 }
 
                 /* === 6. SECONDARY BUTTONS & LINKS === */
@@ -341,7 +349,34 @@ const { description, title } = Astro.props;
                     border-color: #e74c3c !important;
                 }
 
-                /* === 16. LOADING STATES === */
+                /* === 16. SNIPCART INPUT UNDERLINE STYLE OVERRIDE === */
+                .snipcart-form__field input,
+                .snipcart-form__field select {
+                    border-bottom: 2px solid #e0e0e0 !important;
+                }
+                .snipcart-form__field input:focus,
+                .snipcart-form__field select:focus {
+                    border-bottom-color: #ffbf00 !important;
+                }
+                /* Step number circle */
+                .snipcart-checkout-step__col {
+                    align-items: center !important;
+                }
+                .snipcart-checkout-step__number {
+                    background: #ffbf00 !important;
+                    color: #000 !important;
+                    font-weight: 700 !important;
+                }
+                /* Edit link gold */
+                .snipcart-cart-summary__edit-link {
+                    color: #ffbf00 !important;
+                }
+                /* Total in order summary */
+                .snipcart-cart-summary__content .snipcart__font--bold {
+                    font-weight: 900 !important;
+                }
+
+                /* === 17. LOADING STATES === */
                 .snipcart__loading-overlay {
                     background: rgba(26, 26, 26, 0.8) !important;
                 }
