@@ -2,7 +2,7 @@
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import Configurator from "@components/Configurator.astro";
 import CatalogFlipbook from "@components/CatalogFlipbook.astro";
-import CTA from "@components/CTA.astro";
+
 
 const catalogs = [
     { id: "blinds", name: "Blinds Catalog", pages: 65, folder: "blinds-catalog" },
@@ -40,8 +40,6 @@ const optimizedImage = await getOptimizedImage(landingImage)
 <Configurator />
 
 <CatalogFlipbook catalogs={catalogs} onSelectFabric={true} />
-
-<CTA />
 
 </BaseLayout>
 
