@@ -9,7 +9,7 @@
         <strong class="cart-toast-title">Added to Cart</strong>
         <span class="cart-toast-item" id="cart-toast-item">1 item</span>
     </div>
-    <a href="#" class="cart-toast-view snipcart-checkout">View Cart →</a>
+    <a href="/cart" class="cart-toast-view">View Cart →</a>
     <button class="cart-toast-close" id="cart-toast-close">✕</button>
 </div>
 
@@ -35,7 +35,7 @@
         <div class="mini-cart-financing" id="mini-cart-financing">
             <span>As low as <strong class="mini-cart-monthly">$0</strong>/mo with financing</span>
         </div>
-        <button class="mini-cart-checkout snipcart-checkout">Proceed to Checkout</button>
+        <a href="/cart" class="mini-cart-checkout" style="text-decoration:none;">View Cart →</a>
         <a href="/configure" class="mini-cart-continue">← Continue Shopping</a>
     </div>
 </div>
@@ -221,37 +221,14 @@
         syncMiniCartFromSnipcart();
     }
 
-    // Checkout button click — trigger Snipcart checkout
-    const checkoutBtns = document.querySelectorAll('.mini-cart-checkout');
-    checkoutBtns.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            // Hide mini cart
-            if (miniCart) miniCart.classList.add('mini-cart-hidden');
-            // Trigger Snipcart by clicking a hidden snipcart-checkout element
-            const snipcartTrigger = document.createElement('button');
-            snipcartTrigger.className = 'snipcart-checkout';
-            snipcartTrigger.style.display = 'none';
-            document.body.appendChild(snipcartTrigger);
-            snipcartTrigger.click();
-            setTimeout(() => snipcartTrigger.remove(), 100);
-        });
-    });
+    // Mini cart "View Cart" just navigates to /cart (it's an <a> tag now)
 
-    // Also handle header cart icon click
+    // Header cart icon click — go to cart page
     cartBtns.forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            syncMiniCartFromSnipcart();
-            if (miniCart) {
-                miniCart.classList.toggle('mini-cart-hidden');
-                if (!miniCart.classList.contains('mini-cart-hidden')) {
-                    const rect = btn.getBoundingClientRect();
-                    miniCart.style.top = (rect.bottom + 8) + 'px';
-                    miniCart.style.right = Math.max(0, window.innerWidth - rect.right) + 'px';
-                }
-            }
+            window.location.href = '/cart';
         });
     });
 })();

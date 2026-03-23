@@ -1,0 +1,489 @@
+---
+import BaseLayout from "src/layouts/BaseLayout.astro";
+
+import {getOptimizedImage} from "@js/utils"
+import landingImage from "@assets/images/landing.jpg"
+const optimizedImage = await getOptimizedImage(landingImage)
+---
+
+<BaseLayout
+  title="Your Cart | Boutique Shutters"
+  description="Review your custom window treatment order. Free shipping on all orders."
+  preloadedImage={optimizedImage}
+>
+
+<section id="cart-page">
+    <div class="cart-container">
+        <h1 class="cart-title">Your Cart</h1>
+
+        <!-- Empty state -->
+        <div class="cart-empty" id="cart-empty">
+            <span class="cart-empty-icon">🛒</span>
+            <h2>Your cart is empty</h2>
+            <p>Configure your custom window treatments and add them to your cart.</p>
+            <a href="/configure" class="cart-btn-primary">Start Configuring →</a>
+        </div>
+
+        <!-- Cart with items -->
+        <div class="cart-content cart-hidden" id="cart-content">
+            <div class="cart-items-section">
+                <div class="cart-items-header">
+                    <span class="cart-col-product">Product</span>
+                    <span class="cart-col-details">Details</span>
+                    <span class="cart-col-qty">Qty</span>
+                    <span class="cart-col-price">Price</span>
+                    <span class="cart-col-remove"></span>
+                </div>
+                <div class="cart-items" id="cart-items"></div>
+            </div>
+
+            <div class="cart-sidebar">
+                <div class="cart-summary">
+                    <h3 class="cart-summary-title">Order Summary</h3>
+                    <div class="cart-summary-lines" id="cart-summary-lines"></div>
+                    <div class="cart-summary-total" id="cart-summary-total"></div>
+                </div>
+
+                <div class="cart-financing-box">
+                    <p>💳 As low as <strong id="cart-monthly">$0</strong>/mo</p>
+                    <span>with Wisetack or Klarna financing</span>
+                </div>
+
+                <button class="snipcart-checkout cart-checkout-btn">Proceed to Checkout →</button>
+
+                <div class="cart-trust-badges">
+                    <span>🚚 Free Shipping</span>
+                    <span>✓ Satisfaction Guaranteed</span>
+                    <span>🔒 Secure Checkout</span>
+                    <span>💳 Financing Available</span>
+                </div>
+
+                <a href="/configure" class="cart-continue">← Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+</BaseLayout>
+
+<script is:inline>
+(function() {
+    const emptyDiv = document.getElementById('cart-empty');
+    const contentDiv = document.getElementById('cart-content');
+    const itemsDiv = document.getElementById('cart-items');
+    const summaryLines = document.getElementById('cart-summary-lines');
+    const summaryTotal = document.getElementById('cart-summary-total');
+    const monthlyEl = document.getElementById('cart-monthly');
+
+    function getCartItems() {
+        // Try Snipcart first
+        if (typeof Snipcart !== 'undefined' && Snipcart.store) {
+            try {
+                const state = Snipcart.store.getState();
+                const items = state.cart.items.items || [];
+                if (items.length > 0) {
+                    return items.map(i => ({
+                        id: i.id,
+                        name: i.name,
+                        price: i.price,
+                        quantity: i.quantity,
+                        description: i.description || '',
+                        customFields: i.customFields || []
+                    }));
+                }
+            } catch(e) {}
+        }
+
+        // Fallback to sessionStorage
+        try {
+            const saved = sessionStorage.getItem('miniCartItems');
+            if (saved) {
+                return JSON.parse(saved).map(i => ({
+                    id: i.name,
+                    name: i.name,
+                    price: parseFloat(i.price),
+                    quantity: parseInt(i.qty),
+                    description: '',
+                    customFields: []
+                }));
+            }
+        } catch(e) {}
+
+        return [];
+    }
+
+    function renderCart() {
+        const items = getCartItems();
+
+        if (items.length === 0) {
+            emptyDiv.classList.remove('cart-hidden');
+            contentDiv.classList.add('cart-hidden');
+            return;
+        }
+
+        emptyDiv.classList.add('cart-hidden');
+        contentDiv.classList.remove('cart-hidden');
+
+        // Render items
+        let itemsHTML = '';
+        let subtotal = 0;
+
+        items.forEach((item, idx) => {
+            const lineTotal = item.price * item.quantity;
+            subtotal += lineTotal;
+
+            // Build specs from custom fields
+            let specs = '';
+            if (item.customFields && item.customFields.length > 0) {
+                item.customFields.forEach(f => {
+                    specs += '<div class="cart-item-spec"><span>' + f.name + ':</span> ' + f.value + '</div>';
+                });
+            }
+            if (item.description) {
+                specs += '<div class="cart-item-spec"><span>Size:</span> ' + item.description + '</div>';
+            }
+
+            itemsHTML += '<div class="cart-item" data-item-id="' + item.id + '">';
+            itemsHTML += '<div class="cart-item-product">';
+            itemsHTML += '<strong class="cart-item-name">' + item.name + '</strong>';
+            itemsHTML += '</div>';
+            itemsHTML += '<div class="cart-item-details">' + (specs || '<span class="cart-item-desc">' + item.description + '</span>') + '</div>';
+            itemsHTML += '<div class="cart-item-qty">';
+            itemsHTML += '<span class="cart-qty-display">' + item.quantity + '</span>';
+            itemsHTML += '</div>';
+            itemsHTML += '<div class="cart-item-price">$' + lineTotal.toFixed(2) + '</div>';
+            itemsHTML += '<div class="cart-item-remove"><button class="cart-remove-btn" data-remove-idx="' + idx + '" title="Remove">✕</button></div>';
+            itemsHTML += '</div>';
+        });
+
+        itemsDiv.innerHTML = itemsHTML;
+
+        // Summary
+        const tax = subtotal * 0.07;
+        const grandTotal = subtotal + tax;
+
+        summaryLines.innerHTML = ''
+            + '<div class="cart-sum-line"><span>Subtotal (' + items.length + ' item' + (items.length > 1 ? 's' : '') + ')</span><span>$' + subtotal.toFixed(2) + '</span></div>'
+            + '<div class="cart-sum-line"><span>Shipping</span><span class="cart-free">FREE</span></div>'
+            + '<div class="cart-sum-line"><span>Est. Tax (GA 7%)</span><span>$' + tax.toFixed(2) + '</span></div>';
+
+        summaryTotal.innerHTML = '<div class="cart-sum-total"><span>Estimated Total</span><span>$' + grandTotal.toFixed(2) + '</span></div>';
+
+        monthlyEl.textContent = '$' + Math.round(grandTotal / 12);
+    }
+
+    // Remove item handler
+    itemsDiv.addEventListener('click', (e) => {
+        const btn = e.target.closest('.cart-remove-btn');
+        if (!btn) return;
+        const idx = parseInt(btn.dataset.removeIdx);
+
+        // Try Snipcart remove
+        if (typeof Snipcart !== 'undefined' && Snipcart.store) {
+            try {
+                const state = Snipcart.store.getState();
+                const items = state.cart.items.items || [];
+                if (items[idx]) {
+                    Snipcart.api.cart.items.remove(items[idx].uniqueId);
+                    setTimeout(renderCart, 500);
+                    return;
+                }
+            } catch(e) {}
+        }
+
+        // Fallback: remove from sessionStorage
+        try {
+            const saved = JSON.parse(sessionStorage.getItem('miniCartItems') || '[]');
+            saved.splice(idx, 1);
+            sessionStorage.setItem('miniCartItems', JSON.stringify(saved));
+        } catch(e) {}
+        renderCart();
+    });
+
+    // Render on load
+    setTimeout(renderCart, 1000); // Wait for Snipcart to load
+
+    // Also listen for Snipcart ready
+    document.addEventListener('snipcart.ready', function() {
+        renderCart();
+        Snipcart.events.on('item.added', renderCart);
+        Snipcart.events.on('item.removed', renderCart);
+        Snipcart.events.on('item.updated', renderCart);
+    });
+})();
+</script>
+
+<style lang="less" is:global>
+#cart-page {
+    padding: clamp(2rem, 5vw, 4rem) (16/16rem);
+    min-height: 60vh;
+
+    .cart-hidden { display: none !important; }
+
+    .cart-container {
+        max-width: (1200/16rem);
+        margin: 0 auto;
+    }
+
+    .cart-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        font-weight: 700;
+        margin: 0 0 clamp(1.5rem, 3vw, 2rem);
+        padding-top: (80/16rem);
+    }
+
+    /* Empty state */
+    .cart-empty {
+        text-align: center;
+        padding: clamp(3rem, 6vw, 5rem) (16/16rem);
+
+        .cart-empty-icon { font-size: (48/16rem); display: block; margin-bottom: (16/16rem); }
+        h2 { font-family: 'Playfair Display', serif; margin: 0 0 (8/16rem); }
+        p { color: #888; margin: 0 0 (24/16rem); }
+    }
+
+    .cart-btn-primary {
+        display: inline-block;
+        font-family: inherit;
+        font-size: (16/16rem);
+        font-weight: 700;
+        padding: (12/16rem) (32/16rem);
+        background: var(--secondary);
+        color: #000;
+        text-decoration: none;
+        transition: background 0.3s;
+
+        &:hover { background: #856f00; }
+    }
+
+    /* Cart content layout */
+    .cart-content {
+        display: flex;
+        flex-direction: column;
+        gap: (24/16rem);
+    }
+
+    .cart-items-section {
+        flex: 1;
+    }
+
+    /* Items header */
+    .cart-items-header {
+        display: none;
+        padding: (12/16rem) 0;
+        border-bottom: 2px solid #1a1a1a;
+        font-size: (12/16rem);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #888;
+    }
+
+    /* Item rows */
+    .cart-item {
+        display: flex;
+        flex-wrap: wrap;
+        gap: (12/16rem);
+        padding: (16/16rem) 0;
+        border-bottom: 1px solid #e0e0e0;
+        align-items: flex-start;
+    }
+
+    .cart-item-product {
+        flex: 1;
+        min-width: (150/16rem);
+    }
+
+    .cart-item-name {
+        font-size: (16/16rem);
+        font-weight: 700;
+        color: #1a1a1a;
+        display: block;
+        margin-bottom: (4/16rem);
+    }
+
+    .cart-item-details {
+        flex: 2;
+        min-width: (200/16rem);
+    }
+
+    .cart-item-spec {
+        font-size: (13/16rem);
+        color: #666;
+        line-height: 1.6;
+
+        span { font-weight: 600; color: #888; }
+    }
+
+    .cart-item-desc {
+        font-size: (13/16rem);
+        color: #888;
+    }
+
+    .cart-item-qty {
+        width: (60/16rem);
+        text-align: center;
+    }
+
+    .cart-qty-display {
+        display: inline-block;
+        font-size: (16/16rem);
+        font-weight: 700;
+        padding: (4/16rem) (12/16rem);
+        border: 1px solid #e0e0e0;
+        min-width: (36/16rem);
+    }
+
+    .cart-item-price {
+        width: (80/16rem);
+        text-align: right;
+        font-size: (16/16rem);
+        font-weight: 700;
+        color: var(--secondary);
+    }
+
+    .cart-item-remove {
+        width: (30/16rem);
+    }
+
+    .cart-remove-btn {
+        background: none;
+        border: 1px solid #e0e0e0;
+        font-size: (12/16rem);
+        color: #999;
+        cursor: pointer;
+        padding: (4/16rem) (8/16rem);
+        font-family: inherit;
+        transition: all 0.2s;
+
+        &:hover { border-color: #e74c3c; color: #e74c3c; }
+    }
+
+    /* Sidebar */
+    .cart-sidebar {
+        width: 100%;
+    }
+
+    .cart-summary {
+        background: #f7f7f7;
+        padding: (24/16rem);
+        margin-bottom: (16/16rem);
+    }
+
+    .cart-summary-title {
+        font-family: 'Playfair Display', serif;
+        font-size: (18/16rem);
+        margin: 0 0 (16/16rem);
+    }
+
+    .cart-sum-line {
+        display: flex;
+        justify-content: space-between;
+        padding: (8/16rem) 0;
+        font-size: (14/16rem);
+        color: #555;
+        border-bottom: 1px solid #e8e8e8;
+    }
+
+    .cart-free {
+        color: #2ecc71;
+        font-weight: 700;
+    }
+
+    .cart-sum-total {
+        display: flex;
+        justify-content: space-between;
+        padding: (14/16rem) 0 0;
+        margin-top: (8/16rem);
+        font-size: (20/16rem);
+        font-weight: 900;
+        border-top: 2px solid #1a1a1a;
+
+        span:last-child { color: var(--secondary); }
+    }
+
+    .cart-financing-box {
+        text-align: center;
+        padding: (12/16rem);
+        background: #1a1a1a;
+        color: #e0e0e0;
+        margin-bottom: (16/16rem);
+        font-size: (13/16rem);
+
+        p { margin: 0; }
+        strong { color: var(--secondary); font-size: (18/16rem); }
+        span { font-size: (11/16rem); color: #888; }
+    }
+
+    .cart-checkout-btn {
+        width: 100%;
+        padding: (14/16rem);
+        background: var(--secondary);
+        color: #000;
+        border: none;
+        font-family: inherit;
+        font-size: (16/16rem);
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.3s;
+        margin-bottom: (12/16rem);
+
+        &:hover { background: #856f00; }
+    }
+
+    .cart-trust-badges {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: (6/16rem);
+        margin-bottom: (12/16rem);
+
+        span {
+            font-size: (11/16rem);
+            font-weight: 600;
+            color: #2ecc71;
+            background: #f0fdf4;
+            padding: (3/16rem) (8/16rem);
+            border-radius: (3/16rem);
+        }
+    }
+
+    .cart-continue {
+        display: block;
+        text-align: center;
+        font-size: (14/16rem);
+        color: #888;
+        text-decoration: none;
+
+        &:hover { color: var(--secondary); }
+    }
+}
+
+/* Tablet */
+@media only screen and (min-width: 48rem) {
+    #cart-page {
+        .cart-content {
+            flex-direction: row;
+            align-items: flex-start;
+        }
+
+        .cart-items-header {
+            display: flex;
+        }
+
+        .cart-col-product { flex: 1; min-width: 150px; }
+        .cart-col-details { flex: 2; min-width: 200px; }
+        .cart-col-qty { width: 60px; text-align: center; }
+        .cart-col-price { width: 80px; text-align: right; }
+        .cart-col-remove { width: 30px; }
+
+        .cart-sidebar {
+            width: (350/16rem);
+            flex-shrink: 0;
+            position: sticky;
+            top: (100/16rem);
+        }
+    }
+}
+</style>
