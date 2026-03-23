@@ -228,21 +228,18 @@ import { Icon } from 'astro-icon/components';
     
     #cs-navigation {
         width: 100%;
-        /* prevents padding from affecting height and width */
         box-sizing: border-box;
-        padding: (12/16rem) (16/16rem);
+        padding: 0 (12/16rem);
         background-color: #fff;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         position: fixed;
         z-index: 10000;
 
         &:after {
-            /* on hover green bar */
             content: '';
-            width: 40%;
-            max-width: (146/16rem);
-            height: 100%;
-            //BG color of main logo
+            width: (120/16rem);
+            max-width: (120/16rem);
+            height: (50/16rem);
             background: #000000;
             opacity: 1;
             display: block;
@@ -320,14 +317,7 @@ import { Icon } from 'astro-icon/components';
         }
 
         .cs-top-bar {
-            margin: 0;
-            padding: 0;
-            padding-top: (4/16rem);
-            position: relative;
-            z-index: -3;
-            transition: height .3s, padding-bottom .3s, opacity .3s;
-            border-bottom: 1px solid #EFF1F0;
-            overflow: visible;
+            display: none;
         }
 
         .cs-top-bar-inner {
@@ -379,12 +369,11 @@ import { Icon } from 'astro-icon/components';
         }
 
         .cs-logo {
-            width: 40%;
-            max-width: (146/16rem);
-            height: 100%;
-            /* prevents padding from affecting height and width */
+            width: auto;
+            max-width: (120/16rem);
+            height: (50/16rem);
             box-sizing: border-box;
-            padding: (12/16rem) (16/16rem);
+            padding: (8/16rem) (10/16rem);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -450,10 +439,10 @@ import { Icon } from 'astro-icon/components';
         .cs-mobile-actions {
             display: flex;
             align-items: center;
-            gap: (2/16rem);
+            gap: (4/16rem);
             position: absolute;
-            bottom: (6/16rem);
-            right: (16/16rem);
+            top: (5/16rem);
+            right: (12/16rem);
             z-index: 10;
         }
 
