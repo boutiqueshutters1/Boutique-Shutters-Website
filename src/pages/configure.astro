@@ -47,6 +47,26 @@ const optimizedImage = await getOptimizedImage(landingImage)
     </picture>
 </div>
 
+<!-- Auth Gate -->
+<script is:inline>
+(function() {
+    function checkAuth() {
+        var loggedIn = sessionStorage.getItem('acctLoggedIn') === 'true';
+        if (!loggedIn) {
+            if (typeof Snipcart !== 'undefined' && Snipcart.store) {
+                try {
+                    var state = Snipcart.store.getState();
+                    if (state.customer && state.customer.email) return;
+                } catch(e) {}
+            }
+            window.location.href = '/account';
+        }
+    }
+    setTimeout(checkAuth, 1500);
+    document.addEventListener('snipcart.ready', checkAuth);
+})();
+</script>
+
 <Configurator />
 
 <CatalogFlipbook catalogs={catalogs} onSelectFabric={true} />

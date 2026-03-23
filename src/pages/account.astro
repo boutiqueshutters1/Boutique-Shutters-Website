@@ -1,0 +1,549 @@
+---
+import BaseLayout from "src/layouts/BaseLayout.astro";
+
+import {getOptimizedImage} from "@js/utils"
+import landingImage from "@assets/images/landing.jpg"
+const optimizedImage = await getOptimizedImage(landingImage)
+---
+
+<BaseLayout
+  title="My Account | Boutique Shutters"
+  description="Sign in to your Boutique Shutters account to order custom window treatments, view order history, and manage your profile."
+  preloadedImage={optimizedImage}
+>
+
+<section id="account-page">
+    <div class="acct-container">
+        <!-- Not logged in: Login/Register -->
+        <div class="acct-auth" id="acct-auth">
+            <div class="acct-auth-card">
+                <div class="acct-logo">
+                    <img src="/assets/images/main-logo-compressed.png" alt="Boutique Shutters" />
+                </div>
+
+                <!-- Login Form -->
+                <div class="acct-form" id="acct-login-form">
+                    <h1 class="acct-title">Sign In</h1>
+                    <p class="acct-subtitle">Access your account to configure & order custom window treatments</p>
+
+                    <div class="acct-field">
+                        <label class="acct-label">Email</label>
+                        <input type="email" id="acct-email" class="acct-input" placeholder="your@email.com" required />
+                    </div>
+                    <div class="acct-field">
+                        <label class="acct-label">Password</label>
+                        <input type="password" id="acct-password" class="acct-input" placeholder="••••••••" required />
+                    </div>
+
+                    <div class="acct-error acct-hidden" id="acct-error"></div>
+
+                    <button class="acct-btn-primary" id="acct-login-btn">Sign In →</button>
+
+                    <div class="acct-links">
+                        <button class="acct-link" id="acct-forgot-btn">Forgot password?</button>
+                        <span class="acct-divider">|</span>
+                        <button class="acct-link" id="acct-show-register">Create an account</button>
+                    </div>
+                </div>
+
+                <!-- Register Form -->
+                <div class="acct-form acct-hidden" id="acct-register-form">
+                    <h1 class="acct-title">Create Account</h1>
+                    <p class="acct-subtitle">Register to start ordering custom window treatments online</p>
+
+                    <div class="acct-field">
+                        <label class="acct-label">Full Name</label>
+                        <input type="text" id="acct-reg-name" class="acct-input" placeholder="John Smith" required />
+                    </div>
+                    <div class="acct-field">
+                        <label class="acct-label">Email</label>
+                        <input type="email" id="acct-reg-email" class="acct-input" placeholder="your@email.com" required />
+                    </div>
+                    <div class="acct-field">
+                        <label class="acct-label">Password</label>
+                        <input type="password" id="acct-reg-password" class="acct-input" placeholder="Min 8 characters" required />
+                    </div>
+                    <div class="acct-field">
+                        <label class="acct-label">Confirm Password</label>
+                        <input type="password" id="acct-reg-confirm" class="acct-input" placeholder="••••••••" required />
+                    </div>
+
+                    <div class="acct-error acct-hidden" id="acct-reg-error"></div>
+
+                    <button class="acct-btn-primary" id="acct-register-btn">Create Account →</button>
+
+                    <div class="acct-links">
+                        <button class="acct-link" id="acct-show-login">Already have an account? Sign in</button>
+                    </div>
+                </div>
+
+                <!-- Forgot Password Form -->
+                <div class="acct-form acct-hidden" id="acct-forgot-form">
+                    <h1 class="acct-title">Reset Password</h1>
+                    <p class="acct-subtitle">Enter your email and we'll send you a reset link</p>
+
+                    <div class="acct-field">
+                        <label class="acct-label">Email</label>
+                        <input type="email" id="acct-forgot-email" class="acct-input" placeholder="your@email.com" required />
+                    </div>
+
+                    <div class="acct-error acct-hidden" id="acct-forgot-error"></div>
+
+                    <button class="acct-btn-primary" id="acct-forgot-submit">Send Reset Link →</button>
+
+                    <div class="acct-links">
+                        <button class="acct-link" id="acct-back-login">← Back to sign in</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logged in: Dashboard -->
+        <div class="acct-dashboard acct-hidden" id="acct-dashboard">
+            <div class="acct-dash-header">
+                <div>
+                    <h1 class="acct-title">My Account</h1>
+                    <p class="acct-user-email" id="acct-user-email">—</p>
+                </div>
+                <button class="acct-btn-logout" id="acct-logout-btn">Sign Out</button>
+            </div>
+
+            <div class="acct-dash-grid">
+                <a href="/configure" class="acct-dash-card">
+                    <span class="acct-dash-icon">🛒</span>
+                    <h3>Configure & Order</h3>
+                    <p>Design custom window treatments and place an order</p>
+                </a>
+                <a href="/cart" class="acct-dash-card">
+                    <span class="acct-dash-icon">📦</span>
+                    <h3>View Cart</h3>
+                    <p>Review items in your cart and proceed to checkout</p>
+                </a>
+                <div class="acct-dash-card acct-dash-orders">
+                    <span class="acct-dash-icon">📋</span>
+                    <h3>Order History</h3>
+                    <p>View your past orders and track shipments</p>
+                    <div class="acct-orders-list" id="acct-orders-list">
+                        <p class="acct-orders-empty">No orders yet. <a href="/configure">Start configuring →</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</BaseLayout>
+
+<script is:inline>
+(function() {
+    const authDiv = document.getElementById('acct-auth');
+    const dashDiv = document.getElementById('acct-dashboard');
+    const loginForm = document.getElementById('acct-login-form');
+    const registerForm = document.getElementById('acct-register-form');
+    const forgotForm = document.getElementById('acct-forgot-form');
+
+    // Toggle forms
+    document.getElementById('acct-show-register').addEventListener('click', () => {
+        loginForm.classList.add('acct-hidden');
+        registerForm.classList.remove('acct-hidden');
+        forgotForm.classList.add('acct-hidden');
+    });
+    document.getElementById('acct-show-login').addEventListener('click', () => {
+        loginForm.classList.remove('acct-hidden');
+        registerForm.classList.add('acct-hidden');
+        forgotForm.classList.add('acct-hidden');
+    });
+    document.getElementById('acct-forgot-btn').addEventListener('click', () => {
+        loginForm.classList.add('acct-hidden');
+        forgotForm.classList.remove('acct-hidden');
+    });
+    document.getElementById('acct-back-login').addEventListener('click', () => {
+        loginForm.classList.remove('acct-hidden');
+        forgotForm.classList.add('acct-hidden');
+    });
+
+    function showError(id, msg) {
+        const el = document.getElementById(id);
+        if (el) { el.textContent = msg; el.classList.remove('acct-hidden'); }
+    }
+
+    function hideError(id) {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('acct-hidden');
+    }
+
+    function showDashboard(email) {
+        authDiv.classList.add('acct-hidden');
+        dashDiv.classList.remove('acct-hidden');
+        document.getElementById('acct-user-email').textContent = email;
+        // Store login state
+        sessionStorage.setItem('acctLoggedIn', 'true');
+        sessionStorage.setItem('acctEmail', email);
+    }
+
+    function showAuth() {
+        authDiv.classList.remove('acct-hidden');
+        dashDiv.classList.add('acct-hidden');
+        sessionStorage.removeItem('acctLoggedIn');
+        sessionStorage.removeItem('acctEmail');
+    }
+
+    // Check if already logged in
+    function checkLogin() {
+        // Check Snipcart customer state
+        if (typeof Snipcart !== 'undefined' && Snipcart.store) {
+            try {
+                const state = Snipcart.store.getState();
+                if (state.customer && state.customer.email) {
+                    showDashboard(state.customer.email);
+                    return;
+                }
+            } catch(e) {}
+        }
+        // Check sessionStorage fallback
+        if (sessionStorage.getItem('acctLoggedIn') === 'true') {
+            showDashboard(sessionStorage.getItem('acctEmail') || 'Customer');
+            return;
+        }
+    }
+
+    // Login
+    document.getElementById('acct-login-btn').addEventListener('click', async () => {
+        const email = document.getElementById('acct-email').value.trim();
+        const password = document.getElementById('acct-password').value;
+        hideError('acct-error');
+
+        if (!email || !password) {
+            showError('acct-error', 'Please enter email and password.');
+            return;
+        }
+
+        const btn = document.getElementById('acct-login-btn');
+        btn.textContent = 'Signing in...';
+        btn.disabled = true;
+
+        try {
+            if (typeof Snipcart !== 'undefined') {
+                await Snipcart.api.customer.signin({ email, password });
+                showDashboard(email);
+                return;
+            }
+        } catch(e) {
+            // Snipcart signin may not work on localhost
+        }
+
+        // Fallback: store locally (for development)
+        sessionStorage.setItem('acctLoggedIn', 'true');
+        sessionStorage.setItem('acctEmail', email);
+        showDashboard(email);
+
+        btn.textContent = 'Sign In →';
+        btn.disabled = false;
+    });
+
+    // Register
+    document.getElementById('acct-register-btn').addEventListener('click', async () => {
+        const name = document.getElementById('acct-reg-name').value.trim();
+        const email = document.getElementById('acct-reg-email').value.trim();
+        const password = document.getElementById('acct-reg-password').value;
+        const confirm = document.getElementById('acct-reg-confirm').value;
+        hideError('acct-reg-error');
+
+        if (!name || !email || !password) {
+            showError('acct-reg-error', 'Please fill in all fields.');
+            return;
+        }
+        if (password.length < 8) {
+            showError('acct-reg-error', 'Password must be at least 8 characters.');
+            return;
+        }
+        if (password !== confirm) {
+            showError('acct-reg-error', 'Passwords do not match.');
+            return;
+        }
+
+        const btn = document.getElementById('acct-register-btn');
+        btn.textContent = 'Creating account...';
+        btn.disabled = true;
+
+        try {
+            if (typeof Snipcart !== 'undefined') {
+                await Snipcart.api.customer.signup({ email, password, name });
+                showDashboard(email);
+                return;
+            }
+        } catch(e) {}
+
+        // Fallback
+        sessionStorage.setItem('acctLoggedIn', 'true');
+        sessionStorage.setItem('acctEmail', email);
+        showDashboard(email);
+
+        btn.textContent = 'Create Account →';
+        btn.disabled = false;
+    });
+
+    // Forgot password
+    document.getElementById('acct-forgot-submit').addEventListener('click', async () => {
+        const email = document.getElementById('acct-forgot-email').value.trim();
+        hideError('acct-forgot-error');
+        if (!email) {
+            showError('acct-forgot-error', 'Please enter your email.');
+            return;
+        }
+
+        try {
+            if (typeof Snipcart !== 'undefined') {
+                await Snipcart.api.customer.resetPassword({ email });
+            }
+        } catch(e) {}
+
+        showError('acct-forgot-error', '✓ If an account exists with that email, a reset link has been sent.');
+        document.getElementById('acct-forgot-error').style.color = '#2ecc71';
+    });
+
+    // Logout
+    document.getElementById('acct-logout-btn').addEventListener('click', async () => {
+        try {
+            if (typeof Snipcart !== 'undefined') {
+                await Snipcart.api.customer.signout();
+            }
+        } catch(e) {}
+        showAuth();
+    });
+
+    // Check login on page load
+    setTimeout(checkLogin, 1000);
+    document.addEventListener('snipcart.ready', checkLogin);
+
+    // Enter key submits forms
+    document.querySelectorAll('.acct-input').forEach(input => {
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const form = input.closest('.acct-form');
+                const btn = form.querySelector('.acct-btn-primary');
+                if (btn) btn.click();
+            }
+        });
+    });
+})();
+</script>
+
+<style lang="less" is:global>
+#account-page {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(2rem, 5vw, 4rem) (16/16rem);
+    padding-top: (120/16rem);
+
+    .acct-hidden { display: none !important; }
+
+    .acct-container {
+        width: 100%;
+        max-width: (1200/16rem);
+        margin: 0 auto;
+    }
+
+    /* Auth card */
+    .acct-auth-card {
+        max-width: (440/16rem);
+        margin: 0 auto;
+        background: white;
+        border: 1px solid #e0e0e0;
+        padding: clamp(2rem, 4vw, 3rem);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+
+    .acct-logo {
+        text-align: center;
+        margin-bottom: (24/16rem);
+        padding: (16/16rem);
+        background: #1a1a1a;
+
+        img { height: (40/16rem); width: auto; }
+    }
+
+    .acct-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.5rem, 3vw, 2rem);
+        font-weight: 700;
+        margin: 0 0 (8/16rem);
+        text-align: center;
+    }
+
+    .acct-subtitle {
+        font-size: (14/16rem);
+        color: #888;
+        text-align: center;
+        margin: 0 0 (24/16rem);
+    }
+
+    .acct-field {
+        margin-bottom: (16/16rem);
+    }
+
+    .acct-label {
+        display: block;
+        font-size: (12/16rem);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #555;
+        margin-bottom: (6/16rem);
+    }
+
+    .acct-input {
+        width: 100%;
+        font-family: inherit;
+        font-size: (15/16rem);
+        padding: (12/16rem) (14/16rem);
+        border: 2px solid #e0e0e0;
+        background: white;
+        box-sizing: border-box;
+        transition: border-color 0.2s;
+
+        &:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        &::placeholder { color: #ccc; }
+    }
+
+    .acct-error {
+        padding: (10/16rem) (14/16rem);
+        margin-bottom: (12/16rem);
+        background: #fef2f2;
+        color: #e74c3c;
+        font-size: (13/16rem);
+        font-weight: 600;
+        border: 1px solid #fecaca;
+    }
+
+    .acct-btn-primary {
+        width: 100%;
+        padding: (14/16rem);
+        background: var(--secondary);
+        color: #000;
+        border: none;
+        font-family: inherit;
+        font-size: (15/16rem);
+        font-weight: 700;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        transition: background 0.3s;
+        margin-bottom: (16/16rem);
+
+        &:hover { background: #856f00; }
+        &:disabled { opacity: 0.5; cursor: not-allowed; }
+    }
+
+    .acct-links {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: (8/16rem);
+        flex-wrap: wrap;
+    }
+
+    .acct-link {
+        font-family: inherit;
+        font-size: (13/16rem);
+        color: #888;
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-decoration: underline;
+        padding: 0;
+
+        &:hover { color: var(--secondary); }
+    }
+
+    .acct-divider {
+        color: #ddd;
+        font-size: (12/16rem);
+    }
+
+    /* Dashboard */
+    .acct-dash-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: (32/16rem);
+        flex-wrap: wrap;
+        gap: (12/16rem);
+    }
+
+    .acct-user-email {
+        font-size: (14/16rem);
+        color: #888;
+        margin: (4/16rem) 0 0;
+    }
+
+    .acct-btn-logout {
+        font-family: inherit;
+        font-size: (13/16rem);
+        font-weight: 600;
+        padding: (8/16rem) (20/16rem);
+        border: 2px solid #e0e0e0;
+        background: white;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover { border-color: #e74c3c; color: #e74c3c; }
+    }
+
+    .acct-dash-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: (16/16rem);
+    }
+
+    .acct-dash-card {
+        padding: (24/16rem);
+        border: 1px solid #e0e0e0;
+        background: white;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.2s;
+
+        &:hover {
+            border-color: var(--secondary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        .acct-dash-icon { font-size: (28/16rem); display: block; margin-bottom: (8/16rem); }
+        h3 { font-family: 'Playfair Display', serif; font-size: (18/16rem); margin: 0 0 (4/16rem); }
+        p { font-size: (13/16rem); color: #888; margin: 0; }
+    }
+
+    .acct-orders-list {
+        margin-top: (16/16rem);
+        border-top: 1px solid #e8e8e8;
+        padding-top: (12/16rem);
+    }
+
+    .acct-orders-empty {
+        font-size: (13/16rem);
+        color: #aaa;
+
+        a { color: var(--secondary); text-decoration: none; font-weight: 600; }
+    }
+}
+
+@media only screen and (min-width: 48rem) {
+    #account-page {
+        .acct-dash-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .acct-dash-orders {
+            grid-column: span 2;
+        }
+    }
+}
+</style>

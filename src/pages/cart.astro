@@ -12,6 +12,26 @@ const optimizedImage = await getOptimizedImage(landingImage)
   preloadedImage={optimizedImage}
 >
 
+<!-- Auth Gate -->
+<script is:inline>
+(function() {
+    function checkAuth() {
+        var loggedIn = sessionStorage.getItem('acctLoggedIn') === 'true';
+        if (!loggedIn) {
+            if (typeof Snipcart !== 'undefined' && Snipcart.store) {
+                try {
+                    var state = Snipcart.store.getState();
+                    if (state.customer && state.customer.email) return;
+                } catch(e) {}
+            }
+            window.location.href = '/account';
+        }
+    }
+    setTimeout(checkAuth, 1500);
+    document.addEventListener('snipcart.ready', checkAuth);
+})();
+</script>
+
 <section id="cart-page">
     <div class="cart-container">
         <h1 class="cart-title">Your Cart</h1>
