@@ -835,16 +835,22 @@ const productDataJSON = JSON.stringify(products);
             html += '<div class="cfg-inv-totals">';
             html += '<table class="cfg-inv-table">';
             html += '<tbody>';
+            var taxRate = 0.07; // 7% Georgia sales tax
+            var taxAmount = total * taxRate;
+            var grandTotal = total + taxAmount;
+
             html += '<tr><td colspan="2">Unit Price</td><td class="cfg-inv-right">$' + price.toFixed(2) + '</td></tr>';
             html += oversizeNote;
             html += '<tr><td colspan="2">Quantity</td><td class="cfg-inv-right">× ' + state.quantity + '</td></tr>';
             html += '<tr class="cfg-inv-subtotal"><td colspan="2">Subtotal</td><td class="cfg-inv-right">$' + total.toFixed(2) + '</td></tr>';
+            html += '<tr><td colspan="2">Shipping</td><td class="cfg-inv-right" style="color:#2ecc71;font-weight:700;">FREE</td></tr>';
+            html += '<tr><td colspan="2">Est. Tax (GA 7%)</td><td class="cfg-inv-right">$' + taxAmount.toFixed(2) + '</td></tr>';
             html += '</tbody></table>';
             html += '<div class="cfg-inv-grand-total">';
             html += '<span>Estimated Total</span>';
-            html += '<span>$' + total.toFixed(2) + '</span>';
+            html += '<span>$' + grandTotal.toFixed(2) + '</span>';
             html += '</div>';
-            html += '<div class="cfg-inv-financing">As low as <strong>$' + Math.round(total / 12) + '/mo</strong> with Wisetack or Klarna financing</div>';
+            html += '<div class="cfg-inv-financing">As low as <strong>$' + Math.round(grandTotal / 12) + '/mo</strong> with Wisetack or Klarna financing</div>';
             html += '</div>';
         } else {
             html += '<div class="cfg-inv-totals">';
@@ -928,11 +934,19 @@ const productDataJSON = JSON.stringify(products);
             customIdx++;
         }
 
+        const cartTax = total * 0.07;
+        const cartGrand = total + cartTax;
+
         area.innerHTML = `
             <div class="cfg-cart-icon">✓</div>
             <h2 class="cfg-title">Ready to Add to Cart</h2>
             <p class="cfg-subtitle">${itemName} — ${w}" × ${h}" — Qty: ${state.quantity}</p>
-            <p class="cfg-cart-total">$${total.toFixed(2)}</p>
+            <div class="cfg-cart-breakdown">
+                <div class="cfg-cart-line"><span>Subtotal</span><span>$${total.toFixed(2)}</span></div>
+                <div class="cfg-cart-line"><span>Shipping</span><span style="color:#2ecc71;">FREE</span></div>
+                <div class="cfg-cart-line"><span>Est. Tax (GA 7%)</span><span>$${cartTax.toFixed(2)}</span></div>
+                <div class="cfg-cart-line cfg-cart-line-total"><span>Estimated Total</span><span>$${cartGrand.toFixed(2)}</span></div>
+            </div>
             <button class="snipcart-add-item cfg-add-to-cart"
                 data-item-id="${itemId}"
                 data-item-name="${itemName}"
@@ -942,7 +956,7 @@ const productDataJSON = JSON.stringify(products);
                 data-item-description="${w}&quot; × ${h}&quot; custom ${p.name.toLowerCase()}"
                 ${customFields}
             >
-                Add to Cart — $${total.toFixed(2)}
+                Add to Cart — $${cartGrand.toFixed(2)}
             </button>
             <button class="cfg-btn-continue" onclick="document.querySelectorAll('.cfg-product-card')[0].click()">← Configure Another</button>
             <div class="cfg-cart-trust">
@@ -2017,6 +2031,32 @@ const productDataJSON = JSON.stringify(products);
             display: inline-block;
 
             &:hover { background: var(--csButtonHoverColor); }
+        }
+
+        .cfg-cart-breakdown {
+            max-width: (320/16rem);
+            margin: 0 auto (20/16rem);
+        }
+
+        .cfg-cart-line {
+            display: flex;
+            justify-content: space-between;
+            padding: (6/16rem) 0;
+            font-size: (14/16rem);
+            color: #666;
+            border-bottom: 1px solid #f0f0f0;
+
+            &.cfg-cart-line-total {
+                border-bottom: none;
+                border-top: 2px solid #1a1a1a;
+                padding-top: (10/16rem);
+                margin-top: (4/16rem);
+                font-size: (18/16rem);
+                font-weight: 900;
+                color: #1a1a1a;
+
+                span:last-child { color: var(--secondary); }
+            }
         }
 
         .cfg-cart-trust {
