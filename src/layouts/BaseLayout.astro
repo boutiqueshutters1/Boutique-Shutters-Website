@@ -413,7 +413,8 @@ const { description, title } = Astro.props;
                 style.id = id;
                 style.textContent = `
                     .snipcart-modal__container { font-family: 'Inter', sans-serif !important; }
-                    .snipcart-layout { background: #fafafa !important; }
+                    .snipcart-layout { background: #fafafa !important; padding-top: 120px !important; }
+                    .snipcart-layout__content { padding-top: 20px !important; }
                     .snipcart-cart-header { background: #1a1a1a !important; }
                     .snipcart-cart-header__title { color: #ffbf00 !important; font-family: 'Playfair Display', serif !important; font-size: 1.5rem !important; }
                     .snipcart-cart-header__close-button { color: white !important; }
@@ -437,6 +438,8 @@ const { description, title } = Astro.props;
                     .snipcart-payment::before { content: '✓ 100% Satisfaction Guaranteed — Free Shipping — Secure Payment'; display: block; text-align: center; padding: 12px; margin-bottom: 16px; background: #f0fdf4; color: #2ecc71; font-size: 13px; font-weight: 600; border: 1px solid #d1fae5; }
                     .snipcart-cart-summary::after { content: '📦 Estimated delivery: 2–4 weeks'; display: block; text-align: center; padding: 10px; margin-top: 12px; font-size: 12px; color: #888; border-top: 1px solid #e8e8e8; }
                     .snipcart-cart-summary__edit-link { color: #ffbf00 !important; }
+                    .snipcart-cart-summary { overflow: visible !important; }
+                    .snipcart-checkout { overflow: visible !important; }
                     .snipcart__box--badge { background: #1a1a1a !important; }
                     .snipcart__loading-overlay { background: rgba(26,26,26,0.8) !important; }
                 `;
