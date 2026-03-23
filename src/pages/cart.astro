@@ -340,12 +340,11 @@ const optimizedImage = await getOptimizedImage(landingImage)
     }
 
     .cart-item-product {
-        flex: 1;
-        min-width: (150/16rem);
+        width: 100%;
     }
 
     .cart-item-name {
-        font-size: (16/16rem);
+        font-size: (15/16rem);
         font-weight: 700;
         color: #1a1a1a;
         display: block;
@@ -353,8 +352,7 @@ const optimizedImage = await getOptimizedImage(landingImage)
     }
 
     .cart-item-details {
-        flex: 2;
-        min-width: (200/16rem);
+        width: 100%;
     }
 
     .cart-item-spec {
@@ -371,29 +369,33 @@ const optimizedImage = await getOptimizedImage(landingImage)
     }
 
     .cart-item-qty {
-        width: (60/16rem);
         text-align: center;
     }
 
     .cart-qty-display {
         display: inline-block;
-        font-size: (16/16rem);
+        font-size: (14/16rem);
         font-weight: 700;
-        padding: (4/16rem) (12/16rem);
+        padding: (4/16rem) (10/16rem);
         border: 1px solid #e0e0e0;
-        min-width: (36/16rem);
+        min-width: (32/16rem);
     }
 
     .cart-item-price {
-        width: (80/16rem);
         text-align: right;
-        font-size: (16/16rem);
+        font-size: (15/16rem);
         font-weight: 700;
         color: var(--secondary);
     }
 
+    .cart-item-remove { }
+
+    /* Mobile: qty, price, remove in a row */
+    .cart-item-qty,
+    .cart-item-price,
     .cart-item-remove {
-        width: (30/16rem);
+        display: inline-flex;
+        align-items: center;
     }
 
     .cart-remove-btn {
@@ -526,6 +528,12 @@ const optimizedImage = await getOptimizedImage(landingImage)
         .cart-col-qty { width: 60px; text-align: center; }
         .cart-col-price { width: 80px; text-align: right; }
         .cart-col-remove { width: 30px; }
+
+        .cart-item-product { width: auto; flex: 1; min-width: 150px; }
+        .cart-item-details { width: auto; flex: 2; min-width: 200px; }
+        .cart-item-qty { width: 60px; display: block; }
+        .cart-item-price { width: 80px; display: block; }
+        .cart-item-remove { width: 30px; display: block; }
 
         .cart-sidebar {
             width: (350/16rem);
