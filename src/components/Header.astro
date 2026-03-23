@@ -450,8 +450,12 @@ import { Icon } from 'astro-icon/components';
         .cs-mobile-actions {
             display: flex;
             align-items: center;
-            gap: (4/16rem);
-            margin: (8/16rem) 0 0 auto;
+            gap: (2/16rem);
+            position: absolute;
+            top: 50%;
+            right: (16/16rem);
+            transform: translateY(-50%);
+            z-index: 10;
         }
 
         .cs-cart-btn-mobile,
