@@ -382,7 +382,7 @@ const catalogDataJSON = JSON.stringify(catalogs);
 
         /* Viewer */
         .fb-viewer {
-            max-width: (1280/16rem);
+            max-width: (800/16rem);
             margin: 0 auto;
             position: relative;
         }
@@ -394,15 +394,21 @@ const catalogDataJSON = JSON.stringify(catalogs);
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            max-height: 80vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
         }
 
         .fb-main-page {
-            width: 100%;
-            height: auto;
+            width: auto;
+            max-width: 100%;
+            max-height: 80vh;
             display: block;
             user-select: none;
             -webkit-user-drag: none;
             transition: opacity 0.12s, transform 0.12s;
+            object-fit: contain;
         }
 
         /* Arrow nav buttons */
