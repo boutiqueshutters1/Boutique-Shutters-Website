@@ -36,13 +36,17 @@ const catalogDataJSON = JSON.stringify(catalogs);
             <button class="fb-arrow fb-arrow-left" id="fb-prev" title="Previous">‹</button>
             <button class="fb-arrow fb-arrow-right" id="fb-next" title="Next">›</button>
 
-            <!-- Horizontal scroll carousel -->
-            <div class="fb-carousel" id="fb-carousel"></div>
+            <!-- Single page display -->
+            <div class="fb-page-container" id="fb-carousel">
+                <img class="fb-main-page" id="fb-main-img" src="" alt="Catalog page" draggable="false" />
+            </div>
 
-            <!-- Page thumbnails strip -->
-            <div class="fb-thumbnails" id="fb-thumbnails"></div>
+            <!-- Page info + dots -->
+            <div class="fb-controls">
+                <span class="fb-page-info" id="fb-page-info">1 / 65</span>
+            </div>
 
-            <!-- Fabric code popup (appears when user taps on page) -->
+            <!-- Fabric code popup -->
             <div class="fb-code-popup fb-hidden" id="fb-code-popup">
                 <div class="fb-code-popup-inner">
                     <p class="fb-code-popup-title">Enter the fabric code you see:</p>
@@ -69,9 +73,9 @@ const catalogDataJSON = JSON.stringify(catalogs);
     let currentCatalog = catalogs[0];
     let currentPage = 1;
 
-    const carousel = document.getElementById('fb-carousel');
+    const pageContainer = document.getElementById('fb-carousel');
+    const mainImg = document.getElementById('fb-main-img');
     const pageInfo = document.getElementById('fb-page-info');
-    const thumbsContainer = document.getElementById('fb-thumbnails');
     const prevBtn = document.getElementById('fb-prev');
     const nextBtn = document.getElementById('fb-next');
     const codePopup = document.getElementById('fb-code-popup');
@@ -86,102 +90,42 @@ const catalogDataJSON = JSON.stringify(catalogs);
         return '/assets/catalogs/' + catalog.folder + '/page-' + padded + '.jpg';
     }
 
-    // --- Build carousel pages ---
+    // --- Load catalog ---
     function loadCatalog(catalog) {
         currentCatalog = catalog;
         currentPage = 1;
 
-        // Update tabs
         document.querySelectorAll('.fb-tab').forEach(tab => {
             tab.classList.toggle('fb-tab-active', tab.dataset.catalogId === catalog.id);
         });
 
-        // Build all pages in the carousel
-        let carouselHTML = '';
-        for (let i = 1; i <= catalog.pages; i++) {
-            carouselHTML += '<div class="fb-slide" data-page="' + i + '">';
-            carouselHTML += '<img src="' + getPageUrl(catalog, i) + '" alt="' + catalog.name + ' - Page ' + i + '" loading="lazy" draggable="false" />';
-            carouselHTML += '<span class="fb-slide-num">Page ' + i + '</span>';
-            carouselHTML += '</div>';
-        }
-        carousel.innerHTML = carouselHTML;
-
-        // Build thumbnails
-        let thumbsHTML = '';
-        const maxThumbs = Math.min(catalog.pages, 30);
-        for (let i = 1; i <= maxThumbs; i++) {
-            thumbsHTML += '<button class="fb-thumb ' + (i === 1 ? 'fb-thumb-active' : '') + '" data-page="' + i + '">';
-            thumbsHTML += '<img src="' + getPageUrl(catalog, i) + '" alt="Page ' + i + '" loading="lazy" />';
-            thumbsHTML += '</button>';
-        }
-        if (catalog.pages > 30) {
-            thumbsHTML += '<span class="fb-thumb-more">+' + (catalog.pages - 30) + ' more</span>';
-        }
-        thumbsContainer.innerHTML = thumbsHTML;
-
-        // Scroll to first page
-        scrollToPage(1, false);
+        showPage(1);
     }
 
-    // --- Scroll to a specific page ---
-    function scrollToPage(num, smooth) {
+    // --- Show a specific page ---
+    function showPage(num) {
         if (num < 1 || num > currentCatalog.pages) return;
         currentPage = num;
 
-        const slide = carousel.querySelector('.fb-slide[data-page="' + num + '"]');
-        if (slide) {
-            // Use scrollLeft instead of scrollIntoView to avoid page jump
-            const targetLeft = slide.offsetLeft - carousel.offsetLeft;
-            carousel.scrollTo({ left: targetLeft, behavior: smooth ? 'smooth' : 'auto' });
-        }
+        // Slide transition
+        mainImg.style.opacity = '0';
+        mainImg.style.transform = 'translateX(' + (num > currentPage ? '20px' : '-20px') + ')';
 
-        pageInfo.textContent = num + ' / ' + currentCatalog.pages;
+        setTimeout(() => {
+            mainImg.src = getPageUrl(currentCatalog, num);
+            mainImg.alt = currentCatalog.name + ' - Page ' + num;
+            mainImg.style.opacity = '1';
+            mainImg.style.transform = 'translateX(0)';
+        }, 120);
+
+        pageInfo.textContent = 'Page ' + num + ' of ' + currentCatalog.pages;
         prevBtn.disabled = num <= 1;
         nextBtn.disabled = num >= currentCatalog.pages;
-
-        // Update thumbnails
-        document.querySelectorAll('.fb-thumb').forEach(thumb => {
-            thumb.classList.toggle('fb-thumb-active', parseInt(thumb.dataset.page) === num);
-        });
-        const activeThumb = document.querySelector('.fb-thumb-active');
-        if (activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
 
-    // --- Detect current page from scroll position ---
-    let scrollTimeout;
-    carousel.addEventListener('scroll', () => {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-            const slides = carousel.querySelectorAll('.fb-slide');
-            const carouselLeft = carousel.scrollLeft;
-            const carouselWidth = carousel.offsetWidth;
-            let closestPage = 1;
-            let closestDist = Infinity;
-
-            slides.forEach(slide => {
-                const dist = Math.abs(slide.offsetLeft - carouselLeft);
-                if (dist < closestDist) {
-                    closestDist = dist;
-                    closestPage = parseInt(slide.dataset.page);
-                }
-            });
-
-            if (closestPage !== currentPage) {
-                currentPage = closestPage;
-                pageInfo.textContent = currentPage + ' / ' + currentCatalog.pages;
-                prevBtn.disabled = currentPage <= 1;
-                nextBtn.disabled = currentPage >= currentCatalog.pages;
-
-                document.querySelectorAll('.fb-thumb').forEach(thumb => {
-                    thumb.classList.toggle('fb-thumb-active', parseInt(thumb.dataset.page) === currentPage);
-                });
-            }
-        }, 100);
-    }, { passive: true });
-
-    // --- Nav buttons (prevent page scroll) ---
-    prevBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); scrollToPage(currentPage - 1, true); });
-    nextBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); scrollToPage(currentPage + 1, true); });
+    // --- Nav buttons ---
+    prevBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); showPage(currentPage - 1); });
+    nextBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); showPage(currentPage + 1); });
     prevBtn.addEventListener('mousedown', (e) => e.preventDefault());
     nextBtn.addEventListener('mousedown', (e) => e.preventDefault());
 
@@ -193,64 +137,25 @@ const catalogDataJSON = JSON.stringify(catalogs);
         });
     });
 
-    // --- Thumbnail clicks ---
-    thumbsContainer.addEventListener('click', (e) => {
-        const thumb = e.target.closest('.fb-thumb');
-        if (thumb) scrollToPage(parseInt(thumb.dataset.page), true);
+    // --- Keyboard ---
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') showPage(currentPage - 1);
+        if (e.key === 'ArrowRight') showPage(currentPage + 1);
     });
 
-    // --- Mouse drag to scroll ---
-    let isDragging = false;
-    let dragStartX = 0;
-    let dragScrollLeft = 0;
-    let dragMoved = false;
-
-    carousel.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        dragMoved = false;
-        dragStartX = e.pageX - carousel.offsetLeft;
-        dragScrollLeft = carousel.scrollLeft;
-        carousel.style.cursor = 'grabbing';
-        carousel.style.scrollSnapType = 'none'; // disable snap while dragging
-        e.preventDefault();
-    });
-
-    carousel.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        const x = e.pageX - carousel.offsetLeft;
-        const walk = (x - dragStartX) * 1.5; // multiply for faster scroll
-        if (Math.abs(walk) > 5) dragMoved = true;
-        carousel.scrollLeft = dragScrollLeft - walk;
-    });
-
-    carousel.addEventListener('mouseup', () => {
-        isDragging = false;
-        carousel.style.cursor = 'grab';
-        carousel.style.scrollSnapType = 'x mandatory'; // re-enable snap
-    });
-
-    carousel.addEventListener('mouseleave', () => {
-        if (isDragging) {
-            isDragging = false;
-            carousel.style.cursor = 'grab';
-            carousel.style.scrollSnapType = 'x mandatory';
+    // --- Touch swipe ---
+    let touchStartX = 0;
+    pageContainer.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    pageContainer.addEventListener('touchend', (e) => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) showPage(currentPage + 1);
+            else showPage(currentPage - 1);
         }
     });
 
-    // --- Keyboard ---
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') scrollToPage(currentPage - 1, true);
-        if (e.key === 'ArrowRight') scrollToPage(currentPage + 1, true);
-    });
-
-    // --- Click on page to select fabric (only if not dragging) ---
-    carousel.addEventListener('click', (e) => {
-        if (dragMoved) { dragMoved = false; return; } // ignore clicks after drag
-        const slide = e.target.closest('.fb-slide');
-        if (!slide) return;
-        const page = parseInt(slide.dataset.page);
-        currentPage = page;
+    // --- Click on page to select fabric ---
+    pageContainer.addEventListener('click', () => {
         // Show popup
         codePopup.classList.remove('fb-hidden');
         fabricCodeInput.value = '';
@@ -391,64 +296,22 @@ const catalogDataJSON = JSON.stringify(catalogs);
             position: relative;
         }
 
-        /* Horizontal carousel */
-        .fb-carousel {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-            gap: 0;
-            background: #e8e8e8;
+        /* Single page display */
+        .fb-page-container {
+            background: white;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            cursor: grab;
-            user-select: none;
-
-            /* Hide scrollbar */
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            &::-webkit-scrollbar { display: none; }
-        }
-
-        .fb-slide {
-            flex: 0 0 100%;
-            scroll-snap-align: start;
-            position: relative;
             cursor: pointer;
-
-            &:hover .fb-slide-num {
-                opacity: 1;
-            }
-
-            img {
-                width: 100%;
-                height: auto;
-                display: block;
-                user-select: none;
-                -webkit-user-drag: none;
-                pointer-events: none;
-            }
+            position: relative;
+            overflow: hidden;
         }
 
-        .fb-slide-num {
-            position: absolute;
-            bottom: (8/16rem);
-            right: (8/16rem);
-            background: rgba(0,0,0,0.6);
-            color: white;
-            font-size: (11/16rem);
-            font-weight: 600;
-            padding: (2/16rem) (8/16rem);
-            opacity: 0.5;
-            transition: opacity 0.2s;
-        }
-
-        .fb-tap-hint {
-            text-align: center;
-            font-size: (13/16rem);
-            color: #888;
-            margin: (8/16rem) 0 0;
-            padding: 0;
+        .fb-main-page {
+            width: 100%;
+            height: auto;
+            display: block;
+            user-select: none;
+            -webkit-user-drag: none;
+            transition: opacity 0.12s, transform 0.12s;
         }
 
         /* Arrow nav buttons */
@@ -493,15 +356,13 @@ const catalogDataJSON = JSON.stringify(catalogs);
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: (16/16rem);
-            padding: (8/16rem) 0;
+            padding: (10/16rem) 0;
         }
 
         .fb-page-info {
-            font-size: (14/16rem);
+            font-size: (13/16rem);
             font-weight: 600;
-            color: #666;
-            min-width: (60/16rem);
+            color: #999;
             text-align: center;
         }
 
@@ -722,15 +583,6 @@ const catalogDataJSON = JSON.stringify(catalogs);
 /* Tablet */
 @media only screen and (min-width: 48rem) {
     #catalog-flipbook {
-        .fb-slide {
-            flex: 0 0 50%;
-        }
-
-        .fb-thumb {
-            width: (80/16rem);
-            height: (100/16rem);
-        }
-
         .fb-arrow {
             width: (56/16rem);
             height: (56/16rem);
