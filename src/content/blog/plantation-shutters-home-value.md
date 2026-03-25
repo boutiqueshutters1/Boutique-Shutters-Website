@@ -1,7 +1,7 @@
 ---
 title: "Do Plantation Shutters Increase Home Value? What Atlanta Homeowners Should Know"
 description: "Learn how plantation shutters can boost your home's resale value, improve curb appeal, and attract buyers in the competitive Metro Atlanta real estate market."
-author: "Boutique Shutters"
+author: "Boutique Shutters & Shades"
 date: 2026-02-20
 tags:
   - shutters

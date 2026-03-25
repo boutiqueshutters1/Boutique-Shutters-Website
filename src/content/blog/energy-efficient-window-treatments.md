@@ -1,7 +1,7 @@
 ---
 title: "Energy-Efficient Window Treatments: Save on Atlanta Summer Cooling Costs"
 description: "How the right shutters and shades can reduce your energy bills and keep your Metro Atlanta home comfortable year-round through better insulation and solar heat management."
-author: "Boutique Shutters"
+author: "Boutique Shutters & Shades"
 date: 2026-03-01
 tags:
   - energy efficiency

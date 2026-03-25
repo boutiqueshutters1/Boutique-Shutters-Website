@@ -1,7 +1,7 @@
 ---
 title: "2026 Window Treatment Trends: What's Hot in Atlanta Homes"
 description: "Discover the top window treatment trends for 2026, from natural materials and bold colors to smart motorized shades that integrate with your home automation system."
-author: "Boutique Shutters"
+author: "Boutique Shutters & Shades"
 date: 2026-03-18
 tags:
   - trends
@@ -47,4 +47,4 @@ Many of our clients are seeing measurable reductions in their energy bills after
 
 ### Ready to Update Your Windows?
 
-Whether you're drawn to natural materials, smart automation, or energy-saving solutions, Boutique Shutters can help you find the perfect window treatments for your home. Schedule a free consultation to explore these trends in person.
+Whether you're drawn to natural materials, smart automation, or energy-saving solutions, Boutique Shutters & Shades can help you find the perfect window treatments for your home. Schedule a free consultation to explore these trends in person.

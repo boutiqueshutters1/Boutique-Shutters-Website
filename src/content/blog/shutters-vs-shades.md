@@ -1,7 +1,7 @@
 ---
 title: "How to Choose Between Shutters and Shades for Your Atlanta Home"
 description: "Comparing plantation shutters and window shades to help Metro Atlanta homeowners make the best choice for their home's style, budget, and functionality needs."
-author: "Boutique Shutters"
+author: "Boutique Shutters & Shades"
 date: 2026-03-10
 tags:
   - shutters

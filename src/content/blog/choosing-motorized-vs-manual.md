@@ -1,7 +1,7 @@
 ---
 title: "Motorized vs Manual Window Treatments: Which Is Right for You?"
 description: "A practical comparison of motorized and manual window treatments covering cost, convenience, smart home integration, and the best use cases for each option."
-author: "Boutique Shutters"
+author: "Boutique Shutters & Shades"
 date: 2026-02-05
 tags:
   - motorized

@@ -1,7 +1,7 @@
 ---
 title: "Smart Home Integration: Motorized Shades for Modern Living"
 description: "How motorized window treatments connect with Alexa, Google Home, and Apple HomeKit to create a smarter, more comfortable Atlanta home."
-author: "Boutique Shutters"
+author: "Boutique Shutters & Shades"
 date: 2026-03-15
 tags:
   - motorized
