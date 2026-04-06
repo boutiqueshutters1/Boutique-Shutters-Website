@@ -314,6 +314,7 @@ const optimizedImage = await getOptimizedImage(landingImage)
 @media only screen and (min-width: 0rem) {
     #expo-page {
         padding: clamp(1.5rem, 4vw, 3rem) (16/16rem);
+        padding-top: (140/16rem);
         background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
         min-height: 100vh;
 
@@ -336,9 +337,11 @@ const optimizedImage = await getOptimizedImage(landingImage)
         }
 
         .expo-logo {
-            max-width: (220/16rem);
+            max-width: (180/16rem);
             height: auto;
             filter: brightness(0) invert(1);
+            display: block;
+            margin: 0 auto;
         }
 
         .expo-logo-subtitle {
