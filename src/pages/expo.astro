@@ -1,0 +1,613 @@
+---
+import BaseLayout from "src/layouts/BaseLayout.astro";
+
+import {getOptimizedImage} from "@js/utils"
+import landingImage from "@assets/images/landing.jpg"
+const optimizedImage = await getOptimizedImage(landingImage)
+---
+
+<BaseLayout
+  title="Expo Appointment | Boutique Shutters & Shades"
+  description="Book your free consultation at our expo booth. Get exclusive show pricing on custom shutters, shades, and blinds for your home."
+  preloadedImage={optimizedImage}
+>
+
+<!-- ============================================ -->
+<!--                 Expo Page                     -->
+<!-- ============================================ -->
+
+<section id="expo-page">
+    <div class="cs-container">
+        <div class="cs-hero-content">
+            <img src="/assets/images/main-logo-compressed.png" alt="Boutique Shutters & Shades" class="expo-logo" width="280" />
+            <span class="cs-topper">Expo Exclusive</span>
+            <h1 class="cs-title">Book Your Free In-Home Consultation</h1>
+            <p class="cs-text">Thank you for visiting our booth! Fill out the form below to schedule your free in-home design consultation and receive exclusive expo pricing.</p>
+        </div>
+
+        <div class="expo-form-card">
+            <div class="expo-form-header">
+                <h2 class="expo-form-title">Schedule Your Appointment</h2>
+                <p class="expo-form-subtitle">All fields marked * are required</p>
+            </div>
+
+            <form id="expo-form" action="https://formspree.io/f/xdawyrbr" method="POST">
+                <input type="hidden" name="_subject" value="🎪 Expo Lead — New Appointment Request" />
+                <input type="hidden" name="source" value="Expo Booth" />
+
+                <div class="expo-form-row">
+                    <div class="expo-form-group">
+                        <label for="expo-first-name">First Name *</label>
+                        <input type="text" id="expo-first-name" name="first_name" required placeholder="John" />
+                    </div>
+                    <div class="expo-form-group">
+                        <label for="expo-last-name">Last Name *</label>
+                        <input type="text" id="expo-last-name" name="last_name" required placeholder="Smith" />
+                    </div>
+                </div>
+
+                <div class="expo-form-row">
+                    <div class="expo-form-group">
+                        <label for="expo-phone">Phone *</label>
+                        <input type="tel" id="expo-phone" name="phone" required placeholder="(404) 555-1234" />
+                    </div>
+                    <div class="expo-form-group">
+                        <label for="expo-email">Email *</label>
+                        <input type="email" id="expo-email" name="email" required placeholder="john@email.com" />
+                    </div>
+                </div>
+
+                <div class="expo-form-row">
+                    <div class="expo-form-group">
+                        <label for="expo-address">Street Address *</label>
+                        <input type="text" id="expo-address" name="address" required placeholder="123 Main St" />
+                    </div>
+                </div>
+
+                <div class="expo-form-row">
+                    <div class="expo-form-group">
+                        <label for="expo-city">City *</label>
+                        <input type="text" id="expo-city" name="city" required placeholder="Sugar Hill" />
+                    </div>
+                    <div class="expo-form-group expo-sm">
+                        <label for="expo-state">State</label>
+                        <input type="text" id="expo-state" name="state" value="GA" placeholder="GA" />
+                    </div>
+                    <div class="expo-form-group expo-sm">
+                        <label for="expo-zip">Zip *</label>
+                        <input type="text" id="expo-zip" name="zip" required placeholder="30518" pattern="[0-9]{5}" />
+                    </div>
+                </div>
+
+                <div class="expo-form-row">
+                    <div class="expo-form-group">
+                        <label for="expo-product">Product Interest *</label>
+                        <select id="expo-product" name="product_interest" required>
+                            <option value="">Select a product...</option>
+                            <option value="Plantation Shutters">Plantation Shutters</option>
+                            <option value="Zebra Shades">Zebra Shades</option>
+                            <option value="Motorized Shades">Motorized Shades</option>
+                            <option value="Blinds">Blinds</option>
+                            <option value="Exterior Shades">Exterior Shades</option>
+                            <option value="Roman Shades">Roman Shades</option>
+                            <option value="Multiple Products">Multiple Products</option>
+                            <option value="Not Sure">Not Sure — Need Consultation</option>
+                        </select>
+                    </div>
+                    <div class="expo-form-group">
+                        <label for="expo-windows">Number of Windows</label>
+                        <select id="expo-windows" name="window_count">
+                            <option value="">Select...</option>
+                            <option value="1-3">1-3 windows</option>
+                            <option value="4-8">4-8 windows</option>
+                            <option value="9-15">9-15 windows</option>
+                            <option value="16+">16+ windows (whole home)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="expo-form-group">
+                    <label for="expo-preferred-date">Preferred Consultation Date</label>
+                    <input type="date" id="expo-preferred-date" name="preferred_date" />
+                </div>
+
+                <div class="expo-form-group">
+                    <label for="expo-notes">Additional Notes</label>
+                    <textarea id="expo-notes" name="notes" rows="3" placeholder="Tell us about your project, special requests, or any questions..."></textarea>
+                </div>
+
+                <button type="submit" class="expo-submit-btn" id="expo-submit-btn">
+                    Book My Free Consultation
+                </button>
+            </form>
+
+            <!-- Success Message -->
+            <div id="expo-success" class="expo-success" style="display:none;">
+                <div class="expo-success-icon">✓</div>
+                <h3>Appointment Request Received!</h3>
+                <p>Thank you! We'll contact you within 24 hours to confirm your consultation date. Enjoy the expo!</p>
+                <button type="button" class="expo-new-btn" id="expo-new-btn">Submit Another</button>
+            </div>
+        </div>
+
+        <!-- Export Controls (visible on Danny's device) -->
+        <div class="expo-admin-bar" id="expo-admin-bar">
+            <div class="expo-admin-inner">
+                <span class="expo-lead-count" id="expo-lead-count">0 leads captured</span>
+                <button type="button" class="expo-export-btn" id="expo-export-btn">📥 Export to Excel</button>
+                <button type="button" class="expo-clear-btn" id="expo-clear-btn">Clear All</button>
+            </div>
+        </div>
+
+        <div class="expo-footer-info">
+            <div class="expo-info-cards">
+                <div class="expo-info-card">
+                    <span class="expo-info-icon">📞</span>
+                    <span class="expo-info-label">Call Us</span>
+                    <a href="tel:404-966-7419">404-966-7419</a>
+                </div>
+                <div class="expo-info-card">
+                    <span class="expo-info-icon">📧</span>
+                    <span class="expo-info-label">Email</span>
+                    <a href="mailto:sales@boutiqueshutters.com">sales@boutiqueshutters.com</a>
+                </div>
+                <div class="expo-info-card">
+                    <span class="expo-info-icon">🌐</span>
+                    <span class="expo-info-label">Website</span>
+                    <a href="https://www.boutiqueshutters.com">boutiqueshutters.com</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</BaseLayout>
+
+<script is:inline>
+(function() {
+    var form = document.getElementById('expo-form');
+    var submitBtn = document.getElementById('expo-submit-btn');
+    var successDiv = document.getElementById('expo-success');
+    var newBtn = document.getElementById('expo-new-btn');
+    var exportBtn = document.getElementById('expo-export-btn');
+    var clearBtn = document.getElementById('expo-clear-btn');
+    var countEl = document.getElementById('expo-lead-count');
+
+    // Load leads from localStorage
+    function getLeads() {
+        try { return JSON.parse(localStorage.getItem('expoLeads') || '[]'); }
+        catch(e) { return []; }
+    }
+    function saveLeads(leads) {
+        localStorage.setItem('expoLeads', JSON.stringify(leads));
+        updateCount();
+    }
+    function updateCount() {
+        var leads = getLeads();
+        countEl.textContent = leads.length + ' lead' + (leads.length !== 1 ? 's' : '') + ' captured';
+    }
+    updateCount();
+
+    // Form submit
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+
+        var formData = new FormData(form);
+        var lead = {
+            timestamp: new Date().toLocaleString(),
+            first_name: formData.get('first_name'),
+            last_name: formData.get('last_name'),
+            phone: formData.get('phone'),
+            email: formData.get('email'),
+            address: formData.get('address'),
+            city: formData.get('city'),
+            state: formData.get('state'),
+            zip: formData.get('zip'),
+            product_interest: formData.get('product_interest'),
+            window_count: formData.get('window_count'),
+            preferred_date: formData.get('preferred_date'),
+            notes: formData.get('notes')
+        };
+
+        // Save locally
+        var leads = getLeads();
+        leads.push(lead);
+        saveLeads(leads);
+
+        // Send via Formspree
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        }).then(function(res) {
+            if (res.ok) {
+                form.style.display = 'none';
+                successDiv.style.display = 'block';
+            } else {
+                alert('Form submitted locally but email delivery failed. Your data is saved.');
+                form.style.display = 'none';
+                successDiv.style.display = 'block';
+            }
+        }).catch(function() {
+            // Offline — data still saved locally
+            alert('You appear to be offline. Data saved locally — export to Excel when connected.');
+            form.style.display = 'none';
+            successDiv.style.display = 'block';
+        });
+    });
+
+    // New submission
+    newBtn.addEventListener('click', function() {
+        form.reset();
+        form.style.display = 'block';
+        successDiv.style.display = 'none';
+        submitBtn.textContent = 'Book My Free Consultation';
+        submitBtn.disabled = false;
+        document.getElementById('expo-state').value = 'GA';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Export to Excel (CSV)
+    exportBtn.addEventListener('click', function() {
+        var leads = getLeads();
+        if (leads.length === 0) {
+            alert('No leads to export yet.');
+            return;
+        }
+
+        var headers = ['Timestamp', 'First Name', 'Last Name', 'Phone', 'Email', 'Address', 'City', 'State', 'Zip', 'Product Interest', 'Window Count', 'Preferred Date', 'Notes'];
+        var keys = ['timestamp', 'first_name', 'last_name', 'phone', 'email', 'address', 'city', 'state', 'zip', 'product_interest', 'window_count', 'preferred_date', 'notes'];
+
+        var csv = '\uFEFF'; // BOM for Excel
+        csv += headers.join(',') + '\n';
+
+        leads.forEach(function(lead) {
+            var row = keys.map(function(key) {
+                var val = (lead[key] || '').toString().replace(/"/g, '""');
+                return '"' + val + '"';
+            });
+            csv += row.join(',') + '\n';
+        });
+
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'expo-leads-' + new Date().toISOString().slice(0,10) + '.csv';
+        a.click();
+        URL.revokeObjectURL(url);
+    });
+
+    // Clear leads
+    clearBtn.addEventListener('click', function() {
+        if (confirm('Are you sure you want to clear all ' + getLeads().length + ' leads? Make sure you exported first!')) {
+            localStorage.removeItem('expoLeads');
+            updateCount();
+        }
+    });
+
+    // Show admin bar with triple-tap on logo
+    var tapCount = 0;
+    var tapTimer;
+    var logo = document.querySelector('.expo-logo');
+    if (logo) {
+        logo.addEventListener('click', function() {
+            tapCount++;
+            clearTimeout(tapTimer);
+            tapTimer = setTimeout(function() { tapCount = 0; }, 600);
+            if (tapCount >= 3) {
+                var bar = document.getElementById('expo-admin-bar');
+                bar.style.display = bar.style.display === 'none' ? 'block' : 'none';
+                tapCount = 0;
+            }
+        });
+    }
+})();
+</script>
+
+<style lang="less">
+@media only screen and (min-width: 0rem) {
+    #expo-page {
+        padding: clamp(1.5rem, 4vw, 3rem) (16/16rem);
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        min-height: 100vh;
+
+        .cs-container {
+            width: 100%;
+            max-width: (600/16rem);
+            margin: 0 auto;
+        }
+
+        .cs-hero-content {
+            text-align: center;
+            margin-bottom: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        .expo-logo {
+            max-width: (220/16rem);
+            height: auto;
+            margin-bottom: (16/16rem);
+            filter: brightness(0) invert(1);
+        }
+
+        .cs-topper {
+            color: var(--secondary);
+            font-size: (14/16rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: block;
+            margin-bottom: (8/16rem);
+        }
+
+        .cs-title {
+            color: white;
+            font-size: clamp(1.5rem, 4vw, 2.25rem);
+            margin: 0 0 (12/16rem) 0;
+        }
+
+        .cs-text {
+            color: #ccc;
+            font-size: (15/16rem);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .expo-form-card {
+            background: white;
+            border-radius: (8/16rem);
+            padding: clamp(1.25rem, 3vw, 2rem);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .expo-form-header {
+            text-align: center;
+            margin-bottom: (20/16rem);
+            padding-bottom: (16/16rem);
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .expo-form-title {
+            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+            font-weight: 700;
+            margin: 0 0 (4/16rem) 0;
+        }
+
+        .expo-form-subtitle {
+            font-size: (13/16rem);
+            color: #888;
+            margin: 0;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: (12/16rem);
+        }
+
+        .expo-form-row {
+            display: flex;
+            flex-direction: column;
+            gap: (12/16rem);
+        }
+
+        .expo-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: (4/16rem);
+            flex: 1;
+
+            label {
+                font-size: (13/16rem);
+                font-weight: 600;
+                color: #555;
+            }
+
+            input, select, textarea {
+                padding: (10/16rem) (12/16rem);
+                border: 1.5px solid #ddd;
+                border-radius: (4/16rem);
+                font-size: (15/16rem);
+                font-family: inherit;
+                transition: border-color 0.2s;
+                width: 100%;
+                box-sizing: border-box;
+
+                &:focus {
+                    outline: none;
+                    border-color: var(--secondary);
+                }
+            }
+
+            textarea {
+                resize: vertical;
+            }
+        }
+
+        .expo-sm {
+            flex: 0 0 auto;
+            max-width: (100/16rem);
+        }
+
+        .expo-submit-btn {
+            width: 100%;
+            padding: (14/16rem);
+            background: var(--secondary);
+            color: #000;
+            border: none;
+            border-radius: (4/16rem);
+            font-size: (16/16rem);
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: (8/16rem);
+
+            &:hover { background: #e6ac00; }
+            &:disabled { opacity: 0.6; cursor: not-allowed; }
+        }
+
+        .expo-success {
+            text-align: center;
+            padding: (32/16rem) (16/16rem);
+        }
+
+        .expo-success-icon {
+            width: (60/16rem);
+            height: (60/16rem);
+            background: #2ecc71;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: (28/16rem);
+            margin: 0 auto (16/16rem);
+        }
+
+        .expo-success h3 {
+            font-size: (20/16rem);
+            margin: 0 0 (8/16rem) 0;
+        }
+
+        .expo-success p {
+            color: #666;
+            margin: 0 0 (20/16rem) 0;
+        }
+
+        .expo-new-btn {
+            padding: (10/16rem) (24/16rem);
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: (4/16rem);
+            font-size: (14/16rem);
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+
+            &:hover { background: #333; }
+        }
+
+        .expo-admin-bar {
+            display: none;
+            margin-top: (16/16rem);
+        }
+
+        .expo-admin-inner {
+            background: #1a1a1a;
+            border: 2px solid var(--secondary);
+            border-radius: (8/16rem);
+            padding: (12/16rem) (16/16rem);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: (12/16rem);
+        }
+
+        .expo-lead-count {
+            color: var(--secondary);
+            font-weight: 700;
+            font-size: (14/16rem);
+        }
+
+        .expo-export-btn {
+            padding: (8/16rem) (16/16rem);
+            background: var(--secondary);
+            color: #000;
+            border: none;
+            border-radius: (4/16rem);
+            font-size: (13/16rem);
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+
+            &:hover { background: #e6ac00; }
+        }
+
+        .expo-clear-btn {
+            padding: (8/16rem) (16/16rem);
+            background: transparent;
+            color: #ff4444;
+            border: 1px solid #ff4444;
+            border-radius: (4/16rem);
+            font-size: (13/16rem);
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+
+            &:hover { background: #ff4444; color: white; }
+        }
+
+        .expo-footer-info {
+            margin-top: (24/16rem);
+        }
+
+        .expo-info-cards {
+            display: flex;
+            flex-direction: column;
+            gap: (8/16rem);
+        }
+
+        .expo-info-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: (6/16rem);
+            padding: (12/16rem) (16/16rem);
+            display: flex;
+            align-items: center;
+            gap: (10/16rem);
+
+            .expo-info-icon {
+                font-size: (18/16rem);
+            }
+
+            .expo-info-label {
+                font-size: (12/16rem);
+                color: #888;
+                font-weight: 600;
+                text-transform: uppercase;
+                min-width: (50/16rem);
+            }
+
+            a {
+                color: var(--secondary);
+                text-decoration: none;
+                font-size: (14/16rem);
+                font-weight: 600;
+
+                &:hover { text-decoration: underline; }
+            }
+        }
+    }
+}
+
+/* Tablet */
+@media only screen and (min-width: 30rem) {
+    #expo-page {
+        .expo-form-row {
+            flex-direction: row;
+        }
+
+        .expo-info-cards {
+            flex-direction: row;
+        }
+    }
+}
+
+/* Desktop */
+@media only screen and (min-width: 48rem) {
+    #expo-page {
+        .cs-container {
+            max-width: (640/16rem);
+        }
+
+        .expo-logo {
+            max-width: (280/16rem);
+        }
+    }
+}
+</style>
