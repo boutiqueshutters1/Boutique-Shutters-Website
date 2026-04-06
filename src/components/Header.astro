@@ -439,11 +439,13 @@ import { Icon } from 'astro-icon/components';
         .cs-mobile-actions {
             display: flex;
             align-items: center;
-            gap: (2/16rem);
+            gap: (6/16rem);
             position: absolute;
-            top: (16/16rem);
-            right: (8/16rem);
+            top: 50%;
+            transform: translateY(-50%);
+            right: (10/16rem);
             z-index: 10;
+            height: (72/16rem);
         }
 
         .cs-cart-btn-mobile,
@@ -451,8 +453,8 @@ import { Icon } from 'astro-icon/components';
             display: flex;
             align-items: center;
             justify-content: center;
-            width: (40/16rem);
-            height: (40/16rem);
+            width: (44/16rem);
+            height: (44/16rem);
             background: none;
             border: none;
             cursor: pointer;
@@ -1289,32 +1291,33 @@ import { Icon } from 'astro-icon/components';
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 6px;
             text-decoration: none;
             color: #333;
             font-size: 13px;
             font-weight: 600;
-            width: 44px;
             height: 44px;
-            margin: 8px 0 0 4px;
-            transition: color 0.2s;
+            padding: 0 12px;
+            margin-left: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 22px;
+            transition: all 0.2s;
 
-            &:hover { color: #ffbf00; }
+            &:hover {
+                color: var(--secondary);
+                border-color: var(--secondary);
+            }
 
             svg { flex-shrink: 0; }
         }
 
         .cs-account-text {
-            display: none;
+            display: inline;
         }
 
         .cs-nav-button {
             margin-left: auto;
             border-radius: 0;
-        }
-
-        .cs-account-text {
-            display: inline;
         }
 
         .cs-cart-btn {
@@ -1324,7 +1327,7 @@ import { Icon } from 'astro-icon/components';
             justify-content: center;
             width: 44px;
             height: 44px;
-            margin-left: 8px;
+            margin-left: 12px;
             background: none;
             border: 2px solid #e0e0e0;
             border-radius: 50%;
