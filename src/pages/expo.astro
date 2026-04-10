@@ -4,6 +4,7 @@ import BaseLayout from "src/layouts/BaseLayout.astro";
 import {getOptimizedImage} from "@js/utils"
 import landingImage from "@assets/images/landing.jpg"
 const optimizedImage = await getOptimizedImage(landingImage)
+const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || '';
 ---
 
 <BaseLayout
@@ -63,7 +64,7 @@ const optimizedImage = await getOptimizedImage(landingImage)
                 <div class="expo-form-row">
                     <div class="expo-form-group">
                         <label for="expo-address">Street Address *</label>
-                        <input type="text" id="expo-address" name="address" required placeholder="123 Main St" />
+                        <input type="text" id="expo-address" name="address" required placeholder="Start typing your address..." autocomplete="off" />
                     </div>
                 </div>
 
@@ -307,6 +308,65 @@ const optimizedImage = await getOptimizedImage(landingImage)
             }
         });
     }
+})();
+</script>
+
+<script is:inline define:vars={{ googleMapsApiKey }}>
+(function() {
+    if (!googleMapsApiKey || googleMapsApiKey === 'YOUR_API_KEY_HERE') return;
+
+    var script = document.createElement('script');
+    script.src = 'https://maps.googleapis.com/maps/api/js?key=' + googleMapsApiKey + '&libraries=places&callback=initAddressAutocomplete';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+
+    window.initAddressAutocomplete = function() {
+        var addressInput = document.getElementById('expo-address');
+        if (!addressInput) return;
+
+        var autocomplete = new google.maps.places.Autocomplete(addressInput, {
+            types: ['address'],
+            componentRestrictions: { country: 'us' },
+            fields: ['address_components', 'formatted_address']
+        });
+
+        autocomplete.addListener('place_changed', function() {
+            var place = autocomplete.getPlace();
+            if (!place.address_components) return;
+
+            var streetNumber = '';
+            var route = '';
+            var city = '';
+            var state = '';
+            var zip = '';
+
+            for (var i = 0; i < place.address_components.length; i++) {
+                var comp = place.address_components[i];
+                var types = comp.types;
+
+                if (types.indexOf('street_number') !== -1) {
+                    streetNumber = comp.long_name;
+                } else if (types.indexOf('route') !== -1) {
+                    route = comp.short_name;
+                } else if (types.indexOf('locality') !== -1) {
+                    city = comp.long_name;
+                } else if (types.indexOf('sublocality_level_1') !== -1 && !city) {
+                    city = comp.long_name;
+                } else if (types.indexOf('administrative_area_level_1') !== -1) {
+                    state = comp.short_name;
+                } else if (types.indexOf('postal_code') !== -1) {
+                    zip = comp.long_name;
+                }
+            }
+
+            addressInput.value = streetNumber + (streetNumber && route ? ' ' : '') + route;
+
+            if (city) document.getElementById('expo-city').value = city;
+            if (state) document.getElementById('expo-state').value = state;
+            if (zip) document.getElementById('expo-zip').value = zip;
+        });
+    };
 })();
 </script>
 
@@ -632,5 +692,30 @@ const optimizedImage = await getOptimizedImage(landingImage)
             max-width: (280/16rem);
         }
     }
+}
+</style>
+
+<style is:global>
+.pac-container {
+    border-radius: 4px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    border: 1px solid #ddd;
+    font-family: 'Inter', sans-serif;
+    z-index: 10000;
+}
+.pac-item {
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.pac-item:hover {
+    background: #fff8e1;
+}
+.pac-item-selected {
+    background: #fff8e1;
+}
+.pac-matched {
+    font-weight: 700;
+    color: #000;
 }
 </style>
