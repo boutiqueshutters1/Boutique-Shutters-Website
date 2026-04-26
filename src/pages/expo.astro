@@ -168,6 +168,16 @@ const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || '';
 </BaseLayout>
 
 <script is:inline>
+// Load Cormorant Garamond for 2026 brand palette preview
+(function(){
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap';
+    document.head.appendChild(link);
+})();
+</script>
+
+<script is:inline>
 (function() {
     var form = document.getElementById('expo-form');
     var submitBtn = document.getElementById('expo-submit-btn');
@@ -371,12 +381,23 @@ const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || '';
 </script>
 
 <style lang="less">
+// 2026 Brand Color Palette
+@inky: #27454B;
+@raisin: #5B2F2F;
+@ochre: #C9A16A;
+@softblack: #1A1A1A;
+@alabaster: #F4EFE6;
+@mushroom: #A89888;
+@botanical: #6B7A4F;
+@ochre-dark: #B08A52;
+
 @media only screen and (min-width: 0rem) {
     #expo-page {
         padding: clamp(1.5rem, 4vw, 3rem) (16/16rem);
         padding-top: (140/16rem);
-        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        background: linear-gradient(135deg, @inky 0%, darken(@inky, 5%) 100%);
         min-height: 100vh;
+        font-family: 'Inter', -apple-system, sans-serif;
 
         .cs-container {
             width: 100%;
@@ -405,17 +426,17 @@ const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || '';
         }
 
         .expo-logo-subtitle {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Cormorant Garamond', Georgia, serif;
             font-size: clamp(1rem, 2.5vw, 1.25rem);
-            font-weight: 700;
-            color: var(--secondary);
+            font-weight: 600;
+            color: @ochre;
             letter-spacing: 0.15em;
             text-transform: uppercase;
             margin-top: -(8/16rem);
         }
 
         .cs-topper {
-            color: var(--secondary);
+            color: @ochre;
             font-size: (14/16rem);
             font-weight: 700;
             text-transform: uppercase;
@@ -425,20 +446,22 @@ const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || '';
         }
 
         .cs-title {
-            color: white;
+            color: @alabaster;
+            font-family: 'Cormorant Garamond', Georgia, serif;
             font-size: clamp(1.5rem, 4vw, 2.25rem);
+            font-weight: 400;
             margin: 0 0 (12/16rem) 0;
         }
 
         .cs-text {
-            color: #ccc;
+            color: @mushroom;
             font-size: (15/16rem);
             line-height: 1.5;
             margin: 0;
         }
 
         .expo-form-card {
-            background: white;
+            background: @alabaster;
             border-radius: (8/16rem);
             padding: clamp(1.25rem, 3vw, 2rem);
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
@@ -448,18 +471,20 @@ const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || '';
             text-align: center;
             margin-bottom: (20/16rem);
             padding-bottom: (16/16rem);
-            border-bottom: 2px solid #f0f0f0;
+            border-bottom: 2px solid fade(@raisin, 12%);
         }
 
         .expo-form-title {
-            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
-            font-weight: 700;
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+            font-weight: 500;
+            color: @inky;
             margin: 0 0 (4/16rem) 0;
         }
 
         .expo-form-subtitle {
             font-size: (13/16rem);
-            color: #888;
+            color: @mushroom;
             margin: 0;
         }
 
@@ -484,22 +509,24 @@ const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || '';
             label {
                 font-size: (13/16rem);
                 font-weight: 600;
-                color: #555;
+                color: @raisin;
             }
 
             input, select, textarea {
                 padding: (10/16rem) (12/16rem);
-                border: 1.5px solid #ddd;
+                border: 1.5px solid fade(@raisin, 20%);
                 border-radius: (4/16rem);
                 font-size: (15/16rem);
                 font-family: inherit;
                 transition: border-color 0.2s;
                 width: 100%;
                 box-sizing: border-box;
+                background: white;
+                color: @raisin;
 
                 &:focus {
                     outline: none;
-                    border-color: var(--secondary);
+                    border-color: @ochre;
                 }
             }
 
@@ -516,8 +543,8 @@ const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || '';
         .expo-submit-btn {
             width: 100%;
             padding: (14/16rem);
-            background: var(--secondary);
-            color: #000;
+            background: @ochre;
+            color: @inky;
             border: none;
             border-radius: (4/16rem);
             font-size: (16/16rem);
@@ -527,7 +554,7 @@ const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || '';
             transition: background 0.3s;
             margin-top: (8/16rem);
 
-            &:hover { background: #e6ac00; }
+            &:hover { background: @ochre-dark; }
             &:disabled { opacity: 0.6; cursor: not-allowed; }
         }
 
@@ -539,8 +566,8 @@ const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || '';
         .expo-success-icon {
             width: (60/16rem);
             height: (60/16rem);
-            background: #2ecc71;
-            color: white;
+            background: @botanical;
+            color: @alabaster;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -550,19 +577,21 @@ const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || '';
         }
 
         .expo-success h3 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
             font-size: (20/16rem);
+            color: @inky;
             margin: 0 0 (8/16rem) 0;
         }
 
         .expo-success p {
-            color: #666;
+            color: @raisin;
             margin: 0 0 (20/16rem) 0;
         }
 
         .expo-new-btn {
             padding: (10/16rem) (24/16rem);
-            background: #1a1a1a;
-            color: white;
+            background: @inky;
+            color: @alabaster;
             border: none;
             border-radius: (4/16rem);
             font-size: (14/16rem);
@@ -570,7 +599,7 @@ const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || '';
             font-family: inherit;
             cursor: pointer;
 
-            &:hover { background: #333; }
+            &:hover { background: lighten(@inky, 8%); }
         }
 
         .expo-admin-bar {
@@ -579,8 +608,8 @@ const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || '';
         }
 
         .expo-admin-inner {
-            background: #1a1a1a;
-            border: 2px solid var(--secondary);
+            background: @softblack;
+            border: 2px solid @ochre;
             border-radius: (8/16rem);
             padding: (12/16rem) (16/16rem);
             display: flex;
@@ -591,15 +620,15 @@ const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || '';
         }
 
         .expo-lead-count {
-            color: var(--secondary);
+            color: @ochre;
             font-weight: 700;
             font-size: (14/16rem);
         }
 
         .expo-export-btn {
             padding: (8/16rem) (16/16rem);
-            background: var(--secondary);
-            color: #000;
+            background: @ochre;
+            color: @inky;
             border: none;
             border-radius: (4/16rem);
             font-size: (13/16rem);
@@ -607,7 +636,7 @@ const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || '';
             font-family: inherit;
             cursor: pointer;
 
-            &:hover { background: #e6ac00; }
+            &:hover { background: @ochre-dark; }
         }
 
         .expo-clear-btn {
@@ -635,8 +664,8 @@ const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || '';
         }
 
         .expo-info-card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: fade(@alabaster, 8%);
+            border: 1px solid fade(@alabaster, 15%);
             border-radius: (6/16rem);
             padding: (12/16rem) (16/16rem);
             display: flex;
@@ -649,14 +678,14 @@ const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || '';
 
             .expo-info-label {
                 font-size: (12/16rem);
-                color: #888;
+                color: @mushroom;
                 font-weight: 600;
                 text-transform: uppercase;
                 min-width: (50/16rem);
             }
 
             a {
-                color: var(--secondary);
+                color: @ochre;
                 text-decoration: none;
                 font-size: (14/16rem);
                 white-space: nowrap;
@@ -698,24 +727,27 @@ const googleMapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || '';
 <style is:global>
 .pac-container {
     border-radius: 4px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-    border: 1px solid #ddd;
+    box-shadow: 0 4px 16px rgba(39,69,75,0.12);
+    border: 1px solid rgba(91,47,47,0.15);
     font-family: 'Inter', sans-serif;
     z-index: 10000;
+    background: #F4EFE6;
 }
 .pac-item {
     padding: 8px 12px;
     font-size: 14px;
     cursor: pointer;
+    color: #5B2F2F;
+    border-bottom-color: rgba(91,47,47,0.08);
 }
 .pac-item:hover {
-    background: #fff8e1;
+    background: rgba(201,161,106,0.15);
 }
 .pac-item-selected {
-    background: #fff8e1;
+    background: rgba(201,161,106,0.15);
 }
 .pac-matched {
     font-weight: 700;
-    color: #000;
+    color: #27454B;
 }
 </style>
