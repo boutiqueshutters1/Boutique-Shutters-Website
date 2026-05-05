@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import CTA from "@components/CTA.astro";
-import Estimator from "@components/Estimator.astro";
 import ProductSchema from "@components/ProductSchema.astro";
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
@@ -151,16 +150,6 @@ const optimizedImage = await getOptimizedImage(landingImage)
     </div>
 </section>
 
-
-<Estimator
-    productName="Shutters"
-    pricingModel="sqft"
-    options={[
-        { name: "Plantation Shutters", price: 25 },
-        { name: "Composite Shutters", price: 20 },
-    ]}
-    note="This is a rough estimate. Final pricing depends on material, customization, and installation details."
-/>
 
 <CTA/>
 

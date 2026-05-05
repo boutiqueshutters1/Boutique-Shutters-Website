@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import CTA from "@components/CTA.astro";
-import Estimator from "@components/Estimator.astro";
 import ProductSchema from "@components/ProductSchema.astro";
 
 import {getOptimizedImage} from "@js/utils"
@@ -140,16 +139,6 @@ const optimizedImage = await getOptimizedImage(landingImage)
         </div>
     </div>
 </section>
-
-<Estimator
-    productName="Blinds"
-    pricingModel="perWindow"
-    options={[
-        { name: "Faux Wood Blinds", pricePerSqFt: 80 },
-        { name: "Real Wood Blinds", pricePerSqFt: 120 },
-    ]}
-    note="Pricing varies by window size, slat width, and material. Get your exact quote with a free consultation."
-/>
 
 <CTA/>
 
