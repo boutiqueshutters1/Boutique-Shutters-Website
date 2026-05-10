@@ -2,6 +2,7 @@
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import CTA from "@components/CTA.astro";
 import ProductSchema from "@components/ProductSchema.astro";
+import Estimator from "@components/Estimator.astro";
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import {getOptimizedImage} from "@js/utils"
@@ -158,6 +159,27 @@ const optimizedImage = await getOptimizedImage(landingImage)
     </div>
 </section>
 
+
+<Estimator
+    productName="Motorized Shades"
+    pricingType="tier"
+    tiers={[
+        { label: "Small Job", sqftRange: "Up to 75 SF", minSqft: 0, maxSqft: 75, price: 23, altPrice: 26 },
+        { label: "Standard Job", sqftRange: "76–150 SF", minSqft: 75.01, maxSqft: 150, price: 21, altPrice: 24 },
+        { label: "Standard Home", sqftRange: "151–250 SF", minSqft: 150.01, maxSqft: 250, price: 20, altPrice: 23 },
+        { label: "Large Home", sqftRange: "251–400 SF", minSqft: 250.01, maxSqft: 400, price: 18, altPrice: 21 },
+        { label: "Whole Home", sqftRange: "400+ SF", minSqft: 400.01, maxSqft: 99999, price: 17, altPrice: 20 },
+    ]}
+    variants={[
+        { name: "Light Filtering", useAltPrice: false },
+        { name: "Blackout", useAltPrice: true },
+    ]}
+    motorOptions={[
+        { name: "Standard Motor", pricePerShade: 150, description: "Remote-controlled · ideal for most homes" },
+        { name: "Smart Home Motor", pricePerShade: 180, hubPrice: 138, description: "Apple Home, Google Home & Alexa compatible" },
+    ]}
+    note="Includes professional installation, motor, and base remote. Smart home setup included with Smart Home motor. Tax additional. Final quote provided after free in-home measurement."
+/>
 
 <CTA/>
 

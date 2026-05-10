@@ -2,6 +2,7 @@
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import CTA from "@components/CTA.astro";
 import ProductSchema from "@components/ProductSchema.astro";
+import Estimator from "@components/Estimator.astro";
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import {getOptimizedImage} from "@js/utils"
@@ -150,6 +151,12 @@ const optimizedImage = await getOptimizedImage(landingImage)
     </div>
 </section>
 
+
+<Estimator
+    productName="Exterior Shades"
+    pricingType="contact"
+    note="Exterior shades typically range from $55–$70 per square foot installed depending on size, motorization, and site conditions. Each project is custom-quoted to ensure accurate materials, shipping, and installation pricing for your space."
+/>
 
 <CTA/>
 

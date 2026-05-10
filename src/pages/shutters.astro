@@ -2,6 +2,7 @@
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import CTA from "@components/CTA.astro";
 import ProductSchema from "@components/ProductSchema.astro";
+import Estimator from "@components/Estimator.astro";
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import {getOptimizedImage} from "@js/utils"
@@ -150,6 +151,19 @@ const optimizedImage = await getOptimizedImage(landingImage)
     </div>
 </section>
 
+
+<Estimator
+    productName="Plantation Shutters"
+    pricingType="tier"
+    tiers={[
+        { label: "Small Job", sqftRange: "Up to 75 SF", minSqft: 0, maxSqft: 75, price: 47 },
+        { label: "Standard Job", sqftRange: "76–150 SF", minSqft: 75.01, maxSqft: 150, price: 44 },
+        { label: "Standard Home", sqftRange: "151–250 SF", minSqft: 150.01, maxSqft: 250, price: 42 },
+        { label: "Large Home", sqftRange: "251–400 SF", minSqft: 250.01, maxSqft: 400, price: 39 },
+        { label: "Whole Home", sqftRange: "400+ SF", minSqft: 400.01, maxSqft: 99999, price: 36 },
+    ]}
+    note="Includes professional installation and Shoji White painted finish. Stained wood, custom finishes, and unique window shapes may adjust pricing. Tax additional. Final quote provided after free in-home measurement."
+/>
 
 <CTA/>
 

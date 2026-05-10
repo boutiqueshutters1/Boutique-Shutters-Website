@@ -1,17 +1,35 @@
 ---
-interface ProductOption {
+interface PricingTier {
+    label: string;        // e.g., "Small Job"
+    sqftRange: string;    // e.g., "Up to 75 SF"
+    minSqft: number;
+    maxSqft: number;      // use Infinity for top tier
+    price: number;        // primary price/sqft
+    altPrice?: number;    // alternate price (e.g., Blackout variant)
+}
+
+interface Variant {
+    name: string;         // e.g., "Light Filtering"
+    useAltPrice?: boolean;// if true, use tier.altPrice
+}
+
+interface MotorOption {
     name: string;
-    price: number;
+    pricePerShade: number;
+    hubPrice?: number;
+    description?: string;
 }
 
 interface Props {
     productName: string;
-    options: ProductOption[];
-    pricingModel: "sqft" | "perWindow" | "contact";
+    pricingType: "tier" | "contact";
+    tiers?: PricingTier[];
+    variants?: Variant[];
+    motorOptions?: MotorOption[];
     note: string;
 }
 
-const { productName, options, pricingModel, note } = Astro.props;
+const { productName, pricingType, tiers = [], variants = [], motorOptions = [], note } = Astro.props;
 const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}`;
 ---
 
@@ -21,36 +39,32 @@ const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}
             <span class="cs-topper">Cost Estimator</span>
             <h2 class="cs-title">Estimate Your Investment</h2>
             <p class="cs-text">
-                Enter your window measurements below to get a rough cost estimate.
-                {pricingModel === "contact"
-                    ? "Submit your window details and we'll provide a custom quote."
-                    : "This is an approximate range — your exact price will be determined during your free consultation."
+                Enter your window measurements below for a rough estimate.
+                {pricingType === "contact"
+                    ? " Submit your details and we'll provide a custom quote."
+                    : " Larger jobs receive better per-square-foot pricing — your exact total is confirmed during your free in-home consultation."
                 }
             </p>
         </div>
 
         <div class="cs-estimator-body">
-            {/* Product Option Selector - only show if multiple options */}
-            {options.length > 1 && (
+            {/* Variant Selector — e.g., Light Filtering vs Blackout */}
+            {variants.length > 1 && (
                 <div class="cs-option-selector">
-                    <label class="cs-option-label">Select Product Type:</label>
+                    <label class="cs-option-label">Choose Style</label>
                     <div class="cs-option-group">
-                        {options.map((option, i) => (
+                        {variants.map((variant, i) => (
                             <label class="cs-radio-label">
                                 <input
                                     type="radio"
-                                    name={`${estimatorId}-option`}
+                                    name={`${estimatorId}-variant`}
                                     value={i.toString()}
                                     checked={i === 0}
-                                    class="cs-radio"
-                                    data-price={option.price}
-                                    data-name={option.name}
+                                    class="cs-radio cs-variant-radio"
+                                    data-use-alt={variant.useAltPrice ? "1" : "0"}
+                                    data-name={variant.name}
                                 />
-                                <span class="cs-radio-text">
-                                    {option.name}
-                                    {pricingModel === "sqft" && <span class="cs-radio-price">${option.price}/sq ft</span>}
-                                    {pricingModel === "perWindow" && <span class="cs-radio-price">${option.price}/window</span>}
-                                </span>
+                                <span class="cs-radio-text">{variant.name}</span>
                             </label>
                         ))}
                     </div>
@@ -73,11 +87,6 @@ const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}
                             <label class="cs-input-label">Height (inches)</label>
                             <input type="number" class="cs-input cs-height" min="1" max="200" placeholder="48" />
                         </div>
-                        {pricingModel !== "contact" && (
-                            <div class="cs-window-price">
-                                <span class="cs-price-value">$0</span>
-                            </div>
-                        )}
                     </div>
                 </div>
             </div>
@@ -86,9 +95,51 @@ const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}
                 <span>+</span> Add Another Window
             </button>
 
+            {/* Motor Add-On Selector */}
+            {motorOptions.length > 0 && (
+                <div class="cs-motor-section">
+                    <label class="cs-option-label">Motorization (Optional)</label>
+                    <div class="cs-option-group">
+                        <label class="cs-radio-label">
+                            <input
+                                type="radio"
+                                name={`${estimatorId}-motor`}
+                                value="-1"
+                                checked
+                                class="cs-radio cs-motor-radio"
+                                data-shade-price="0"
+                                data-hub-price="0"
+                                data-motor-name="None"
+                            />
+                            <span class="cs-radio-text">No Motor (Manual)</span>
+                        </label>
+                        {motorOptions.map((motor, i) => (
+                            <label class="cs-radio-label">
+                                <input
+                                    type="radio"
+                                    name={`${estimatorId}-motor`}
+                                    value={i.toString()}
+                                    class="cs-radio cs-motor-radio"
+                                    data-shade-price={motor.pricePerShade.toString()}
+                                    data-hub-price={(motor.hubPrice || 0).toString()}
+                                    data-motor-name={motor.name}
+                                />
+                                <span class="cs-radio-text">
+                                    {motor.name}
+                                    {motor.description && <small class="cs-radio-desc">{motor.description}</small>}
+                                </span>
+                            </label>
+                        ))}
+                    </div>
+                </div>
+            )}
+
             {/* Results */}
-            {pricingModel !== "contact" ? (
+            {pricingType === "tier" ? (
                 <div class="cs-results">
+                    <div class="cs-tier-display" id={`${estimatorId}-tier`}>
+                        <span class="cs-tier-label">Enter window dimensions to see your tier</span>
+                    </div>
                     <div class="cs-total-row">
                         <span class="cs-total-label">Estimated Total</span>
                         <span class="cs-total-value">$0</span>
@@ -102,12 +153,12 @@ const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}
                         <img src="/assets/images/partners/klarna-logo.svg" alt="Klarna" height="20" loading="lazy" />
                     </div>
                     <p class="cs-disclaimer">{note}</p>
-                    <a href="/book" class="cs-button-solid">Get Your Exact Quote</a>
+                    <a href="/book" class="cs-button-solid">Book Free Consultation</a>
                 </div>
             ) : (
                 <div class="cs-results">
                     <div class="cs-contact-message">
-                        <p>Every exterior shade installation is unique. Submit your window details and we'll provide a personalized quote.</p>
+                        <p>Every {productName.toLowerCase()} project is unique. Submit your window details and we'll provide a personalized quote tailored to your job.</p>
                     </div>
                     <div class="cs-financing-badges">
                         <img src="/assets/images/partners/wisetack-logo.svg" alt="Wisetack" height="20" loading="lazy" />
@@ -122,53 +173,85 @@ const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}
     </div>
 </section>
 
-<script is:inline define:vars={{ estimatorId, pricingModel, options }}>
+<script is:inline define:vars={{ estimatorId, pricingType, tiers, variants }}>
 (function() {
     const section = document.querySelector(`[data-estimator-id="${estimatorId}"]`);
-    if (!section) return;
+    if (!section || pricingType === 'contact') {
+        // Still wire up add-window for contact mode
+        if (section) wireAddWindow();
+        return;
+    }
 
     const container = section.querySelector('.cs-windows-container');
     const addBtn = section.querySelector('.cs-add-window');
     const totalEl = section.querySelector('.cs-total-value');
     const monthlyEl = section.querySelector('.cs-monthly-value');
+    const tierEl = section.querySelector(`#${estimatorId}-tier`);
     let windowCount = 1;
 
-    function getSelectedPrice() {
-        if (options.length === 1) return options[0].price;
-        const checked = section.querySelector(`input[name="${estimatorId}-option"]:checked`);
-        return checked ? parseFloat(checked.dataset.price) : options[0].price;
+    function getCurrentTier(totalSqft) {
+        if (totalSqft <= 0) return null;
+        for (let i = 0; i < tiers.length; i++) {
+            const t = tiers[i];
+            const max = t.maxSqft === null || t.maxSqft >= 99999 ? Infinity : t.maxSqft;
+            if (totalSqft >= t.minSqft && totalSqft <= max) return t;
+        }
+        return tiers[tiers.length - 1] || null;
+    }
+
+    function isUsingAltPrice() {
+        if (variants.length <= 1) return false;
+        const checked = section.querySelector(`input[name="${estimatorId}-variant"]:checked`);
+        return checked ? checked.dataset.useAlt === '1' : false;
+    }
+
+    function getMotorTotal(shadeCount) {
+        const motorRadio = section.querySelector(`input[name="${estimatorId}-motor"]:checked`);
+        if (!motorRadio) return 0;
+        const shadePrice = parseFloat(motorRadio.dataset.shadePrice) || 0;
+        const hubPrice = parseFloat(motorRadio.dataset.hubPrice) || 0;
+        if (shadePrice === 0) return 0;
+        return (shadePrice * shadeCount) + hubPrice;
     }
 
     function calculateAll() {
         const rows = container.querySelectorAll('.cs-window-row');
-        let grandTotal = 0;
+        let totalSqft = 0;
+        let shadeCount = 0;
 
         rows.forEach(row => {
             const w = parseFloat(row.querySelector('.cs-width').value) || 0;
             const h = parseFloat(row.querySelector('.cs-height').value) || 0;
-            const priceEl = row.querySelector('.cs-price-value');
-            const price = getSelectedPrice();
-
-            let windowPrice = 0;
             if (w > 0 && h > 0) {
-                if (pricingModel === 'sqft') {
-                    const sqft = (w * h) / 144;
-                    windowPrice = sqft * price;
-                } else if (pricingModel === 'perWindow') {
-                    windowPrice = price;
-                }
+                totalSqft += (w * h) / 144;
+                shadeCount += 1;
             }
-
-            if (priceEl) {
-                priceEl.textContent = windowPrice > 0 ? `$${Math.round(windowPrice).toLocaleString()}` : '$0';
-            }
-            grandTotal += windowPrice;
         });
 
+        const tier = getCurrentTier(totalSqft);
+        const useAlt = isUsingAltPrice();
+        const ratePerSqft = tier ? (useAlt && tier.altPrice ? tier.altPrice : tier.price) : 0;
+        const productSubtotal = totalSqft * ratePerSqft;
+        const motorAddOn = getMotorTotal(shadeCount);
+        const grandTotal = productSubtotal + motorAddOn;
+
+        // Update tier display
+        if (tierEl) {
+            if (tier && totalSqft > 0) {
+                tierEl.innerHTML = `
+                    <span class="cs-tier-label">${tier.label} · ${Math.round(totalSqft)} sqft</span>
+                    <span class="cs-tier-rate">$${ratePerSqft}/sqft</span>
+                `;
+            } else {
+                tierEl.innerHTML = '<span class="cs-tier-label">Enter window dimensions to see your tier</span>';
+            }
+        }
+
+        // Update total
         if (totalEl) {
             totalEl.textContent = grandTotal > 0 ? `$${Math.round(grandTotal).toLocaleString()}` : '$0';
             if (monthlyEl) {
-                const monthly = grandTotal > 0 ? Math.round(grandTotal / 12) : 0;
+                const monthly = grandTotal > 0 ? Math.round(grandTotal / 24) : 0;
                 monthlyEl.textContent = monthly > 0 ? `$${monthly.toLocaleString()}` : '$0';
             }
         }
@@ -178,11 +261,6 @@ const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}
         const row = document.createElement('div');
         row.className = 'cs-window-row';
         row.dataset.windowIndex = index;
-
-        const priceHtml = pricingModel !== 'contact'
-            ? `<div class="cs-window-price"><span class="cs-price-value">$0</span></div>`
-            : '';
-
         row.innerHTML = `
             <div class="cs-window-header">
                 <span class="cs-window-label">Window ${index + 1}</span>
@@ -198,7 +276,6 @@ const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}
                     <label class="cs-input-label">Height (inches)</label>
                     <input type="number" class="cs-input cs-height" min="1" max="200" placeholder="48" />
                 </div>
-                ${priceHtml}
             </div>
         `;
 
@@ -224,20 +301,21 @@ const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}
         windowCount = rows.length;
     }
 
-    // Add window button
-    addBtn.addEventListener('click', () => {
-        const row = createWindowRow(windowCount);
-        container.appendChild(row);
-        windowCount++;
-        row.querySelector('.cs-width').focus();
-    });
+    function wireAddWindow() {
+        if (!addBtn) return;
+        addBtn.addEventListener('click', () => {
+            const row = createWindowRow(windowCount);
+            container.appendChild(row);
+            windowCount++;
+            row.querySelector('.cs-width').focus();
+        });
+    }
 
-    // Listen on initial inputs
+    wireAddWindow();
+
     section.querySelectorAll('.cs-input').forEach(input => {
         input.addEventListener('input', calculateAll);
     });
-
-    // Listen on radio change
     section.querySelectorAll('.cs-radio').forEach(radio => {
         radio.addEventListener('change', calculateAll);
     });
@@ -279,7 +357,8 @@ const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}
             gap: (20/16rem);
         }
 
-        .cs-option-selector {
+        .cs-option-selector,
+        .cs-motor-section {
             background: white;
             padding: (20/16rem);
         }
@@ -324,17 +403,18 @@ const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}
 
         .cs-radio-text {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
             flex: 1;
             font-size: (16/16rem);
             font-weight: 600;
-        }
+            line-height: 1.3;
 
-        .cs-radio-price {
-            font-size: (14/16rem);
-            font-weight: 700;
-            color: var(--secondary);
+            small {
+                font-size: (12/16rem);
+                font-weight: 400;
+                color: #888;
+                margin-top: (2/16rem);
+            }
         }
 
         .cs-windows-container {
@@ -425,18 +505,6 @@ const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}
             padding-bottom: (10/16rem);
         }
 
-        .cs-window-price {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding-top: (4/16rem);
-
-            .cs-price-value {
-                font-size: (20/16rem);
-                font-weight: 900;
-                color: var(--secondary);
-            }
-        }
-
         .cs-add-window {
             background: white;
             border: 2px dashed #d0d0d0;
@@ -467,6 +535,30 @@ const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}
             flex-direction: column;
             align-items: center;
             gap: (8/16rem);
+        }
+
+        .cs-tier-display {
+            background: rgba(255, 191, 0, 0.1);
+            border: 1px solid rgba(255, 191, 0, 0.3);
+            padding: (10/16rem) (16/16rem);
+            display: flex;
+            flex-direction: column;
+            gap: (4/16rem);
+            margin-bottom: (8/16rem);
+            min-width: (240/16rem);
+
+            .cs-tier-label {
+                font-size: (13/16rem);
+                font-weight: 600;
+                color: #ccc;
+                letter-spacing: 0.05em;
+            }
+
+            .cs-tier-rate {
+                font-size: (18/16rem);
+                font-weight: 800;
+                color: var(--secondary);
+            }
         }
 
         .cs-total-row {
@@ -590,15 +682,17 @@ const estimatorId = `estimator-${productName.toLowerCase().replace(/\s+/g, '-')}
         }
 
         .cs-window-inputs {
-            grid-template-columns: 1fr auto 1fr auto;
+            grid-template-columns: 1fr auto 1fr;
         }
 
-        .cs-window-price {
-            grid-column: auto;
-            text-align: right;
-            padding-top: 0;
-            padding-bottom: (10/16rem);
-            min-width: (80/16rem);
+        .cs-tier-display {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            .cs-tier-label {
+                text-align: left;
+            }
         }
 
         .cs-total-row {
